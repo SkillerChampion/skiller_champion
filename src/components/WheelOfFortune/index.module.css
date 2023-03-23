@@ -1,0 +1,62 @@
+.imagesRoot,
+.cloud {
+  width: 350px;
+  height: 120px;
+}
+.cloud {
+  margin-top: 70px;
+
+  background: #ccccfc;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 100px;
+}
+.cloud::after,
+.cloud::before {
+  content: '';
+  position: relative;
+  display: inline-block;
+  background: #ccccfc;
+  border-radius: inherit;
+}
+.cloud::after {
+  width: 100px;
+  height: 100px;
+  top: -118px;
+  left: -133px;
+}
+.cloud::before {
+  width: 180px;
+  height: 180px;
+  top: -70px;
+  left: 130px;
+}
+
+.cloudRoot {
+  transform: scale(0.98);
+  margin-bottom: 70px;
+}
+
+.imagesRoot {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: -55px;
+}
+
+@media screen and (max-width: 1100px) {
+  .cloudRoot {
+    transform: scale(0.75);
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .cloudRoot {
+    transform: scale(0.7);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .cloudRoot {
+    transform: scale(0.62);
+  }
+}

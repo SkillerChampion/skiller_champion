@@ -1,0 +1,15 @@
+.removeInset > div:first-child {
+  inset: 0 !important;
+}
+
+.insideSidebar > div:first-child {
+  width: 595px !important;
+}
+
+.insideSidebar > div:nth-child(2) {
+  right: -511px !important;
+}
+
+.removeInset > div:nth-child(2) {
+  width: 6px !important;
+}

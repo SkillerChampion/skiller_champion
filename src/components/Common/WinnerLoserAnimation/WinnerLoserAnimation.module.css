@@ -1,0 +1,47 @@
+.modalRoot > div:nth-child(2) {
+  width: 550px !important;
+  height: 350px !important;
+}
+
+.modalRootLoser > div:nth-child(2) {
+  background: rgb(204, 39, 39);
+}
+
+.modalRootWinner > div:nth-child(2) {
+  background: rgb(59, 176, 20);
+}
+
+.customBtn {
+  background: #fff !important;
+  color: black !important;
+  padding-left: 45px !important;
+  padding-right: 45px !important;
+}
+
+.greenBtn:hover {
+  background: rgb(151, 252, 117) !important;
+}
+
+.redBtn:hover {
+  background: rgb(255, 131, 131) !important;
+  color: #fff !important;
+}
+
+@media screen and (max-width: 768px) {
+  .modalRoot > div:nth-child(2) {
+    width: 350px !important;
+    height: 250px !important;
+  }
+
+  .customBtn {
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .modalRoot > div:nth-child(2) {
+    width: 280px !important;
+    height: 200px !important;
+  }
+}

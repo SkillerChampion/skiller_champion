@@ -1,0 +1,61 @@
+.reduceFontSize {
+  font-size: 14px !important;
+}
+
+.fullHeight {
+  height: calc(100% - 48px) !important;
+}
+
+.fullHeight > div {
+  height: 100% !important;
+}
+
+.hover_background > * {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+}
+
+.selectedNavTitle,
+.hover_background {
+  position: relative;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0 10px 0 16px;
+  border-radius: 10px;
+}
+
+.selectedNavTitle:before,
+.hover_background:before {
+  border-radius: 10px;
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 100%;
+  left: 0;
+  background: var(--indigo-600);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.selectedNavTitle:before,
+.hover_background:hover:before {
+  border-radius: 10px;
+  content: '';
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.fixAspectRatio {
+  color: var(--indigo-600) !important;
+}
+
+@media screen and (max-width: 640px) {
+  .reduceFontSize {
+    font-size: 11px !important;
+  }
+}
