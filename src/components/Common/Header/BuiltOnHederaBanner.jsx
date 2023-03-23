@@ -7,7 +7,7 @@ export default function BuiltOnHederaBanner() {
       <img src={hederaIcon} className="w-6 sm:w-7 z-10" alt="" />
 
       <p className="text-xs sm:text-base lg:text-lg leading-6 flex justify-center items-center font-bold text-white heliosFontFamily">
-        Launching Founders NFTs soon. Stayss tune
+        Launching Founders NFTs soon. Stay tuned
       </p>
       <img src={hederaIcon} className="w-6 sm:w-7 z-10" alt="" />
     </div>
