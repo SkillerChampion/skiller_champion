@@ -71,9 +71,6 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
 
     if (nftDetails) {
       try {
-        const randomSlice = await getRandomSlice(betAmount);
-        winningAmount = randomSlice[ARRAY_KEYS.VALUE];
-
         const nftTransferred = await transferNftFromUserToTreasury(
           nftDetails,
           winnerMaxAmount,
@@ -85,6 +82,9 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
         nftTransferTxnId = nftTransferred?.txnId;
 
         if (receiptStatus) {
+          const randomSlice = await getRandomSlice(betAmount);
+          winningAmount = randomSlice[ARRAY_KEYS.VALUE];
+
           const res = await transferPrizeToUserAccount(winningAmount, userAccountId);
           transferPrizeTxnId = res?.txnId;
 

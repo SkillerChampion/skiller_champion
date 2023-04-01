@@ -6,6 +6,7 @@ import GrayCard from '../Common/Cards/GrayCard';
 import Button from '../Common/Button/Button';
 import SideDrawer from '../Common/SideDrawer/SideDrawer';
 import SideDrawerIndex from './SideDrawer/Index';
+import { useNavigate } from 'react-router-dom';
 
 import {
   ZERO_INDEX,
@@ -22,6 +23,7 @@ import {
   getGoldPassTokenId,
   getSilverPassTokenId
 } from '../../utils/helperFunctions';
+import { ALL_ROUTES_PATHS } from '../../utils/routes';
 
 const Dashboard = () => {
   const {
@@ -33,6 +35,8 @@ const Dashboard = () => {
     sendTxnToWallet,
     refetchTokenRelationships
   } = useContext(WalletContext);
+
+  const navigate = useNavigate();
 
   const [buySelectedPass, setBuySelectedPass] = useState();
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
@@ -112,10 +116,11 @@ const Dashboard = () => {
         </div>
         <Button
           text={`Buy 1 ${buySelectedPass?.[ARRAY_KEYS.LABEL]} Pass`}
-          className={`w-full mt-[10px]`}
-          btnClassName="max-w-none w-full justify-center"
+          className={`mt-[10px]`}
+          btnClassName="justify-center"
           onClick={handleBuyClick}
           disabled={!userAccountId}
+          allowFullWidth
         />
       </>
     ) : (
@@ -123,10 +128,11 @@ const Dashboard = () => {
         text={
           userAccountId ? `Associate ${buySelectedPass?.[ARRAY_KEYS.LABEL]} Pass` : 'Connect wallet'
         }
-        className={`w-full mt-[25px]`}
-        btnClassName="max-w-none w-full justify-center"
+        className={`mt-[25px]`}
+        btnClassName="justify-center"
         onClick={associateToken}
         disabled={!userAccountId}
+        allowFullWidth
       />
     );
   };
@@ -136,16 +142,30 @@ const Dashboard = () => {
       <BodyContainer heading="Dashboard" className="h-auto" rootClassName="h-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-14 pb-[15px]">
           <GrayCard>
-            <>
-              <div className="hidden md:block">
-                <Button
-                  text={`Your History`}
-                  onClick={openSideModal}
-                  disabled={!userAccountId}
-                  isHistoryBtn
-                />
+            <div>
+              <div className="grid md:grid-cols-2 md:gap-4">
+                <div className="w-full flex justify-start">
+                  <Button
+                    text={`Leader board`}
+                    onClick={() => navigate(ALL_ROUTES_PATHS.LEADER_BOARD)}
+                    disabled={!userAccountId}
+                    isHistoryBtn
+                    allowFullWidth
+                    btnClassName="justify-center"
+                  />
+                </div>
+                <div className="hidden md:flex justify-end">
+                  <Button
+                    text={`Your History`}
+                    onClick={openSideModal}
+                    disabled={!userAccountId}
+                    isHistoryBtn
+                    allowFullWidth
+                    btnClassName="justify-center"
+                  />
+                </div>
               </div>
-            </>
+            </div>
           </GrayCard>
 
           <GrayCard>

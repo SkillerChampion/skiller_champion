@@ -10,31 +10,37 @@ const Button = ({
   isPlayBtn = false,
   isHistoryBtn = false,
   disabled = false,
+  allowFullWidth = false,
   onClick = () => {}
 }) => {
+  const limitWidth = 'max-w-[170px] sm:max-w-none';
+  const fullWidth = 'max-w-none w-full';
+
   const handleClick = () => {
     if (disabled) return;
     onClick();
   };
 
   return (
-    <div className={`flex-shrink-0 pr-2 ${className}`}>
+    <div className={`flex-shrink-0 ${className} ${allowFullWidth && 'w-full'}`}>
       <button
         type="button"
         className={`relative inline-flex items-center gap-x-1.5 rounded-md py-2 px-[12px] sm:px-4 sm:py-2 text-xxs sm:text-xs 
        xl:text-sm text-white shadow-sm  bg-indigo-600 hover:bg-indigo-400 transition-all 
-        ease-in duration-100 hover:text-gray-900 GrindFontFamily ${btnClassName} max-w-[150px] sm:max-w-none ${
+        ease-in duration-100 hover:text-gray-900 GrindFontFamily  ${
           disabled && 'disable-btn'
-        }`}
+        } whitespace-nowrap 
+        ${allowFullWidth ? fullWidth : limitWidth}
+        ${btnClassName} `}
         onClick={handleClick}>
         {isPlayBtn && (
           <div className="">
-            <PlayIcon className="h-4 w-4 sm:h-5 sm:w-5 text-white " aria-hidden="true" />
+            <PlayIcon className=" text-white " aria-hidden="true" />
           </div>
         )}
         {isHistoryBtn && (
           <div className="">
-            <HistoryIcon className="h-4 w-4 sm:h-5 sm:w-5 text-white " aria-hidden="true" />
+            <HistoryIcon className=" text-white text-xl" aria-hidden="true" />
           </div>
         )}
 

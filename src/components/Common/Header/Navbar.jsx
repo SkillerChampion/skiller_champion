@@ -17,7 +17,7 @@ export default function Header() {
   const { connectToHashPack, userAccountId } = useContext(WalletContext);
 
   const WhitePaperDownloadLg = () => (
-    <a className=" w-full h-8 rounded-md flex items-center  hover:bg-gray-700 text-white cursor-pointer px-2">
+    <a className=" w-full h-8 rounded-md flex items-center  hover:bg-indigo-500 text-white cursor-pointer px-2">
       Whitepaper
     </a>
   );
@@ -91,14 +91,14 @@ export default function Header() {
                     More
                     <KeyboardArrowDownIcon className={classes.arrow} />
                     <div>
-                      <div className="absolute w-[200px] bg-gray-800 rounded-md p-[5px] z-50 left-[-55%] top-[34px] hidden group-hover:inline-block transition-all 200ms ease-in">
+                      <div className="absolute w-[200px] bg-indigo-700 rounded-md p-[5px] z-50 left-[-55%] top-[34px] hidden group-hover:inline-block transition-all 200ms ease-in">
                         {NAVBAR_ROUTES.filter(
                           (item) => item.pathName !== ALL_ROUTES_PATHS.WHEEL_OF_FORTUNE
                         ).map((item) => (
                           <Link
                             key={item.pathName}
                             to={item.pathName}
-                            className=" w-full h-8 rounded-md flex items-center  hover:bg-gray-700 text-white cursor-pointer px-2">
+                            className=" w-full h-8 rounded-md flex items-center  hover:bg-indigo-500 cursor-pointer px-2">
                             {item.heading}
                           </Link>
                         ))}

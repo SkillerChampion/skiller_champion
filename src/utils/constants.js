@@ -76,9 +76,9 @@ export const HEDERA_API_KEYS = {
 };
 
 export const PASSES_TYPES = {
-  PLATINUM: 'Platinum',
+  PLATINUM: 'PLATINUM',
   SILVER: 'SILVER',
-  GOLD: 'Gold'
+  GOLD: 'GOLD'
 };
 
 export const WHEEL_BET_AMOUNTS = {
@@ -88,9 +88,9 @@ export const WHEEL_BET_AMOUNTS = {
 };
 
 export const WHEEL_MAX_WINNER_AMOUNTS = {
-  PLATINUM: 2000,
-  GOLD: 500,
-  SILVER: 100
+  PLATINUM: 5000,
+  GOLD: 1500,
+  SILVER: 300
 };
 
 export const HCS_KEYS = {
