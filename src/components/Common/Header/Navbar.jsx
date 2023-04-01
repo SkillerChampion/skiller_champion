@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useContext } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -8,12 +9,27 @@ import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import { WalletContext } from '../../../context/WalletContext';
 import ConnectedWallet from './ConnectedWallet';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { NAVBAR_ROUTES, ALL_ROUTES_PATHS } from '../../../utils/routes';
 
 export default function Header() {
   const location = useLocation();
   const { connectToHashPack, userAccountId } = useContext(WalletContext);
 
+  const WhitePaperDownloadLg = () => (
+    <a className=" w-full h-8 rounded-md flex items-center  hover:bg-gray-700 text-white cursor-pointer px-2">
+      Whitepaper
+    </a>
+  );
+
+  const WhitePaperDownloadSm = () => (
+    <a
+      className={`${'text-gray-300 hover:bg-gray-700 hover:text-white'}
+    block rounded-md px-3 py-2 text-xs font-medium cursor-pointer 
+  `}>
+      Whitepaper
+    </a>
+  );
   return (
     <Disclosure as="nav" className={`relative headerPurpleBG z-20`}>
       {({ open }) => (
@@ -52,7 +68,9 @@ export default function Header() {
               </div>
               <div className="flex gap-10 items-center">
                 <div className="hidden lg:ml-6 lg:flex lg:items-center lg:space-x-4">
-                  {NAVBAR_ROUTES.map((item) => (
+                  {NAVBAR_ROUTES.filter(
+                    (item) => item.pathName === ALL_ROUTES_PATHS.WHEEL_OF_FORTUNE
+                  ).map((item) => (
                     <Link
                       key={item.heading}
                       to={item.pathName}
@@ -66,6 +84,28 @@ export default function Header() {
                       {item.heading}
                     </Link>
                   ))}
+
+                  <div
+                    className={`${'text-gray-300 hover:bg-indigo-600 hover:text-white border-transparent rounded-md'}
+                        pl-3 pr-7 py-2 text-xs lg:text-13px font-medium border-b-2 whitespace-nowrap relative group`}>
+                    More
+                    <KeyboardArrowDownIcon className={classes.arrow} />
+                    <div>
+                      <div className="absolute w-[200px] bg-gray-800 rounded-md p-[5px] z-50 left-[-55%] top-[34px] hidden group-hover:inline-block transition-all 200ms ease-in">
+                        {NAVBAR_ROUTES.filter(
+                          (item) => item.pathName !== ALL_ROUTES_PATHS.WHEEL_OF_FORTUNE
+                        ).map((item) => (
+                          <Link
+                            key={item.pathName}
+                            to={item.pathName}
+                            className=" w-full h-8 rounded-md flex items-center  hover:bg-gray-700 text-white cursor-pointer px-2">
+                            {item.heading}
+                          </Link>
+                        ))}
+                        <WhitePaperDownloadLg />
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="flex items-center">
                   {userAccountId ? (
@@ -96,6 +136,8 @@ export default function Header() {
                     {item.heading}
                   </Link>
                 ))}
+
+                <WhitePaperDownloadSm />
               </div>
             )}
           </Disclosure.Panel>

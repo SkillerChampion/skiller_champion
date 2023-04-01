@@ -1,0 +1,47 @@
+.twitterParent {
+  background-color: rgb(25, 118, 210);
+  z-index: 1;
+  position: relative;
+}
+
+.twitter {
+  color: white !important;
+  font-size: 35px !important;
+}
+
+.allIconsRoot {
+  position: absolute;
+  top: 0;
+  right: 56px;
+  transform: translateX(56px);
+  transition: all 200ms linear;
+}
+
+.spinning {
+  animation-duration: 0.65s;
+  animation-name: spinning;
+}
+
+.revealIcons {
+  width: 120px;
+}
+
+@keyframes spinning {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes reveal {
+  from {
+  }
+
+  to {
+    transform: translateX(0);
+    width: 200px;
+  }
+}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useContext, Suspense } from 'react';
 // import { io } from 'socket.io-client';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
@@ -10,7 +11,7 @@ import Admin from './components/Admin/Index';
 import { scrollToTop } from './utils/helperFunctions';
 import { FortuneContext } from './context/FortuneContext';
 import { WalletContext } from './context/WalletContext';
-
+import SocialMediaLinks from './components/Common/SocialMediaLinks/SocialMediaLinks';
 import { ALL_ROUTES, ALL_ROUTES_PATHS } from './utils/routes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -47,6 +48,8 @@ function App() {
       <ToastWrapper />
       <WinnerLoserAnimation data={showWinnerLoser} setData={setShowWinnerLoser} />
       <Header />
+      <SocialMediaLinks />
+
       <Suspense fallback={<FallbackLoader />}>
         <Routes>
           {ALL_ROUTES.map((item, index) => (

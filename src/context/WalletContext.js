@@ -159,6 +159,7 @@ const WalletContextComponent = (props) => {
   };
 
   const connectToHashPack = async () => {
+    console.log('connectToHashPack');
     hashconnect.connectToLocalWallet(walletData[HASH_CONNECT_KEYS.PAIRING_STRING]);
   };
 

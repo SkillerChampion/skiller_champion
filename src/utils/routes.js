@@ -22,7 +22,7 @@ export const ALL_ROUTES = [
     Component: WheelOfFortune,
     heading: 'Wheel Of Fortune'
   },
-  { pathName: ALL_ROUTES_PATHS.DASHBOARD, Component: Dashboard, heading: 'Play' }
+  { pathName: ALL_ROUTES_PATHS.DASHBOARD, Component: Dashboard, heading: 'Riddles' }
 ];
 
 export const NAVBAR_ROUTES = [ALL_ROUTES[1], ALL_ROUTES[2]];
