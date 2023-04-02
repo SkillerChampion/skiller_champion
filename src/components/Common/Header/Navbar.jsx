@@ -16,20 +16,6 @@ export default function Header() {
   const location = useLocation();
   const { connectToHashPack, userAccountId } = useContext(WalletContext);
 
-  const WhitePaperDownloadLg = () => (
-    <a className=" w-full h-8 rounded-md flex items-center  hover:bg-indigo-500 text-white cursor-pointer px-2">
-      Whitepaper
-    </a>
-  );
-
-  const WhitePaperDownloadSm = () => (
-    <a
-      className={`${'text-gray-300 hover:bg-gray-700 hover:text-white'}
-    block rounded-md px-3 py-2 text-xs font-medium cursor-pointer 
-  `}>
-      Whitepaper
-    </a>
-  );
   return (
     <Disclosure as="nav" className={`relative headerPurpleBG z-20`}>
       {({ open }) => (
@@ -102,7 +88,6 @@ export default function Header() {
                             {item.heading}
                           </Link>
                         ))}
-                        <WhitePaperDownloadLg />
                       </div>
                     </div>
                   </div>
@@ -136,8 +121,6 @@ export default function Header() {
                     {item.heading}
                   </Link>
                 ))}
-
-                <WhitePaperDownloadSm />
               </div>
             )}
           </Disclosure.Panel>

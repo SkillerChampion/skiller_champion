@@ -5,7 +5,9 @@ const BodyContainer = ({
   heading = '',
   reducePaddingOnSm = false,
   className,
-  rootClassName
+  rootClassName,
+  whiteHeading,
+  headingClass
 }) => {
   return (
     <div className={`relative isolate overflow-hidden bg-gray-900  ${rootClassName}`}>
@@ -63,9 +65,11 @@ const BodyContainer = ({
          sm:px-14 md:px-16 pt-8 lg:pt-10 lg:px-12 h-full ${className}`}>
         {heading && (
           <div
-            className={`pinkWhiteText GrindFontFamily text-xl md:text-2xl lg:text-3xl pb-6 sm:pb-8 pt-2 sm:pt-6 ${
+            className={`${
+              whiteHeading ? 'text-white' : 'pinkWhiteText'
+            } GrindFontFamily text-xl md:text-2xl lg:text-3xl pb-6 sm:pb-8 pt-2 sm:pt-6 ${
               reducePaddingOnSm && 'pb-2'
-            }`}>
+            } ${headingClass}`}>
             {heading}
           </div>
         )}

@@ -51,7 +51,7 @@ const LeaderTable = () => {
   });
 
   return (
-    <BodyContainer heading="Leader Board" rootClassName="h-screen">
+    <BodyContainer heading="Leader Board -" rootClassName="h-screen">
       <PageLevelTabs currentTab={currentTab} setCurrentTab={setCurrentTab} tabs={tabs} spaceHr />
 
       <div className="h-full">
