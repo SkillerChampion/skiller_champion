@@ -16,7 +16,7 @@ create table skiller_champion.BUY_PASSES (
    modified_timestamp  VARCHAR(120)          null
 );
 
-comment on table skiller_champion.BUY_PASSES  is
+comment on table skiller_champion.BUY_PASSES is
 'DESCRIPTION:
 Store information when user bought any pass';
 
@@ -38,8 +38,14 @@ create table skiller_champion.USE_PASSES (
    modified_timestamp  VARCHAR(120)          null
 );
 
-comment on table skiller_champion.USE_PASSES  is
+comment on table skiller_champion.USE_PASSES is
 'DESCRIPTION:
 Store information when user uses any pass';
 
+create table skiller_champion.USER_INFO (
+   email               VARCHAR(120)          null,
+   user_account_id     VARCHAR(120)          null
+);
 
+comment on table skiller_champion.USER_INFO is
+'DESCRIPTION: Store user information';

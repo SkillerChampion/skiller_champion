@@ -12,6 +12,7 @@ const PassPurchaseHistory = ({ userAccountId }) => {
   const { data, isFetching, error } = useQuery(['getBuyPassesByAccountId', userAccountId], () =>
     getBuyPassesByAccountId(userAccountId)
   );
+
   const headers = [
     { [ARRAY_KEYS.HEADER]: 'Type', [ARRAY_KEYS.VALUE]: HCS_KEYS.pass_type },
     { [ARRAY_KEYS.HEADER]: 'Spent (ℏ)', [ARRAY_KEYS.VALUE]: HCS_KEYS.pass_amount },
@@ -19,13 +20,12 @@ const PassPurchaseHistory = ({ userAccountId }) => {
     {
       [ARRAY_KEYS.HEADER]: 'Time',
       [ARRAY_KEYS.VALUE]: HCS_KEYS.modified_timestamp,
-      [ARRAY_KEYS.MIN_WIDTH]: '180px'
+      [ARRAY_KEYS.MIN_WIDTH]: '170px'
     },
     { [ARRAY_KEYS.HEADER]: 'Status', [ARRAY_KEYS.VALUE]: HCS_KEYS.status },
     { [ARRAY_KEYS.HEADER]: 'Verify', [ARRAY_KEYS.VALUE]: HCS_KEYS.consensus_timestamp }
   ];
 
-  console.log('data22', data);
   const bodyData = data?.map((item) => {
     const message = item ?? {};
 

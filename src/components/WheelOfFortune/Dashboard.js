@@ -148,8 +148,7 @@ const Dashboard = () => {
                   <Button
                     text={`Leader board`}
                     onClick={() => navigate(ALL_ROUTES_PATHS.LEADER_BOARD)}
-                    disabled={!userAccountId}
-                    isHistoryBtn
+                    isTrophyBtn
                     allowFullWidth
                     btnClassName="justify-center"
                   />

@@ -99,6 +99,11 @@ body {
   line-height: 150% !important;
 }
 
+.MontserratFamily {
+  font-family: 'Montserrat' !important;
+  line-height: 150% !important;
+}
+
 .fadeIn {
   z-index: 1;
   animation: fadeIn ease-in 1;

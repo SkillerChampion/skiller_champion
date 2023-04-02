@@ -25,7 +25,6 @@ import {
 } from './axiosInstance';
 
 export const submitHcsMessage = (topicId, message = {}, accountId, passType) => {
-  console.log('topicId', topicId);
   return axios
     .post(`/hederaService/submitHcsMessage`, {
       topicId,
@@ -120,6 +119,21 @@ export const getBuyPassesByAccountId = async (accountId) => {
   const order = 'desc';
 
   return axios.get(`/hederaService/getBuyPassesByAccountId/${accountId}`).then((res) => res.data);
+};
+
+export const getLeaderBoardData = async (passType = '') => {
+  return axios
+    .get(`/hederaService/getLeaderBoardByPassType?passType=${passType}`)
+    .then((res) => res.data);
+};
+
+export const submitUserEmail = (email, accountId) => {
+  return axios
+    .post(`/hederaService/insertUserEmail`, {
+      email,
+      accountId
+    })
+    .then((res) => res.data);
 };
 
 export const getAccountBalances = async (accountId) => {

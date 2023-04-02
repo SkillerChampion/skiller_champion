@@ -92,7 +92,12 @@ const WheelContainer = () => {
   return (
     <BodyContainer reducePaddingOnSm rootClassName="h-auto" heading="Use Pass -">
       <div className="flex flex-col relative ">
-        <PageLevelTabs currentTab={currentTab} setCurrentTab={setCurrentTab} tabs={tabs} />
+        <PageLevelTabs
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          tabs={tabs}
+          showPassCount
+        />
         <WheelCallBack />
       </div>
       <div className="w-full h-[200px]"></div>

@@ -1,7 +1,13 @@
 import classes from './index.module.css';
 import { ARRAY_KEYS } from '../../../utils/constants';
 
-const PageLevelTabs = ({ tabs = [], currentTab = {}, setCurrentTab = () => {} }) => {
+const PageLevelTabs = ({
+  tabs = [],
+  currentTab = {},
+  setCurrentTab = () => {},
+  showPassCount = false,
+  spaceHr = false
+}) => {
   const handleTabClick = (tab) => {
     setCurrentTab(tab);
   };
@@ -20,7 +26,9 @@ const PageLevelTabs = ({ tabs = [], currentTab = {}, setCurrentTab = () => {} })
         </select>
       </div>
       <div className={`hidden sm:block `}>
-        <nav className="flex space-x-4 md:space-x-7" aria-label="Tabs">
+        <nav
+          className={`flex ${showPassCount ? 'space-x-4 md:space-x-7' : 'space-x-2 md:space-x-4'}`}
+          aria-label="Tabs">
           {tabs.map((tab) => {
             const passCount = tab[ARRAY_KEYS.PASS_COUNT]?.length ?? 0;
 
@@ -28,7 +36,7 @@ const PageLevelTabs = ({ tabs = [], currentTab = {}, setCurrentTab = () => {} })
               <div
                 key={tab[ARRAY_KEYS.VALUE]}
                 className={`
-              ${classes.hover_background} ${
+              ${showPassCount ? classes.hover_background : classes.hover_background_no_count} ${
                   currentTab[ARRAY_KEYS.VALUE] === tab[ARRAY_KEYS.VALUE] && classes.selectedNavTitle
                 }
                 ${
@@ -40,22 +48,26 @@ const PageLevelTabs = ({ tabs = [], currentTab = {}, setCurrentTab = () => {} })
                `}
                 onClick={() => handleTabClick(tab)}>
                 <div>{tab[ARRAY_KEYS.LABEL]}</div>
-                <div
-                  className={`ml-[5px]  ${
-                    currentTab[ARRAY_KEYS.VALUE] === tab[ARRAY_KEYS.VALUE]
-                      ? `bg-white`
-                      : 'bg-indigo-600'
-                  }
+
+                {showPassCount && (
+                  <div
+                    className={`ml-[5px]  ${
+                      currentTab[ARRAY_KEYS.VALUE] === tab[ARRAY_KEYS.VALUE]
+                        ? `bg-white`
+                        : 'bg-indigo-600'
+                    }
                 ${
                   currentTab[ARRAY_KEYS.VALUE] === tab[ARRAY_KEYS.VALUE] && classes.fixAspectRatio
                 } rounded-full w-8 h-8 text-center flex items-center justify-center text-lg`}>
-                  {passCount}
-                </div>
+                    {passCount}
+                  </div>
+                )}
               </div>
             );
           })}
         </nav>
-        <div className="w-full h-2 bg-indigo-600 rounded-lg mt-4"></div>
+        <div
+          className={`w-full h-2 ${spaceHr ? 'mb-6' : 'mb-0'} bg-indigo-600 rounded-lg mt-4`}></div>
       </div>
     </div>
   );

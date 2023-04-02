@@ -93,6 +93,13 @@ export const WHEEL_MAX_WINNER_AMOUNTS = {
   SILVER: 300
 };
 
+export const LEADER_BOARD_TABS = {
+  ALL: 'ALL',
+  PLATINUM: PASSES_TYPES.PLATINUM,
+  GOLD: PASSES_TYPES.GOLD,
+  SILVER: PASSES_TYPES.SILVER
+};
+
 export const HCS_KEYS = {
   type: 'type',
   pass_type: 'pass_type',

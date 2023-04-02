@@ -1,6 +1,7 @@
 import React from 'react';
 import { PlayIcon } from '@heroicons/react/20/solid';
 import HistoryIcon from '@mui/icons-material/History';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
 const Button = ({
   text = '',
@@ -9,6 +10,7 @@ const Button = ({
   isHashPackBtn = false,
   isPlayBtn = false,
   isHistoryBtn = false,
+  isTrophyBtn = false,
   disabled = false,
   allowFullWidth = false,
   onClick = () => {}
@@ -41,6 +43,11 @@ const Button = ({
         {isHistoryBtn && (
           <div className="">
             <HistoryIcon className=" text-white text-xl" aria-hidden="true" />
+          </div>
+        )}
+        {isTrophyBtn && (
+          <div className="">
+            <EmojiEventsIcon className=" text-white text-xl" aria-hidden="true" />
           </div>
         )}
 

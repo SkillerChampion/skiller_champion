@@ -42,11 +42,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }));
 
-const TableData = ({ headers = [], bodyData = [], isFetching = false }) => {
+const TableData = ({ headers = [], bodyData = [], isFetching = false, insideSidebar }) => {
   if (isFetching) return <Spinner center />;
 
+  const Wrapper = ({ children }) => {
+    if (insideSidebar)
+      return <Scrollbar className={`${classes.removeInset} h-full w-full`}>{children}</Scrollbar>;
+
+    return <>{children}</>;
+  };
+
   return (
-    <Scrollbar className={`${classes.removeInset} h-full w-full`}>
+    <Wrapper>
       <TableContainer component={Paper}>
         <Table sx={{ width: '100%' }} aria-label="customized table" className="">
           <TableHead>
@@ -58,7 +65,8 @@ const TableData = ({ headers = [], bodyData = [], isFetching = false }) => {
                   <StyledTableCell
                     align="center"
                     key={index}
-                    style={minWidth ? { minWidth: minWidth } : {}}>
+                    style={minWidth ? { minWidth: minWidth } : {}}
+                    className={`${classes.borders} ${classes.fontSize16}`}>
                     {item[ARRAY_KEYS.HEADER]}
                   </StyledTableCell>
                 );
@@ -92,7 +100,7 @@ const TableData = ({ headers = [], bodyData = [], isFetching = false }) => {
                         } ${
                           dataText === HEDERA_API_KEYS.SUCCESS &&
                           'bg-green-700 text-white font-bold'
-                        }`}>
+                        }  ${classes.borders}`}>
                         {dataText}
                       </StyledTableCell>
                     );
@@ -103,7 +111,7 @@ const TableData = ({ headers = [], bodyData = [], isFetching = false }) => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Scrollbar>
+    </Wrapper>
   );
 };
 
