@@ -1,3 +1,30 @@
 .headerSpace {
   top: 80px;
 }
+
+.link,
+.bodyText,
+.subHeading,
+.heading {
+  font-size: 18px;
+  color: white;
+  font-family: 'Montserrat' !important;
+  line-height: 150% !important;
+  font-weight: 500;
+}
+
+.link,
+.bodyText {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: 600;
+}

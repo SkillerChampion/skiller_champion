@@ -7,6 +7,7 @@ import discordIcon from '../../../assets/discordIcon.png';
 import { useLocation } from 'react-router-dom';
 
 const SocialMediaLinks = () => {
+  // TODO add links
   const mainCircleId = 'mainCircleId';
   const revealDivId = 'revealDivId';
 
