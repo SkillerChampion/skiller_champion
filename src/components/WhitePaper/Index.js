@@ -1,24 +1,26 @@
 import SideBar from './SideBar';
-import {
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon
-} from '@heroicons/react/24/outline';
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
 import Paper from './Paper';
+import { ALL_ROUTES_PATHS } from '../../utils/routes';
+
 import { Scrollbar } from 'react-scrollbars-custom';
 
 const Index = () => {
+  const linkName = {
+    motivation: 'Motivation',
+    fortuneWheel: 'Wheel Of Fortune',
+    riddles: 'Riddles',
+    founderNfts: 'Founders Premium NFTs'
+  };
+
   const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-    { name: 'Team', href: '#', icon: UsersIcon, current: false },
-    { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-    { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-    { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
-    { name: 'Reports', href: '#', icon: ChartPieIcon, current: false }
+    { name: linkName.motivation, path: `${ALL_ROUTES_PATHS.WHITE_PAPER}#${linkName.motivation}` },
+    {
+      name: linkName.fortuneWheel,
+      path: `${ALL_ROUTES_PATHS.WHITE_PAPER}#${linkName.fortuneWheel}`
+    },
+    { name: linkName.riddles, path: `${ALL_ROUTES_PATHS.WHITE_PAPER}#${linkName.riddles}` },
+    { name: linkName.founderNfts, path: `${ALL_ROUTES_PATHS.WHITE_PAPER}#${linkName.founderNfts}` }
   ];
   return (
     <div className={`w-full flex h-full relative`}>
@@ -30,7 +32,7 @@ const Index = () => {
           heading="WHITEPAPER V1 -"
           headingClass="MontserratFamily font-bold"
           whiteHeading>
-          <Paper />
+          <Paper linkName={linkName} />
         </BodyContainer>
       </Scrollbar>
     </div>

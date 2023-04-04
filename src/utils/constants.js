@@ -1,4 +1,4 @@
-export const ZERO_INDEX = 0;
+export const ZERO = 0;
 export const THREE_SECONDS = 3000;
 export const FOUR_SECONDS = 4000;
 

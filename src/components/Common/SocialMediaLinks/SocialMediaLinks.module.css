@@ -24,6 +24,7 @@
 
 .revealIcons {
   width: 120px;
+  animation-name: reveal;
 }
 
 @keyframes spinning {
@@ -42,6 +43,5 @@
 
   to {
     transform: translateX(0);
-    width: 200px;
   }
 }

@@ -9,11 +9,10 @@ const Section2 = () => {
         <div className="mx-auto max-w-lg flex-shrink-0 lg:mx-0 xl:max-w-2xl lg:pt-8">
           <h1
             className={`mt-10 text-xl sm:text-3xl xl:text-4xl font-bold tracking-tight text-white pinkWhiteText text-center lg:text-left GrindFontFamily`}>
-            Mock your opponent by betting and winning the battle (coming soon..)
+            Mock your opponent by betting and winning the riddle battle (coming soon..)
           </h1>
           <p className="mt-6 text-xxs md:text-base  leading-8 text-white lg:pr-24 text-center lg:text-left heliosFontFamily">
-            Connect to audio and mock your opponent using mic. The player who answers the most
-            riddles correctly with least time wins the battle
+            Connect to audio and mock your opponent using mic.
           </p>
         </div>
 

@@ -8,7 +8,7 @@ import {
   HASH_CONNECT_KEYS,
   LOCAL_STORAGE_KEYS,
   hashConnectInitialData,
-  ZERO_INDEX,
+  ZERO,
   HEDERA_API_KEYS,
   FIVE_SECONDS,
   TWENTY_SECONDS
@@ -119,11 +119,10 @@ const WalletContextComponent = (props) => {
     let initData = await hashconnect.init(HASH_CONNECT_META_DATA, 'testnet');
 
     if (initData) {
-      const getAccountId =
-        initData.savedPairings[ZERO_INDEX]?.[HASH_CONNECT_KEYS.ACCOUNT_ID]?.[ZERO_INDEX];
+      const getAccountId = initData.savedPairings[ZERO]?.[HASH_CONNECT_KEYS.ACCOUNT_ID]?.[ZERO];
       const getTopic = initData[HASH_CONNECT_KEYS.TOPIC];
       const getPairingString = initData[HASH_CONNECT_KEYS.PAIRING_STRING];
-      const getSavedPairingData = initData.savedPairings[ZERO_INDEX];
+      const getSavedPairingData = initData.savedPairings[ZERO];
 
       const provider = hashconnect.getProvider('testnet', getTopic, getAccountId);
       const signer = hashconnect.getSigner(provider);
@@ -142,7 +141,7 @@ const WalletContextComponent = (props) => {
   const setUpHashConnectEvents = (saveWalletData) => {
     hashconnect.pairingEvent.on((data) => {
       const getAccountId =
-        data[HASH_CONNECT_KEYS.PAIRING_DATA]?.[HASH_CONNECT_KEYS.ACCOUNT_ID]?.[ZERO_INDEX];
+        data[HASH_CONNECT_KEYS.PAIRING_DATA]?.[HASH_CONNECT_KEYS.ACCOUNT_ID]?.[ZERO];
       const getSavedPairingData = data[HASH_CONNECT_KEYS.PAIRING_DATA];
       const getTopic = saveWalletData[HASH_CONNECT_KEYS.TOPIC];
 

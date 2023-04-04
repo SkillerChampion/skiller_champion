@@ -45,7 +45,7 @@ export default function BuiltOnHederaBanner() {
         <form onSubmit={handleEmailSubmit}>
           <input
             type="email"
-            className="bg-gray-800 text-white rounded-md text-xs sm:text-sm px-2 w-[210px] sm:w-[300px] py-1 MontserratFamily font-semibold "
+            className="bg-gray-800 text-white rounded-md text-xxs sm:text-sm px-2 w-[210px] sm:w-[300px] py-1 MontserratFamily font-semibold "
             placeholder="yourEmail@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

@@ -10,7 +10,7 @@ import {
   CSS_VARIABLES,
   TEN_SECONDS,
   TWELVE_SECONDS,
-  ZERO_INDEX,
+  ZERO,
   THREE_SECONDS,
   HEDERA_API_KEYS
 } from '../../../utils/constants';
@@ -62,7 +62,7 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
   };
 
   const useNftForFortuneWheel = async () => {
-    const nftDetails = passesInUserAccount[ZERO_INDEX];
+    const nftDetails = passesInUserAccount[ZERO];
     const nftTokenId = nftDetails?.[HEDERA_API_KEYS.token_id];
     const nftSerialNumber = nftDetails?.[HEDERA_API_KEYS.serial_number];
     let winningAmount;

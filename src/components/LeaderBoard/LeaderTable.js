@@ -2,7 +2,7 @@
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
 import React, { useState, useCallback, useMemo } from 'react';
 import PageLevelTabs from '../Common/Tabs/PageLevelTabs';
-import { ZERO_INDEX, ARRAY_KEYS, LEADER_BOARD_TABS, HCS_KEYS } from '../../utils/constants';
+import { ZERO, ARRAY_KEYS, LEADER_BOARD_TABS, HCS_KEYS } from '../../utils/constants';
 import TableData from '../Common/Table/Table';
 import { useQuery } from 'react-query';
 import { getLeaderBoardData } from '../../services/hederaService';
@@ -27,7 +27,7 @@ const LeaderTable = () => {
     }
   ];
 
-  const [currentTab, setCurrentTab] = useState(tabs[ZERO_INDEX]);
+  const [currentTab, setCurrentTab] = useState(tabs[ZERO]);
 
   const { data, isFetching, error } = useQuery(
     ['getLeaderBoardData', currentTab[ARRAY_KEYS.VALUE]],

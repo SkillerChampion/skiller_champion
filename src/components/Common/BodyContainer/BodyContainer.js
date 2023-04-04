@@ -61,7 +61,7 @@ const BodyContainer = ({
         </defs>
       </svg>
       <div
-        className={`mx-auto max-w-[1400px] px-10
+        className={`mx-auto max-w-[1400px] px-8
          sm:px-14 md:px-16 pt-8 lg:pt-10 lg:px-12 h-full ${className}`}>
         {heading && (
           <div

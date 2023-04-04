@@ -17,7 +17,7 @@ import {
   getTreasuryPrivateKey,
   getFortuneWheelTopicId
 } from '../utils/helperFunctions';
-import { SPACE, ZERO_INDEX, PLATFORM_FEES } from '../utils/constants';
+import { SPACE, ZERO, PLATFORM_FEES } from '../utils/constants';
 import {
   NODE_BE_API as axios,
   HEDERA_NODE_API as hederaApi,
@@ -136,12 +136,17 @@ export const submitUserEmail = (email, accountId) => {
     .then((res) => res.data);
 };
 
+export const getLeaderBoardByAccountId = (accountId) => {
+  if (!accountId) return;
+  return axios.get(`/hederaService/getLeaderBoardByAccountId/${accountId}`).then((res) => res.data);
+};
+
 export const getAccountBalances = async (accountId) => {
   if (!accountId) return;
   const client = getHederaClient();
   const balanceCheckTx = await new AccountBalanceQuery().setAccountId(accountId).execute(client);
 
-  const hbarBalance = Number(balanceCheckTx?.hbars?.toString()?.split(SPACE)?.[ZERO_INDEX]) ?? 0;
+  const hbarBalance = Number(balanceCheckTx?.hbars?.toString()?.split(SPACE)?.[ZERO]) ?? 0;
 
   return hbarBalance;
 };

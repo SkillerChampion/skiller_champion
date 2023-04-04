@@ -6,7 +6,7 @@ import Error from '../Common/Error/Error';
 
 import PageLevelTabs from '../Common/Tabs/PageLevelTabs';
 import {
-  ZERO_INDEX,
+  ZERO,
   ARRAY_KEYS,
   PASSES_TYPES,
   WHEEL_BET_AMOUNTS,
@@ -62,7 +62,7 @@ const WheelContainer = () => {
     ]
   );
 
-  const [currentTab, setCurrentTab] = useState(tabs[ZERO_INDEX]);
+  const [currentTab, setCurrentTab] = useState(tabs[ZERO]);
 
   const WheelCallBack = useCallback(() => {
     if (isDataQueryLoading) return <Spinner center className="pt-[100px]" />;

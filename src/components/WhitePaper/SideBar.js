@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import classes from './Index.module.css';
+import { HashLink } from 'react-router-hash-link';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -21,23 +22,17 @@ const SideBar = ({ navigation }) => {
                 <ul role="list" className="-mx-2 space-y-1">
                   {navigation.map((item) => (
                     <li key={item.name}>
-                      <div
-                        href={item.href}
+                      <HashLink
+                        to={item.path}
+                        smooth
                         className={classNames(
                           item.current
                             ? 'bg-indigo-600 text-white'
                             : 'text-indigo-200 hover:text-white hover:bg-indigo-600',
-                          'group flex gap-x-3 rounded-md p-2 text-xs lg:text-sm leading-6 items-center MontserratFamily font-semibold'
+                          'group flex gap-x-3 rounded-md p-2 text-xs lg:text-sm leading-6 items-center MontserratFamily font-semibold cursor-pointer'
                         )}>
-                        <item.icon
-                          className={classNames(
-                            item.current ? 'text-white' : 'text-indigo-200 group-hover:text-white',
-                            'h-4 w-4 lg:h-6 lg:w-6 shrink-0'
-                          )}
-                          aria-hidden="true"
-                        />
                         {item.name}
-                      </div>
+                      </HashLink>
                     </li>
                   ))}
                 </ul>
