@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
 import classes from './Landing.module.css';
-import wheel from '../../assets/wheel.jpg';
+import wheel2000 from '../../assets/wheel2000.jpg';
+import wheel500 from '../../assets/wheel500.jpg';
+import wheel100 from '../../assets/wheel100.jpg';
 
 const data = [
   {
@@ -11,7 +13,7 @@ const data = [
     curvedBorder: classes.curvedBorderPlatinum,
     curvedBorderRight: classes.curvedBorderPlatinumRight,
     borderColorClassName: classes.borderColorPlatinum,
-    wheel: wheel
+    wheel: wheel2000
   },
   {
     title: 'Gold Pass',
@@ -20,7 +22,7 @@ const data = [
     curvedBorder: classes.curvedBorderGold,
     curvedBorderRight: classes.curvedBorderGoldRight,
     borderColorClassName: classes.borderColorGold,
-    wheel: wheel
+    wheel: wheel500
   },
   {
     title: 'Silver Pass',
@@ -29,7 +31,7 @@ const data = [
     curvedBorder: classes.curvedBorderSilver,
     curvedBorderRight: classes.curvedBorderSilverRight,
     borderColorClassName: classes.borderColorSilver,
-    wheel: wheel
+    wheel: wheel100
   }
 ];
 

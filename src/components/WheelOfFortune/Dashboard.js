@@ -239,7 +239,7 @@ const Dashboard = () => {
       </BodyContainer>
 
       <SideDrawer isSideModalOpen={isSideModalOpen} onClose={closeSideModal}>
-        <SideDrawerIndex userAccountId={userAccountId} />
+        <SideDrawerIndex userAccountId={userAccountId} isSideModalOpen={isSideModalOpen} />
       </SideDrawer>
     </>
   );

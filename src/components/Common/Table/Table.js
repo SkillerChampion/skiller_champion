@@ -10,8 +10,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Scrollbar } from 'react-scrollbars-custom';
 import classes from './Table.module.css';
-import { ARRAY_KEYS, HEDERA_API_KEYS } from '../../../utils/constants';
+import { ARRAY_KEYS, HEDERA_API_KEYS, ZERO } from '../../../utils/constants';
 import Spinner from '../Spinner/Spinner';
+import { isArray } from '../../../utils/helperFunctions';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,12 +43,51 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }));
 
-const TableData = ({ headers = [], bodyData = [], isFetching = false, insideSidebar }) => {
+const TableData = ({
+  headers = [],
+  bodyData = [],
+  isFetching = false,
+  insideSidebar,
+  userAccountId,
+  setLocalUserAccountId = () => {}
+}) => {
+  const isDataFound = isArray(bodyData);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const value = e.target[ZERO].value;
+
+    setLocalUserAccountId(value);
+  };
+
+  const InputSearch = () => (
+    <form onSubmit={handleSubmit}>
+      <input
+        className="h-8 text-base pl-5 w-full border-1 rounded-sm mb-5 MontserratFamily font-semibold"
+        placeholder="Enter User account id"
+        defaultValue={userAccountId}
+      />
+    </form>
+  );
+
   if (isFetching) return <Spinner center />;
 
   const Wrapper = ({ children }) => {
-    if (insideSidebar)
-      return <Scrollbar className={`${classes.removeInset} h-full w-full`}>{children}</Scrollbar>;
+    if (insideSidebar) {
+      return (
+        <Scrollbar className={`${classes.removeInset} h-full w-full`}>
+          <>
+            <InputSearch />
+            {isDataFound && (
+              <div className="text-sm text-white px-2 pb-1 MontserratFamily font-bold">
+                Showing last 50 transactions -{' '}
+              </div>
+            )}
+            {children}
+          </>
+        </Scrollbar>
+      );
+    }
 
     return <>{children}</>;
   };
@@ -73,44 +113,47 @@ const TableData = ({ headers = [], bodyData = [], isFetching = false, insideSide
               })}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {bodyData.map((row, index) => {
-              const rowsArray = Object.keys(row);
+          {isDataFound && (
+            <TableBody>
+              {bodyData.map((row, index) => {
+                const rowsArray = Object.keys(row);
 
-              return (
-                <StyledTableRow key={index}>
-                  {rowsArray?.map((item, rowIndex) => {
-                    if (item === ARRAY_KEYS.DISPLAY_FN) {
-                      const displayFn = row[ARRAY_KEYS.DISPLAY_FN];
+                return (
+                  <StyledTableRow key={index}>
+                    {rowsArray?.map((item, rowIndex) => {
+                      if (item === ARRAY_KEYS.DISPLAY_FN) {
+                        const displayFn = row[ARRAY_KEYS.DISPLAY_FN];
 
+                        return (
+                          <StyledTableCell align="center" key={rowIndex}>
+                            {displayFn}
+                          </StyledTableCell>
+                        );
+                      }
+
+                      const dataText = row[headers?.[rowIndex]?.[ARRAY_KEYS.VALUE]];
                       return (
-                        <StyledTableCell align="center" key={rowIndex}>
-                          {displayFn}
+                        <StyledTableCell
+                          align="center"
+                          key={rowIndex}
+                          className={`${
+                            dataText === HEDERA_API_KEYS.FAILED && 'bg-red-700 text-white'
+                          } ${
+                            dataText === HEDERA_API_KEYS.SUCCESS &&
+                            'bg-green-700 text-white font-bold'
+                          }  ${classes.borders}`}>
+                          {dataText}
                         </StyledTableCell>
                       );
-                    }
-
-                    const dataText = row[headers?.[rowIndex]?.[ARRAY_KEYS.VALUE]];
-                    return (
-                      <StyledTableCell
-                        align="center"
-                        key={rowIndex}
-                        className={`${
-                          dataText === HEDERA_API_KEYS.FAILED && 'bg-red-700 text-white'
-                        } ${
-                          dataText === HEDERA_API_KEYS.SUCCESS &&
-                          'bg-green-700 text-white font-bold'
-                        }  ${classes.borders}`}>
-                        {dataText}
-                      </StyledTableCell>
-                    );
-                  })}
-                </StyledTableRow>
-              );
-            })}
-          </TableBody>
+                    })}
+                  </StyledTableRow>
+                );
+              })}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
+      {!isDataFound && <div className="w-full bg-transparent text-white m-7">No data found...</div>}
     </Wrapper>
   );
 };

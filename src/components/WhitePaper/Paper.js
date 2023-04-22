@@ -1,7 +1,7 @@
 import classes from './Index.module.css';
 import { Link } from 'react-router-dom';
 import mainpage from '../../assets/mainpage.jpg';
-import wheel from '../../assets/wheel.jpg';
+import wheel2000 from '../../assets/wheel2000.jpg';
 import { ALL_ROUTES_PATHS } from '../../utils/routes';
 
 const SectionParagraph = ({ heading = '', id = '', children }) => {
@@ -63,7 +63,7 @@ const Paper = ({ linkName }) => {
             <a className={`${classes.link}`}>(see proof)</a>.
           </div>
           <img
-            src={wheel}
+            src={wheel2000}
             className={`rounded-full mx-auto w-8/12 lg:w-5/12 mt-6 sm:mt-10 ${classes.wheelAnim}`}
           />
         </div>

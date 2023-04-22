@@ -6,9 +6,7 @@ import { ARRAY_KEYS, HCS_KEYS } from '../../../utils/constants';
 import TableData from '../../Common/Table/Table';
 import SearchTxn from '../../Common/Table/SearchTxn';
 
-const PassPurchaseHistory = ({ userAccountId }) => {
-  const topicId = getFortuneWheelTopicId();
-
+const PassPurchaseHistory = ({ userAccountId, setLocalUserAccountId }) => {
   const { data, isFetching, error } = useQuery(['getBuyPassesByAccountId', userAccountId], () =>
     getBuyPassesByAccountId(userAccountId)
   );
@@ -43,7 +41,14 @@ const PassPurchaseHistory = ({ userAccountId }) => {
 
   return (
     <div className="h-full">
-      <TableData headers={headers} bodyData={bodyData} isFetching={isFetching} insideSidebar />
+      <TableData
+        headers={headers}
+        bodyData={bodyData}
+        isFetching={isFetching}
+        insideSidebar
+        setLocalUserAccountId={setLocalUserAccountId}
+        userAccountId={userAccountId}
+      />
     </div>
   );
 };
