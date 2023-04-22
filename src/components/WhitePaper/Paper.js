@@ -62,7 +62,10 @@ const Paper = ({ linkName }) => {
             upto 5000 HBARs. All of the games are 100% random and fair{' '}
             <a className={`${classes.link}`}>(see proof)</a>.
           </div>
-          <img src={wheel} className="rounded-full mx-auto w-8/12 lg:w-5/12 mt-6 sm:mt-10" />
+          <img
+            src={wheel}
+            className={`rounded-full mx-auto w-8/12 lg:w-5/12 mt-6 sm:mt-10 ${classes.wheelAnim}`}
+          />
         </div>
       </SectionParagraph>
 

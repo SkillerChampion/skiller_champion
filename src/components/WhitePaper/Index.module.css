@@ -24,6 +24,20 @@
   cursor: pointer;
 }
 
+.wheelAnim {
+  animation: rotation 20s infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .heading {
     font-size: 18px;
