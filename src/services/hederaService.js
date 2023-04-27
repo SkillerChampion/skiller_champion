@@ -152,7 +152,6 @@ export const getAccountBalances = async (accountId) => {
 };
 
 export const transferPrizeToUserAccount = async (winningAmount, accountId) => {
-  // if (!winningAmount || winningAmount < 1) return;
   const client = getHederaClient();
 
   const computePlatformFees = (PLATFORM_FEES * winningAmount) / 100;

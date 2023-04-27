@@ -1,4 +1,4 @@
-import { NODE_BE_API as axios } from './axiosInstance';
+import { NODE_BE_OPEN_SOURCE_API as axios } from './axiosInstance';
 
 export const getAllWheelDataList = () => {
   return axios.get(`/fortuneWheel`).then((res) => res.data);
