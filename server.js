@@ -21,7 +21,12 @@ app.get('/api/health', (req, res) => {
     configurations.dbHost
   );
 
-  console.log('CHECKING SECRETS - ', getSecretValue(configurations.dbPassword));
+  console.log(
+    'CHECKING SECRETS - ',
+    process.env.REACT_APP_NODE_BE_OPEN_SOURCE_API,
+    process.env.DATABASE,
+    getSecretValue(configurations.dbPassword)
+  );
   res.send('FE Node app is running');
 });
 
