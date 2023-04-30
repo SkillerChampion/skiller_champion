@@ -9,12 +9,14 @@ handlers:
   - url: /api/.*
     script: auto
 
-  # Serve the React frontend's root index.html
-  - url: /
-    static_files: client/build/index.html
-    upload: client/build/index.html
+  # Serve static assets from the React build folder
+  - url: /(.*\.(js|css|png|jpg|gif|ico|json|html))$
+    static_files: client/build/\1
+    upload: client/build/.*\.(js|css|png|jpg|gif|ico|json|html)$
 
-  # Serve any remaining requests with the React frontend's index.html
+  # Serve the index.html file for all other routes
   - url: /.*
+    secure: always
+    redirect_http_response_code: 301
     static_files: client/build/index.html
     upload: client/build/index.html
