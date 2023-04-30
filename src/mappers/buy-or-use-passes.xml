@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="buyOrUsePasses">  
+    <insert id="insertBuyPass">
+        INSERT INTO skiller_champion.buy_passes
+        (
+            pass_serial_number, 
+            pass_amount,                                                      
+            pass_type,                         
+            status,                                                
+            token_id,
+            txn_id,
+            type, 
+            user_account_id, 
+            consensus_timestamp, 
+            payer_account_id,
+            modified_timestamp
+        )			                                              
+        VALUES
+        (
+            #{pass_serial_number},	                                               
+            #{pass_amount},
+            #{pass_type},
+            #{status},
+            #{token_id},
+            #{txn_id},
+            #{type},
+            #{user_account_id},
+            #{consensus_timestamp},
+            #{payer_account_id},
+            #{modified_timestamp}
+        ) 
+        RETURNING status as status 
+    </insert>
+
+    <insert id="insertUsePass">
+        INSERT INTO skiller_champion.use_passes
+        (
+            pass_serial_number, 
+            pass_amount,                                                      
+            pass_type,                         
+            status,                                                
+            token_id,
+            txn_id,
+            type, 
+            user_account_id, 
+            consensus_timestamp, 
+            payer_account_id,
+            winner_amount,
+            nft_transfer_txn_id,
+            error_msg,
+            modified_timestamp
+        )			                                              
+        VALUES
+        (
+            #{pass_serial_number},	                                               
+            #{pass_amount},
+            #{pass_type},
+            #{status},
+            #{token_id},
+            #{txn_id},
+            #{type},
+            #{user_account_id},
+            #{consensus_timestamp},
+            #{payer_account_id},
+            #{winner_amount},
+            #{nft_transfer_txn_id},
+            <choose>
+                <when test="error_msg !=null">
+                #{error_msg}		  	    	
+                </when>
+                <otherwise>
+                ''	  	 		
+                </otherwise>
+            </choose>,
+            #{modified_timestamp}	
+        ) 
+        RETURNING status as status 
+    </insert>
+
+    <select id="selectUsePassByUserId">
+        SELECT * FROM skiller_champion.use_passes
+        WHERE user_account_id=#{account_id}
+        ORDER by consensus_timestamp DESC
+        LIMIT 50
+    </select>
+
+    <select id="selectBuyPassByUserId">
+        SELECT * FROM skiller_champion.buy_passes
+        WHERE user_account_id=#{account_id}
+        ORDER by consensus_timestamp DESC
+        LIMIT 50
+    </select>
+
+    <select id="selectLeaderBoardUsePass">
+        SELECT user_account_id, pass_type, SUM(winner_amount) as winner_amount, SUM(pass_amount) as pass_amount 
+        FROM skiller_champion.use_passes
+            <if test="pass_type != ''">
+                WHERE pass_type = #{pass_type}
+            </if>
+        GROUP BY user_account_id, pass_type
+        ORDER by winner_amount DESC
+        LIMIT 40
+    </select>
+
+    <select id="selectLeaderBoardUsePassByAccountId">
+        SELECT user_account_id, pass_type, SUM(winner_amount) as winner_amount, SUM(pass_amount) as pass_amount 
+        FROM skiller_champion.use_passes
+        WHERE user_account_id = #{account_id}
+        GROUP BY user_account_id, pass_type
+        ORDER by winner_amount DESC
+    </select>
+
+
+    
+</mapper>

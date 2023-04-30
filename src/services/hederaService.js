@@ -1,217 +1,176 @@
-/* eslint-disable no-unused-vars */
-import {
-  AccountId,
-  TransferTransaction,
-  AccountBalanceQuery,
+const { HEDERA_NODE_API } = require('./axiosInstance');
+const {
   TopicCreateTransaction,
-  PrivateKey,
   Client,
   TopicMessageQuery,
   TopicMessageSubmitTransaction
-} from '@hashgraph/sdk';
+} = require('@hashgraph/sdk');
 
-import { HEDERA_API_KEYS, HCS_KEYS } from '../utils/constants';
+const {
+  HCS_KEYS,
+  QUERIES,
+  MAPPER_NAMESPACES,
+  ARRAY_KEYS,
+  HCS_TYPES
+} = require('../utils/constants');
 
-import {
+const {
   getTreasuryAccountId,
   getTreasuryPrivateKey,
-  getFortuneWheelTopicId
-} from '../utils/helperFunctions';
-import { SPACE, ZERO, PLATFORM_FEES } from '../utils/constants';
-import {
-  NODE_BE_API as axios,
-  HEDERA_NODE_API as hederaApi,
-  HASHSCAN_API as hashScanApi
-} from './axiosInstance';
+  decodeHcsTimeStamp,
+  isEmptyArray
+} = require('../utils/helperFunctions');
 
-export const submitHcsMessage = (topicId, message = {}, accountId, passType) => {
-  return axios
-    .post(`/hederaService/submitHcsMessage`, {
-      topicId,
-      message,
-      accountId
-    })
-    .then((res) => res.data);
-};
+const { executeQuery } = require('../utils/database/database');
 
-export const chargeUserAndTransferNft = (amountHbar, accountId, tokenId, nftSerialNumber) => {
-  return axios
-    .post(`/hederaService/buyPassForHbars`, {
-      amountHbar,
-      accountId,
-      tokenId,
-      nftSerialNumber
-    })
-    .then((res) => res.data);
-};
-
-export const transferNftToTreasury = (accountId, tokenId, nftSerialNumber) => {
-  if (!accountId || !tokenId || !nftSerialNumber) return;
-
-  return axios
-    .post(`/hederaService/transferNftToTreasury`, {
-      accountId,
-      tokenId,
-      nftSerialNumber
-    })
-    .then((res) => res.data);
-};
-
-export const associateTokens = (accountId, tokenId) => {
-  return axios
-    .post(`/hederaService/associateTokens`, { accountId, tokenId })
-    .then((res) => res.data);
-};
-
-export const getTokenRelationships = (accountId) => {
-  if (!accountId) return;
-
-  return hederaApi.get(`/api/v1/accounts/${accountId}/tokens`).then((res) => res.data);
-};
-
-export const getNftsSerialNumberFromTreasury = (accountId, tokenId) => {
-  if (!accountId) return;
-
-  return hederaApi.get(`/api/v1/accounts/${accountId}/nfts`).then((res) => {
-    const getAllNfts = res.data?.nfts ?? [];
-
-    const getSerialNumber = getAllNfts.find((item) => item[HEDERA_API_KEYS.token_id] === tokenId)?.[
-      HEDERA_API_KEYS.serial_number
-    ];
-
-    return getSerialNumber;
-  });
-};
-
-export const getAllNftsFromAccountWithTokenId = (accountId, tokenId, returnOnlyCount = false) => {
-  if (!accountId) return;
-
-  return hederaApi.get(`/api/v1/accounts/${accountId}/nfts`).then((res) => {
-    const getAllNfts = res.data?.nfts ?? [];
-
-    const filterNfts =
-      getAllNfts.filter((item) => item[HEDERA_API_KEYS.token_id] === tokenId) ?? [];
-
-    return returnOnlyCount ? filterNfts.length : filterNfts;
-  });
-};
-
-export const getTopicMessagesByTopicId = async (topicId, accountId, passType) => {
-  if (!topicId || !accountId) return;
-  const order = 'desc';
-
-  return axios
-    .get(
-      `/hederaService/getAllMessagesByTopicId/${topicId}/${accountId}?passType=${passType}&order=${order}`
-    )
-    .then((res) => res.data);
-};
-
-export const getUsePassesByAccountId = async (accountId) => {
-  if (!accountId) return;
-  const order = 'desc';
-
-  return axios.get(`/hederaService/getUsePassesByUserId/${accountId}`).then((res) => res.data);
-};
-
-export const getBuyPassesByAccountId = async (accountId) => {
-  if (!accountId) return;
-  const order = 'desc';
-
-  return axios.get(`/hederaService/getBuyPassesByAccountId/${accountId}`).then((res) => res.data);
-};
-
-export const getLeaderBoardData = async (passType = '') => {
-  return axios
-    .get(`/hederaService/getLeaderBoardByPassType?passType=${passType}`)
-    .then((res) => res.data);
-};
-
-export const submitUserEmail = (email, accountId) => {
-  return axios
-    .post(`/hederaService/insertUserEmail`, {
-      email,
-      accountId
-    })
-    .then((res) => res.data);
-};
-
-export const getLeaderBoardByAccountId = (accountId) => {
-  if (!accountId) return;
-  return axios.get(`/hederaService/getLeaderBoardByAccountId/${accountId}`).then((res) => res.data);
-};
-
-export const getAccountBalances = async (accountId) => {
-  if (!accountId) return;
-  const client = getHederaClient();
-  const balanceCheckTx = await new AccountBalanceQuery().setAccountId(accountId).execute(client);
-
-  const hbarBalance = Number(balanceCheckTx?.hbars?.toString()?.split(SPACE)?.[ZERO]) ?? 0;
-
-  return hbarBalance;
-};
-
-export const transferPrizeToUserAccount = async (winningAmount, accountId) => {
-  const client = getHederaClient();
-
-  const computePlatformFees = (PLATFORM_FEES * winningAmount) / 100;
-  const deductPlatformFees = winningAmount - computePlatformFees;
-
-  const negativeAmount = -Math.abs(deductPlatformFees);
-  const positiveAmount = Math.abs(deductPlatformFees);
-
-  const sendHbar = await new TransferTransaction()
-    .addHbarTransfer(AccountId.fromString(getTreasuryAccountId()), negativeAmount) //Sending account
-    .addHbarTransfer(AccountId.fromString(accountId), positiveAmount) //Receiving account
-    .execute(client);
-
-  const transactionReceipt = await sendHbar.getReceipt(client);
-  const txnRecord = await sendHbar.getRecord(client);
-
-  const receiptStatus = transactionReceipt?.status?.toString();
-  const txnId = txnRecord?.transactionId?.toString();
-
-  console.log(
-    'The transfer transaction from my treasury to the user account was: ' + receiptStatus,
-    +' with txn id - ' + txnId
-  );
-  return { receiptStatus, txnId };
-};
-
-export const getHederaClient = () => {
-  if (process.env.REACT_APP_RUN_TESTNET) {
+const getHederaClient = () => {
+  if (process.env.RUN_TESTNET) {
     return Client.forTestnet().setOperator(getTreasuryAccountId(), getTreasuryPrivateKey());
   } else {
     return Client.forMainnet().setOperator(getTreasuryAccountId(), getTreasuryPrivateKey());
   }
 };
 
-// export const subscribeToTopicOnMainnet = () => {
-//   const client = getHederaClient();
-//   const topicId = getFortuneWheelTopicId();
+const getTopicMessagesByTopicId = async (topicId, order = 'desc') => {
+  const limit = 1000000000000000000;
 
-//   new TopicMessageQuery().setTopicId(topicId).subscribe(client, null, (message) => {
-//     let messageAsString = Buffer.from(message.contents, 'utf8').toString();
-//     console.log(`${message.consensusTimestamp.toDate()} Received: ${messageAsString}`);
-//   });
-// };
+  return HEDERA_NODE_API.get(
+    `/api/v1/topics/${topicId}/messages?order=${order}&limit=${limit}`
+  ).then((res) => res.data);
+};
 
-// export const subscribeToTopic = async () => {
-//   if (!process.env.REACT_APP_RUN_TESTNET) return subscribeToTopicOnMainnet();
-// };
+const insertBuyPassTable = async (params) => {
+  await executeQuery(MAPPER_NAMESPACES.buyOrUsePasses, QUERIES.insertBuyPass, params);
+};
 
-export const createNewTopic = async () => {
-  const privateKey = getTreasuryPrivateKey();
+const insertUsePassTable = async (params) => {
+  await executeQuery(MAPPER_NAMESPACES.buyOrUsePasses, QUERIES.insertUsePass, params);
+};
 
+const getUsePassesByUserId = async (params) => {
+  const result = await executeQuery(
+    MAPPER_NAMESPACES.buyOrUsePasses,
+    QUERIES.selectUsePassByUserId,
+    params
+  );
+
+  const data = result?.rows;
+
+  if (!isEmptyArray(data)) {
+    return data;
+  } else return [];
+};
+
+const getBuyPassesByAccountId = async (params) => {
+  const result = await executeQuery(
+    MAPPER_NAMESPACES.buyOrUsePasses,
+    QUERIES.selectBuyPassByUserId,
+    params
+  );
+
+  const data = result?.rows;
+
+  if (!isEmptyArray(data)) {
+    return data;
+  } else return [];
+};
+
+const getLeaderBoardByPassType = async (params) => {
+  const result = await executeQuery(
+    MAPPER_NAMESPACES.buyOrUsePasses,
+    QUERIES.selectLeaderBoardUsePass,
+    params
+  );
+
+  const data = result?.rows;
+
+  if (!isEmptyArray(data)) {
+    return data;
+  } else return [];
+};
+
+const getLeaderBoardByAccountId = async (params) => {
+  const result = await executeQuery(
+    MAPPER_NAMESPACES.buyOrUsePasses,
+    QUERIES.selectLeaderBoardUsePassByAccountId,
+    params
+  );
+
+  const data = result?.rows;
+
+  if (!isEmptyArray(data)) {
+    return data;
+  } else return [];
+};
+
+const insertUserEmail = async (params) => {
+  await executeQuery(MAPPER_NAMESPACES.userInformation, QUERIES.insertUserEmail, params);
+};
+
+const findAndCallQueryFnByPassType = async (passType, params) => {
+  const dataSet = [
+    { [ARRAY_KEYS.VALUE]: HCS_TYPES.BUY_PASSES, [ARRAY_KEYS.FUNCTION]: insertBuyPassTable },
+    { [ARRAY_KEYS.VALUE]: HCS_TYPES.USE_PASSES, [ARRAY_KEYS.FUNCTION]: insertUsePassTable }
+  ];
+
+  const queryFn = dataSet?.find((item) => item[ARRAY_KEYS.VALUE] === passType)?.[
+    ARRAY_KEYS.FUNCTION
+  ];
+
+  try {
+    if (queryFn) await queryFn(params);
+  } catch (error) {
+    console.log('Database query error - ', error);
+  }
+};
+
+const submitHcsMessage = async (topicId, message = {}, userAccountId) => {
   const client = getHederaClient();
-  const txnId = await new TopicCreateTransaction()
-    .setSubmitKey(privateKey.publicKey)
-    .execute(client);
+  const appendUserAccountId = { ...message, [HCS_KEYS.user_account_id]: userAccountId };
 
-  const receipt = await txnId.getReceipt(client);
+  const stringifyMessage = JSON.stringify(appendUserAccountId);
 
-  const topicId = receipt.topicId?.toString();
+  let sendResponse = await new TopicMessageSubmitTransaction({
+    topicId: topicId,
+    message: stringifyMessage
+  }).execute(client);
 
-  console.log('topicId', topicId);
-  return topicId;
+  // Get the receipt of the transaction
+  const getReceipt = await sendResponse.getReceipt(client);
+  const txnRecord = await sendResponse.getRecord(client);
+
+  // Get the status of the transaction
+  const transactionStatus = getReceipt.status?.toString();
+
+  // Get consensus timestamp
+  const consensusTime = txnRecord?.consensusTimestamp?.toString();
+
+  const queryData = {
+    ...appendUserAccountId,
+    [HCS_KEYS.consensus_timestamp]: consensusTime,
+    [HCS_KEYS.payer_account_id]: getTreasuryAccountId(),
+    [HCS_KEYS.modified_timestamp]: decodeHcsTimeStamp(consensusTime)
+  };
+
+  console.log(
+    'The consensus message has been posted with ->  ' +
+      transactionStatus +
+      '  ->  with timestamp  -> ',
+    consensusTime,
+    queryData
+  );
+
+  await findAndCallQueryFnByPassType(appendUserAccountId?.[HCS_KEYS.type], queryData);
+
+  return transactionStatus;
+};
+
+module.exports = {
+  getTopicMessagesByTopicId,
+  submitHcsMessage,
+  getUsePassesByUserId,
+  getBuyPassesByAccountId,
+  getLeaderBoardByPassType,
+  insertUserEmail,
+  getLeaderBoardByAccountId
 };

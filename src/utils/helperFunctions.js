@@ -1,170 +1,83 @@
-import { ARRAY_KEYS, HCS_TYPES, HCS_KEYS } from './constants';
-import { toast } from 'react-toastify';
-import {} from '@hashgraph/sdk';
-import { submitHcsMessage } from '../services/hederaService';
+require('dotenv').config();
+const moment = require('moment');
 
-// Private Keys and Token Ids
-export const getTreasuryAccountId = () => process.env.REACT_APP_TREASURY_ACCOUNT_ID;
-export const getTreasuryPrivateKey = () => process.env.REACT_APP_TREASURY_PRIVATE_KEY;
-export const getTreasuryPublicKey = () => process.env.REACT_APP_TREASURY_PUBLIC_KEY;
+const { HCS_KEYS, ZERO_INDEX, DOT, HCS_TYPES, ARRAY_KEYS } = require('./constants');
 
-export const getPlatinumPassTokenId = () => process.env.REACT_APP_PLATINUM_PASS_TOKEN_ID;
+const getTreasuryAccountId = () => process.env.TREASURY_ACCOUNT_ID;
+const getTreasuryPrivateKey = () => process.env.TREASURY_PRIVATE_KEY;
 
-export const getGoldPassTokenId = () => process.env.REACT_APP_GOLD_PASS_TOKEN_ID;
+const getFortuneWheelTopicId = () => process.env.TOPIC_ID_FORTUNE_WHEEL;
 
-export const getSilverPassTokenId = () => process.env.REACT_APP_SILVER_PASS_TOKEN_ID;
-export const getFortuneWheelTopicId = () => process.env.REACT_APP_TOPIC_ID_FORTUNE_WHEEL;
+const b64_to_utf8 = (str) => {
+  const decode = decodeURIComponent(atob(str));
 
-export const getHashScanUrl = () => process.env.REACT_APP_HASHSCAN_URL;
-
-export const scrollToTop = (smooth = false) => {
-  if (smooth) {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
-  } else {
-    window.scrollTo(0, 0);
-  }
+  return decode;
 };
 
-export const isPositiveNumber = (input) => {
-  if (typeof input === 'number' && input > 0) return true;
-  return false;
+const decodeHcsMsg = (msg) => {
+  const convertBase64ToText = b64_to_utf8(msg);
+
+  let text = convertBase64ToText;
+
+  try {
+    const parsedString = JSON.parse(convertBase64ToText);
+    text = parsedString;
+  } catch (error) {}
+
+  return text;
 };
 
-export const isValidNftSerialNumber = (input) => {
-  if (typeof input === 'number' && input > 1) return true;
-  return false;
+const convertTimeToMomentFormat = (seconds) => {
+  const unixTime = moment.unix(seconds)?.locale('en');
+  const formattedTime = unixTime?.format('MMMM DD, YYYY - hh:mm A');
+  return formattedTime;
 };
 
-export const setCssVariable = (key, value) => {
-  document.querySelector(':root').style.setProperty(key, `${value}deg`);
+const decodeHcsTimeStamp = (time) => {
+  const splitTimeToGetSeconds = time?.split(DOT)?.[ZERO_INDEX];
+  return convertTimeToMomentFormat(splitTimeToGetSeconds);
 };
 
-// Fn to evaluate Profit/loss chances for 1800 wheel
-export const wheelRevenueEstimator = (wheelData = [], initialPrice) => {
-  let profit = 0;
-  let loss = 0;
+const decodeAllMessagesWithUserId = (topicData = {}, passType, accountId) => {
+  const getMessages = topicData[HCS_KEYS.messages] ?? [];
 
-  for (let i = 0; i < 10; i++) {
-    const random = Math.floor(Math.random() * wheelData.length);
-    const randomSlice = wheelData[random];
+  const decodeMessages =
+    getMessages
+      .map((item) => {
+        const payer_id = item[HCS_KEYS.payer_account_id];
+        const message = item[HCS_KEYS.message];
+        const timeStamp = item[HCS_KEYS.consensus_timestamp];
 
-    if (randomSlice[ARRAY_KEYS.VALUE] <= initialPrice) {
-      profit = profit + (initialPrice - randomSlice[ARRAY_KEYS.VALUE]);
-    } else {
-      loss = loss + (randomSlice[ARRAY_KEYS.VALUE] - initialPrice);
-    }
-  }
+        const decodedMsg = message;
+        const decodedTimeStamp = decodeHcsTimeStamp(timeStamp);
 
-  console.log('profit - ', profit);
-  console.log('loss - ', loss);
-  console.log('overal - ', profit - loss);
+        return {
+          [HCS_KEYS.payer_account_id]: payer_id,
+          [HCS_KEYS.message]: decodeHcsMsg(decodedMsg),
+          [HCS_KEYS.consensus_timestamp]: timeStamp,
+          [HCS_KEYS.modified_timestamp]: decodedTimeStamp
+        };
+      })
+      ?.filter((item) => {
+        if (
+          passType === item[HCS_KEYS.message]?.[HCS_KEYS.type] &&
+          accountId === item[HCS_KEYS.message]?.[HCS_KEYS.user_account_id]
+        )
+          return true;
+      }) ?? [];
+
+  return decodeMessages;
 };
 
-export const displayErrors = (errors = []) => {
-  errors.forEach((item) => toast.error(item.msg));
+const isEmptyArray = (input = []) => {
+  return Array.isArray(input) && input?.length > 0 ? false : true;
 };
 
-export const isArray = (arr) => {
-  return Array.isArray(arr) && arr?.length > 0 ? true : false;
-};
-
-export const isArrayReady = (arr) => {
-  return isArray(arr) ? arr : [];
-};
-
-export const submitBuyPassHcsMsg = async (
-  passType,
-  passAmount,
-  passSerialNum,
-  tokenId,
-  status,
-  txnId,
-  accountId
-) => {
-  const topicId = getFortuneWheelTopicId();
-
-  const msg = {
-    [HCS_KEYS.type]: HCS_TYPES.BUY_PASSES,
-    [HCS_KEYS.token_id]: tokenId,
-    [HCS_KEYS.pass_type]: passType,
-    [HCS_KEYS.pass_amount]: passAmount,
-    [HCS_KEYS.pass_serial_number]: passSerialNum,
-    [HCS_KEYS.status]: status,
-    [HCS_KEYS.txn_id]: txnId
-  };
-
-  const res = await submitHcsMessage(topicId, msg, accountId);
-
-  return res;
-};
-
-export const submitUsePassHcsMsg = async (
-  passType,
-  passAmount,
-  passSerialNum,
-  tokenId,
-  status,
-  winnerAmount,
-  txnId,
-  nftTransferTxnId,
-  accountId
-) => {
-  const topicId = getFortuneWheelTopicId();
-
-  const msg = {
-    [HCS_KEYS.type]: HCS_TYPES.USE_PASSES,
-    [HCS_KEYS.token_id]: tokenId,
-    [HCS_KEYS.pass_type]: passType,
-    [HCS_KEYS.pass_amount]: passAmount,
-    [HCS_KEYS.pass_serial_number]: passSerialNum,
-    [HCS_KEYS.status]: status,
-    [HCS_KEYS.winner_amount]: winnerAmount,
-    [HCS_KEYS.txn_id]: txnId,
-    [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId
-  };
-
-  const res = await submitHcsMessage(topicId, msg, accountId);
-
-  return res;
-};
-
-export const submitUsePassFailedHcsMsg = async (
-  passType,
-  passAmount,
-  passSerialNum,
-  tokenId,
-  status,
-  errorMsg,
-  txnId,
-  nftTransferTxnId,
-  accountId
-) => {
-  const topicId = getFortuneWheelTopicId();
-
-  const getError = errorMsg?.stack;
-
-  const msg = {
-    [HCS_KEYS.type]: HCS_TYPES.USE_PASSES,
-    [HCS_KEYS.token_id]: tokenId,
-    [HCS_KEYS.pass_type]: passType,
-    [HCS_KEYS.pass_amount]: passAmount,
-    [HCS_KEYS.pass_serial_number]: passSerialNum,
-    [HCS_KEYS.status]: status,
-    [HCS_KEYS.error_msg]: getError,
-    [HCS_KEYS.txn_id]: txnId,
-    [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId
-  };
-
-  const res = await submitHcsMessage(topicId, msg, accountId);
-
-  return res;
-};
-
-export const linkToHashScanTxn = (timeStamp = '') => {
-  const url = getHashScanUrl();
-  return `${url}/transaction/${timeStamp}`;
+module.exports = {
+  getTreasuryAccountId,
+  getTreasuryPrivateKey,
+  getFortuneWheelTopicId,
+  decodeAllMessagesWithUserId,
+  decodeHcsTimeStamp,
+  isEmptyArray
 };
