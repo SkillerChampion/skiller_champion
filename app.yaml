@@ -5,16 +5,16 @@ env_variables:
   PORT: 8080
 
 handlers:
-  # Serve all API requests to the Node.js app
+  # Serve API routes using the Node.js app
   - url: /api/.*
     script: auto
 
-  # Serve static assets from the React build folder
-  - url: /(.*\.(js|css|png|jpg|gif|ico|json|html))$
-    static_files: build/\1
-    upload: client/build/.*\.(js|css|png|jpg|gif|ico|json|html)$
+  # Serve the React frontend's root index.html
+  - url: /
+    static_files: client/build/index.html
+    upload: client/build/index.html
 
-  # Serve the index.html file as the default page
+  # Serve any remaining requests with the React frontend's index.html
   - url: /.*
-    static_files: build/index.html
+    static_files: client/build/index.html
     upload: client/build/index.html
