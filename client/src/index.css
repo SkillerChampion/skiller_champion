@@ -7,7 +7,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('./assets/fonts/Grind\ Demolished.otf') format('opentype');
+  src: url('./assets/fonts/Grind.otf') format('opentype');
 }
 
 @font-face {
@@ -15,7 +15,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('./assets/fonts/Helios\ Regular.otf') format('opentype');
+  src: url('./assets/fonts/Helios.otf') format('opentype');
 }
 
 :root {
