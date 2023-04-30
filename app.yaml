@@ -10,9 +10,9 @@ handlers:
     script: auto
 
   # Serve static assets from the React build folder
-  - url: /(.*\.(js|css|png|jpg|gif|ico|json|html))$
+  - url: /(.*\.(js|css|png|jpg|gif|ico|json|html|otf))$
     static_files: client/build/\1
-    upload: client/build/.*\.(js|css|png|jpg|gif|ico|json|html)$
+    upload: client/build/.*\.(js|css|png|jpg|gif|ico|json|html|otf)$
 
   # Serve the index.html file for all other routes
   - url: /.*
