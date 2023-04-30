@@ -8,6 +8,7 @@ import SideDrawer from '../Common/SideDrawer/SideDrawer';
 import SideDrawerIndex from './SideDrawer/Index';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { isArrayReady } from '../../utils/helperFunctions';
 
 import {
   ZERO,
@@ -169,7 +170,7 @@ const Dashboard = () => {
             Your Winnings -
           </div>
           <div className="ml-1 space-y-4 md:space-y-7">
-            {totalWinnings?.map((item) => {
+            {isArrayReady(totalWinnings)?.map((item) => {
               const getWinningAmount = data?.find(
                 (winningItem) => winningItem[HCS_KEYS.pass_type] === item[ARRAY_KEYS.LABEL]
               )?.[HCS_KEYS.winner_amount];

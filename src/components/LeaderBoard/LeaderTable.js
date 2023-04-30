@@ -6,6 +6,7 @@ import { ZERO, ARRAY_KEYS, LEADER_BOARD_TABS, HCS_KEYS } from '../../utils/const
 import TableData from '../Common/Table/Table';
 import { useQuery } from 'react-query';
 import { getLeaderBoardData } from '../../services/hederaService';
+import { isArrayReady } from '../../utils/helperFunctions';
 
 const LeaderTable = () => {
   const tabs = [
@@ -41,7 +42,7 @@ const LeaderTable = () => {
     { [ARRAY_KEYS.HEADER]: 'Pass Type', [ARRAY_KEYS.VALUE]: HCS_KEYS.pass_type }
   ];
 
-  const bodyData = data?.map((item) => {
+  const bodyData = isArrayReady(data)?.map((item) => {
     return {
       [HCS_KEYS.pass_type]: item[HCS_KEYS.pass_type],
       [HCS_KEYS.pass_amount]: item[HCS_KEYS.pass_amount],

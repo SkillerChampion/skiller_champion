@@ -14,7 +14,7 @@ import {
 } from '../../utils/constants';
 import { FortuneContext } from '../../context/FortuneContext';
 import { WalletContext } from '../../context/WalletContext';
-
+import { isArrayReady } from '../../utils/helperFunctions';
 import Spinner from '../Common/Spinner/Spinner';
 
 const WheelContainer = () => {
@@ -67,7 +67,7 @@ const WheelContainer = () => {
   const WheelCallBack = useCallback(() => {
     if (isDataQueryLoading) return <Spinner center className="pt-[100px]" />;
 
-    return tabs
+    return isArrayReady(tabs)
       ?.filter((item) => item[ARRAY_KEYS.VALUE] === currentTab[ARRAY_KEYS.VALUE])
       ?.map((item, index) => {
         const Wheel = item[ARRAY_KEYS.COMPONENT];

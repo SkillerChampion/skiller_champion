@@ -6,6 +6,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import classes from './index.module.css';
+import { isArrayReady } from '../../../utils/helperFunctions';
 
 function TabPanel(props) {
   const { children, value, index, onlyUseLeftMargins, fullHeight, removeChildMargins, ...other } =
@@ -84,7 +85,7 @@ const SmallTabs = ({
           TabIndicatorProps={{
             style: { background: '#4f46e5', height: '100%', position: 'absolute' }
           }}>
-          {tabs?.map((item, index) => (
+          {isArrayReady(tabs)?.map((item, index) => (
             <Tab
               label={item.label}
               {...a11yProps(index)}
@@ -101,7 +102,7 @@ const SmallTabs = ({
         className={`bg-gray-900 ${onlyUseLeftMargins ? 'rounded-bl-xl ' : 'rounded-b-xl '} ${
           fullHeight && classes.fullHeight
         }`}>
-        {tabs?.map((item, index) => (
+        {isArrayReady(tabs)?.map((item, index) => (
           <TabPanel
             value={value}
             index={index}

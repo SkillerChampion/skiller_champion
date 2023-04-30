@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useQuery } from 'react-query';
 import { getBuyPassesByAccountId } from '../../../services/hederaService';
-import { getFortuneWheelTopicId } from '../../../utils/helperFunctions';
+import { isArrayReady } from '../../../utils/helperFunctions';
 import { ARRAY_KEYS, HCS_KEYS } from '../../../utils/constants';
 import TableData from '../../Common/Table/Table';
 import SearchTxn from '../../Common/Table/SearchTxn';
@@ -24,9 +24,7 @@ const PassPurchaseHistory = ({ userAccountId, setLocalUserAccountId }) => {
     { [ARRAY_KEYS.HEADER]: 'Verify', [ARRAY_KEYS.VALUE]: HCS_KEYS.consensus_timestamp }
   ];
 
-  const bodyData = data?.map((item) => {
-    const message = item ?? {};
-
+  const bodyData = isArrayReady(data)?.map((item) => {
     return {
       [HCS_KEYS.pass_type]: item[HCS_KEYS.pass_type],
       [HCS_KEYS.pass_amount]: item[HCS_KEYS.pass_amount],

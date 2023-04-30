@@ -4,6 +4,7 @@ import { getUsePassesByAccountId } from '../../../services/hederaService';
 import { ARRAY_KEYS, HCS_KEYS } from '../../../utils/constants';
 import TableData from '../../Common/Table/Table';
 import SearchTxn from '../../Common/Table/SearchTxn';
+import { isArrayReady } from '../../../utils/helperFunctions';
 
 const PassUseHistory = ({ userAccountId, setLocalUserAccountId }) => {
   const { data, isFetching, error } = useQuery(['getUsePassesByAccountId', userAccountId], () =>
@@ -23,9 +24,7 @@ const PassUseHistory = ({ userAccountId, setLocalUserAccountId }) => {
     { [ARRAY_KEYS.HEADER]: 'Verify', [ARRAY_KEYS.VALUE]: HCS_KEYS.consensus_timestamp }
   ];
 
-  const bodyData = data?.map((item) => {
-    const message = item;
-
+  const bodyData = isArrayReady(data)?.map((item) => {
     return {
       [HCS_KEYS.pass_type]: item[HCS_KEYS.pass_type],
       [HCS_KEYS.pass_amount]: item[HCS_KEYS.pass_amount],

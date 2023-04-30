@@ -12,7 +12,7 @@ import { Scrollbar } from 'react-scrollbars-custom';
 import classes from './Table.module.css';
 import { ARRAY_KEYS, HEDERA_API_KEYS, ZERO } from '../../../utils/constants';
 import Spinner from '../Spinner/Spinner';
-import { isArray } from '../../../utils/helperFunctions';
+import { isArray, isArrayReady } from '../../../utils/helperFunctions';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -98,7 +98,7 @@ const TableData = ({
         <Table sx={{ width: '100%' }} aria-label="customized table" className="">
           <TableHead>
             <TableRow>
-              {headers?.map((item, index) => {
+              {isArrayReady(headers)?.map((item, index) => {
                 const minWidth = item[ARRAY_KEYS.MIN_WIDTH];
 
                 return (
@@ -120,7 +120,7 @@ const TableData = ({
 
                 return (
                   <StyledTableRow key={index}>
-                    {rowsArray?.map((item, rowIndex) => {
+                    {isArrayReady(rowsArray)?.map((item, rowIndex) => {
                       if (item === ARRAY_KEYS.DISPLAY_FN) {
                         const displayFn = row[ARRAY_KEYS.DISPLAY_FN];
 

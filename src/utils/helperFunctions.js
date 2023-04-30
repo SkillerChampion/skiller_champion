@@ -72,6 +72,10 @@ export const isArray = (arr) => {
   return Array.isArray(arr) && arr?.length > 0 ? true : false;
 };
 
+export const isArrayReady = (arr) => {
+  return isArray(arr) ? arr : [];
+};
+
 export const submitBuyPassHcsMsg = async (
   passType,
   passAmount,
