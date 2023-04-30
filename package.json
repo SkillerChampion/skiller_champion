@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node server",
     "dev": "set NODE_ENV=dev&&nodemon server",
+    "start": "node server.js",
     "clientBuild": "cd client && npm install -force && npm run build"
   },
   "author": "Skiller Champion",

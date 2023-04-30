@@ -10,7 +10,7 @@ initializePgConnection();
 app.use(cors());
 app.use(express.json({ extended: false }));
 
-app.get('/api/health', (req, res) => res.send('BE Hedera app is running'));
+app.get('/api/health', (req, res) => res.send('FE Node app is running'));
 
 app.use('/api/hederaService', require('./src/routes/hederaService'));
 
