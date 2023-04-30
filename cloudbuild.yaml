@@ -1,9 +1,9 @@
 # cloudbuild.yaml
 steps:
-  - name: 'gcr.io/cloud-builders/npm'
+  - name: 'package install'
     args: ['install', '-f']
 
-  - name: 'gcr.io/cloud-builders/npm'
+  - name: 'package build'
     args: ['run', 'build']
 
   - name: 'gcr.io/cloud-builders/gcloud'
