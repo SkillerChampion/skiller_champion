@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 const { initializePgConnection, loadBatisMappers } = require('./src/utils/database/database');
+const configurations = require('./config');
+const getSecretValue = require('./src/utils/secretManager');
 
 loadBatisMappers();
 initializePgConnection();
@@ -10,7 +12,18 @@ initializePgConnection();
 app.use(cors());
 app.use(express.json({ extended: false }));
 
-app.get('/api/health', (req, res) => res.send('FE Node app is running'));
+app.get('/api/health', (req, res) => {
+  console.log(
+    'CHECKING ENVS - ',
+    configurations.dbUser,
+    configurations.dbPassword,
+    configurations.database,
+    configurations.dbHost
+  );
+
+  console.log('CHECKING SECRETS - ', getSecretValue(configurations.dbPassword));
+  res.send('FE Node app is running');
+});
 
 app.use('/api/hederaService', require('./src/routes/hederaService'));
 

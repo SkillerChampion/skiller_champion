@@ -12,7 +12,7 @@ const getSecret = async (secretName) => {
       throw new TypeError('secretName must be a string!');
     }
     const [secret] = await client.accessSecretVersion({
-      name: secretName
+      name: secretName,
     });
     console.log(`Found Secret for key: ${secretName}`);
     return secret;
@@ -35,6 +35,5 @@ const getSecretValue = async (secretName) => {
 };
 
 module.exports = {
-  getSecret,
-  getSecretValue
+  getSecretValue,
 };
