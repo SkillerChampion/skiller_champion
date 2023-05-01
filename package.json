@@ -4,10 +4,10 @@
   "description": "",
   "scripts": {
     "start": "node server.js",
-    "clientBuild": "cd client && npm install -force && npm run build",
-    "server": "nodemon server",
-    "client": "npm start --prefix client",
-    "dev": "set NODE_ENV=dev&&concurrently \"npm run server\" \"npm run client\""
+    "clientBuild": "cd client && npm install --force && npm run build",
+    "server": "set NODE_ENV=development&&nodemon server",
+    "client": "npm run startLocal --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Skiller Champion",
   "license": "ISC",
@@ -32,6 +32,7 @@
     "@babel/cli": "^7.21.0",
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
+    "concurrently": "^8.0.1",
     "dotenv": "^16.0.3",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",

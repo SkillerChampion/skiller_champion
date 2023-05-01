@@ -4,7 +4,7 @@ steps:
     args: ['run', 'clientBuild']
 
   - name: 'gcr.io/cloud-builders/npm'
-    args: ['install', '-force']
+    args: ['install', '--force']
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']

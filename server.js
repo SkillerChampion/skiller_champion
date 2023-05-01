@@ -5,7 +5,6 @@ const path = require('path');
 const { initializePgConnection, loadBatisMappers } = require('./src/utils/database/database');
 const configurations = require('./config');
 const { getSecretValue } = require('./src/utils/secretManager');
-require('dotenv').config();
 
 loadBatisMappers();
 initializePgConnection();
@@ -13,10 +12,18 @@ initializePgConnection();
 app.use(cors());
 app.use(express.json({ extended: false }));
 
+console.log(
+  'CHECKING ENVS - ',
+  configurations.dbUser,
+  configurations.dbPassword,
+  configurations.database,
+  configurations.dbHost
+);
+
 app.get('/api/health', async (req, res) => {
   console.log(
     'CHECKING ENVS - ',
-    configurations.dbUser,
+    process.env.DB_USER,
     configurations.dbPassword,
     configurations.database,
     configurations.dbHost

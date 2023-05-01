@@ -38,6 +38,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "startLocal": "set REACT_APP_ENV=development&&react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },

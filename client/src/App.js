@@ -43,13 +43,7 @@ function App() {
     />
   );
 
-  console.log(
-    'CHECKING ENVS FE - ',
-    process.env,
-    process.env.REACT_APP_NODE_BE_OPEN_SOURCE_API,
-    process.env.DATABASE,
-    window.REACT_APP_NODE_BE_OPEN_SOURCE_API
-  );
+  console.log('CHECKING ENVS FE - ', process.env.REACT_APP_NODE_BE_API);
 
   return (
     <div className={`${isWheelOfFortuneSpinning && 'pointer-events-none'} h-screen`}>
