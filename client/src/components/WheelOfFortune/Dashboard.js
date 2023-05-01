@@ -224,7 +224,7 @@ const Dashboard = () => {
             </div>
           </GrayCard>
 
-          <GrayCard>
+          <GrayCard className="flex flex-col justify-between">
             <>
               <RadioButtons
                 heading="Buy Passes -"
