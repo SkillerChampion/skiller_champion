@@ -12,14 +12,6 @@ initializePgConnection();
 app.use(cors());
 app.use(express.json({ extended: false }));
 
-console.log(
-  'CHECKING ENVS - ',
-  configurations.dbUser,
-  configurations.dbPassword,
-  configurations.database,
-  configurations.dbHost
-);
-
 app.get('/api/health', async (req, res) => {
   console.log(
     'CHECKING ENVS - ',
