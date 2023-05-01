@@ -16,6 +16,8 @@ import { ALL_ROUTES, ALL_ROUTES_PATHS } from './utils/routes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+require('dotenv').config();
+
 function App() {
   const { pathname } = useLocation();
   const { isWheelOfFortuneSpinning, showWinnerLoser, setShowWinnerLoser } =
