@@ -47,7 +47,8 @@ function App() {
     'CHECKING ENVS FE - ',
     process.env,
     process.env.REACT_APP_NODE_BE_OPEN_SOURCE_API,
-    process.env.DATABASE
+    process.env.DATABASE,
+    window.REACT_APP_NODE_BE_OPEN_SOURCE_API
   );
 
   return (
