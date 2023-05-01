@@ -5,7 +5,7 @@ const path = require('path');
 const { initializePgConnection, loadBatisMappers } = require('./src/utils/database/database');
 const configurations = require('./config');
 const { getSecretValue } = require('./src/utils/secretManager');
-const { API_URL } = process.env;
+require('dotenv').config();
 
 loadBatisMappers();
 initializePgConnection();
