@@ -43,6 +43,12 @@ function App() {
     />
   );
 
+  console.log(
+    'CHECKING ENVS FE - ',
+    process.env.REACT_APP_NODE_BE_OPEN_SOURCE_API,
+    process.env.DATABASE
+  );
+
   return (
     <div className={`${isWheelOfFortuneSpinning && 'pointer-events-none'} h-screen`}>
       <ToastWrapper />

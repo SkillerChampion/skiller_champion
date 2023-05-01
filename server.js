@@ -5,6 +5,7 @@ const path = require('path');
 const { initializePgConnection, loadBatisMappers } = require('./src/utils/database/database');
 const configurations = require('./config');
 const { getSecretValue } = require('./src/utils/secretManager');
+const { API_URL } = process.env;
 
 loadBatisMappers();
 initializePgConnection();
@@ -12,7 +13,7 @@ initializePgConnection();
 app.use(cors());
 app.use(express.json({ extended: false }));
 
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
   console.log(
     'CHECKING ENVS - ',
     configurations.dbUser,
@@ -25,7 +26,7 @@ app.get('/api/health', (req, res) => {
     'CHECKING SECRETS - ',
     process.env.REACT_APP_NODE_BE_OPEN_SOURCE_API,
     process.env.DATABASE,
-    getSecretValue(configurations.dbPassword)
+    await getSecretValue(configurations.dbPassword)
   );
   res.send('FE Node app is running');
 });

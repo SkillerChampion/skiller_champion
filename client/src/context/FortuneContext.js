@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { TEN_SECONDS } from '../utils/constants';
 import { getAllWheelDataList } from '../services/fortuneWheel';
-
 export const FortuneContext = createContext();
 
 const FortuneWheelContextComponent = (props) => {
