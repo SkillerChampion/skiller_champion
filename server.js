@@ -10,16 +10,13 @@ const { DEPLOYED_ORIGIN_URL, NODE_ENVS } = require('./src/utils/constants');
 loadBatisMappers();
 initializePgConnection();
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // replace with your React app's URL
-      if (origin === DEPLOYED_ORIGIN_URL || process.env.NODE_ENV === NODE_ENVS.development) {
-        callback(null, true);
-      } else return callback(new Error('Not allowed by CORS'));
-    },
-  })
-);
+// Set up CORS middleware to allow requests from a specific URL
+const corsOptions = {
+  origin: DEPLOYED_ORIGIN_URL,
+};
+
+if (process.env.NODE_ENV === NODE_ENVS.development) app.use(cors());
+else app.use(cors(corsOptions));
 
 app.use(express.json({ extended: false }));
 
