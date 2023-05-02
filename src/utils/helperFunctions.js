@@ -74,7 +74,7 @@ const isEmptyArray = (input = []) => {
 };
 
 const getSecretAccessName = (projectId, secretName) => {
-  return `projects/${projectId}/secrets/${secretName}`;
+  return `projects/${projectId}/secrets/${secretName}/versions/latest`;
 };
 
 module.exports = {
