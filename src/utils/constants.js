@@ -66,6 +66,8 @@ const HCS_TYPES = {
   USE_PASSES: 'USE_PASSES',
 };
 
+const DEPLOYED_ORIGIN_URL = 'https://skiller-champion.uc.r.appspot.com';
+
 module.exports = {
   ARRAY_KEYS,
   HASH_CONNECT_KEYS,
@@ -76,4 +78,5 @@ module.exports = {
   MAPPER_NAMESPACES,
   QUERIES,
   HCS_TYPES,
+  DEPLOYED_ORIGIN_URL,
 };

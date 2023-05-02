@@ -5,6 +5,7 @@ const path = require('path');
 const { initializePgConnection, loadBatisMappers } = require('./src/utils/database/database');
 const configurations = require('./config');
 const { getSecretValue } = require('./src/utils/secretManager');
+const { DEPLOYED_ORIGIN_URL } = require('./src/utils/constants');
 
 loadBatisMappers();
 initializePgConnection();
@@ -13,10 +14,9 @@ app.use(
   cors({
     origin: function (origin, callback) {
       // replace with your React app's URL
-      if (origin !== 'http://localhost:3000') {
-        return callback(new Error('Not allowed by CORS'));
-      }
-      callback(null, true);
+      if (origin === DEPLOYED_ORIGIN_URL || process.env.NODE_ENV === NODE_ENVS.development) {
+        callback(null, true);
+      } else return callback(new Error('Not allowed by CORS'));
     },
   })
 );
@@ -25,7 +25,7 @@ app.use(express.json({ extended: false }));
 
 console.log(
   'CHECKING ENVS - ',
-  process.env.DB_USER,
+  process.env.NODE_ENV,
   configurations.dbPassword,
   configurations.database,
   configurations.dbHost
