@@ -10,6 +10,8 @@ const getSecret = async (secretName) => {
       throw new Error('secretName is required!');
     }
 
+    console.log(`Searching secret for key: ${secretName}`);
+
     const [secret] = await client.accessSecretVersion({
       name: secretName,
     });
@@ -27,9 +29,10 @@ const getSecretValue = async (secretName) => {
     const version = await getSecret(getFullSecretName);
 
     const data = version?.payload?.data ? version.payload.data.toString() : '';
-    console.log(`Found Secret for key: ${secretName} - ${data}`);
+    const decodedSecret = Buffer.from(data, 'base64').toString();
 
-    return new TextDecoder('utf-8').decode(data);
+    console.log(`Found Secret for key: ${secretName}`);
+    return decodedSecret;
   } catch (error) {
     console.log(`An Error Occurred while SecretAccessError: ${error}`);
   }
