@@ -1,20 +1,19 @@
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
+const { getSecretAccessName } = require('./secretManager');
+const { GCP_PROJECT_ID } = require('./constants');
 
 const client = new SecretManagerServiceClient({ fallback: true });
-const config = require('../../config');
 
 const getSecret = async (secretName) => {
   try {
     if (!secretName) {
-      throw new TypeError('secretName is required!');
+      throw new Error('secretName is required!');
     }
-    if (typeof secretName !== 'string') {
-      throw new TypeError('secretName must be a string!');
-    }
+
     const [secret] = await client.accessSecretVersion({
       name: secretName,
     });
-    console.log(`Found Secret for key: ${secretName}`);
+
     return secret;
   } catch (error) {
     console.log(`SecretAccessError: ${error}`);
@@ -24,13 +23,15 @@ const getSecret = async (secretName) => {
 
 const getSecretValue = async (secretName) => {
   try {
-    const version = await getSecret(secretName);
-    console.log(`Retriving secret ... ${secretName}`);
+    const getFullSecretName = getSecretAccessName(GCP_PROJECT_ID, secretName);
+    const version = await getSecret(getFullSecretName);
 
-    const data = version.payload ? version.payload.data : '';
+    const data = version?.payload?.data ? version.payload.data.toString() : '';
+    console.log(`Found Secret for key: ${secretName} - ${data}`);
+
     return new TextDecoder('utf-8').decode(data);
   } catch (error) {
-    console.log(`An Error Occurred: ${error}`);
+    console.log(`An Error Occurred while SecretAccessError: ${error}`);
   }
 };
 

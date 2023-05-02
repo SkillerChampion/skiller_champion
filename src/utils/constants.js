@@ -67,6 +67,7 @@ const HCS_TYPES = {
 };
 
 const DEPLOYED_ORIGIN_URL = 'https://skiller-champion.uc.r.appspot.com';
+const GCP_PROJECT_ID = 948181003317;
 
 module.exports = {
   ARRAY_KEYS,
@@ -79,4 +80,5 @@ module.exports = {
   QUERIES,
   HCS_TYPES,
   DEPLOYED_ORIGIN_URL,
+  GCP_PROJECT_ID,
 };

@@ -55,7 +55,7 @@ const decodeAllMessagesWithUserId = (topicData = {}, passType, accountId) => {
           [HCS_KEYS.payer_account_id]: payer_id,
           [HCS_KEYS.message]: decodeHcsMsg(decodedMsg),
           [HCS_KEYS.consensus_timestamp]: timeStamp,
-          [HCS_KEYS.modified_timestamp]: decodedTimeStamp
+          [HCS_KEYS.modified_timestamp]: decodedTimeStamp,
         };
       })
       ?.filter((item) => {
@@ -73,11 +73,16 @@ const isEmptyArray = (input = []) => {
   return Array.isArray(input) && input?.length > 0 ? false : true;
 };
 
+const getSecretAccessName = (projectId, secretName) => {
+  return `projects/${projectId}/secrets/${secretName}`;
+};
+
 module.exports = {
   getTreasuryAccountId,
   getTreasuryPrivateKey,
   getFortuneWheelTopicId,
   decodeAllMessagesWithUserId,
   decodeHcsTimeStamp,
-  isEmptyArray
+  isEmptyArray,
+  getSecretAccessName,
 };
