@@ -3,22 +3,16 @@ const {
   TopicCreateTransaction,
   Client,
   TopicMessageQuery,
-  TopicMessageSubmitTransaction
+  TopicMessageSubmitTransaction,
 } = require('@hashgraph/sdk');
 
-const {
-  HCS_KEYS,
-  QUERIES,
-  MAPPER_NAMESPACES,
-  ARRAY_KEYS,
-  HCS_TYPES
-} = require('../utils/constants');
+const { HCS_KEYS, QUERIES, MAPPER_NAMESPACES, ARRAY_KEYS, HCS_TYPES } = require('../utils/constants');
 
 const {
   getTreasuryAccountId,
   getTreasuryPrivateKey,
   decodeHcsTimeStamp,
-  isEmptyArray
+  isEmptyArray,
 } = require('../utils/helperFunctions');
 
 const { executeQuery } = require('../utils/database/database');
@@ -34,9 +28,9 @@ const getHederaClient = () => {
 const getTopicMessagesByTopicId = async (topicId, order = 'desc') => {
   const limit = 1000000000000000000;
 
-  return HEDERA_NODE_API.get(
-    `/api/v1/topics/${topicId}/messages?order=${order}&limit=${limit}`
-  ).then((res) => res.data);
+  return HEDERA_NODE_API.get(`/api/v1/topics/${topicId}/messages?order=${order}&limit=${limit}`).then(
+    (res) => res.data
+  );
 };
 
 const insertBuyPassTable = async (params) => {
@@ -48,11 +42,7 @@ const insertUsePassTable = async (params) => {
 };
 
 const getUsePassesByUserId = async (params) => {
-  const result = await executeQuery(
-    MAPPER_NAMESPACES.buyOrUsePasses,
-    QUERIES.selectUsePassByUserId,
-    params
-  );
+  const result = await executeQuery(MAPPER_NAMESPACES.buyOrUsePasses, QUERIES.selectUsePassByUserId, params);
 
   const data = result?.rows;
 
@@ -62,11 +52,7 @@ const getUsePassesByUserId = async (params) => {
 };
 
 const getBuyPassesByAccountId = async (params) => {
-  const result = await executeQuery(
-    MAPPER_NAMESPACES.buyOrUsePasses,
-    QUERIES.selectBuyPassByUserId,
-    params
-  );
+  const result = await executeQuery(MAPPER_NAMESPACES.buyOrUsePasses, QUERIES.selectBuyPassByUserId, params);
 
   const data = result?.rows;
 
@@ -76,11 +62,7 @@ const getBuyPassesByAccountId = async (params) => {
 };
 
 const getLeaderBoardByPassType = async (params) => {
-  const result = await executeQuery(
-    MAPPER_NAMESPACES.buyOrUsePasses,
-    QUERIES.selectLeaderBoardUsePass,
-    params
-  );
+  const result = await executeQuery(MAPPER_NAMESPACES.buyOrUsePasses, QUERIES.selectLeaderBoardUsePass, params);
 
   const data = result?.rows;
 
@@ -110,12 +92,10 @@ const insertUserEmail = async (params) => {
 const findAndCallQueryFnByPassType = async (passType, params) => {
   const dataSet = [
     { [ARRAY_KEYS.VALUE]: HCS_TYPES.BUY_PASSES, [ARRAY_KEYS.FUNCTION]: insertBuyPassTable },
-    { [ARRAY_KEYS.VALUE]: HCS_TYPES.USE_PASSES, [ARRAY_KEYS.FUNCTION]: insertUsePassTable }
+    { [ARRAY_KEYS.VALUE]: HCS_TYPES.USE_PASSES, [ARRAY_KEYS.FUNCTION]: insertUsePassTable },
   ];
 
-  const queryFn = dataSet?.find((item) => item[ARRAY_KEYS.VALUE] === passType)?.[
-    ARRAY_KEYS.FUNCTION
-  ];
+  const queryFn = dataSet?.find((item) => item[ARRAY_KEYS.VALUE] === passType)?.[ARRAY_KEYS.FUNCTION];
 
   try {
     if (queryFn) await queryFn(params);
@@ -132,7 +112,7 @@ const submitHcsMessage = async (topicId, message = {}, userAccountId) => {
 
   let sendResponse = await new TopicMessageSubmitTransaction({
     topicId: topicId,
-    message: stringifyMessage
+    message: stringifyMessage,
   }).execute(client);
 
   // Get the receipt of the transaction
@@ -149,13 +129,11 @@ const submitHcsMessage = async (topicId, message = {}, userAccountId) => {
     ...appendUserAccountId,
     [HCS_KEYS.consensus_timestamp]: consensusTime,
     [HCS_KEYS.payer_account_id]: getTreasuryAccountId(),
-    [HCS_KEYS.modified_timestamp]: decodeHcsTimeStamp(consensusTime)
+    [HCS_KEYS.modified_timestamp]: decodeHcsTimeStamp(consensusTime),
   };
 
   console.log(
-    'The consensus message has been posted with ->  ' +
-      transactionStatus +
-      '  ->  with timestamp  -> ',
+    'The consensus message has been posted with ->  ' + transactionStatus + '  ->  with timestamp  -> ',
     consensusTime,
     queryData
   );
@@ -172,5 +150,6 @@ module.exports = {
   getBuyPassesByAccountId,
   getLeaderBoardByPassType,
   insertUserEmail,
-  getLeaderBoardByAccountId
+  getLeaderBoardByAccountId,
+  getHederaClient,
 };

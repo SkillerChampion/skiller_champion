@@ -37,7 +37,7 @@ const createTcpPool = async (config) => {
 };
 
 const getPassword = async () => {
-  if (process.env.NODE_ENV === NODE_ENVS.dev || process.env.NODE_ENV === NODE_ENVS.st) {
+  if (process.env.NODE_ENV === NODE_ENVS.development || process.env.NODE_ENV === NODE_ENVS.st) {
     return configurations.dbPassword;
   } else {
     console.log('Fix secret manager');

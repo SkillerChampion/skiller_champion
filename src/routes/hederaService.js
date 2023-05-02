@@ -3,13 +3,13 @@ const {
   TokenAssociateTransaction,
   AccountId,
   TransactionId,
-  PrivateKey
+  PrivateKey,
 } = require('@hashgraph/sdk');
 
 const {
   getTreasuryPrivateKey,
   getTreasuryAccountId,
-  decodeAllMessagesWithUserId
+  decodeAllMessagesWithUserId,
 } = require('../utils/helperFunctions');
 
 const { check, validationResult } = require('express-validator');
@@ -21,7 +21,7 @@ const {
   getBuyPassesByAccountId,
   getLeaderBoardByPassType,
   insertUserEmail,
-  getLeaderBoardByAccountId
+  getLeaderBoardByAccountId,
 } = require('../services/hederaService');
 
 const { HCS_KEYS } = require('../utils/constants');
@@ -36,7 +36,7 @@ router.post(
     check('amountHbar', 'Hbar amount is required').not().isEmpty(),
     check('accountId', 'User account Id is required').not().isEmpty(),
     check('tokenId', 'Token Id is required').not().isEmpty(),
-    check('nftSerialNumber', 'Serial Number is invalid').not().isEmpty()
+    check('nftSerialNumber', 'Serial Number is invalid').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -84,7 +84,7 @@ router.post(
   [
     check('accountId', 'User account Id is required').not().isEmpty(),
     check('tokenId', 'Token Id is required').not().isEmpty(),
-    check('nftSerialNumber', 'Serial Number is invalid').not().isEmpty()
+    check('nftSerialNumber', 'Serial Number is invalid').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -129,7 +129,7 @@ router.post(
   '/associateTokens',
   [
     check('tokenId', 'Token id is required').not().isEmpty(),
-    check('accountId', 'User account Id is required').not().isEmpty()
+    check('accountId', 'User account Id is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -189,7 +189,7 @@ router.post(
   [
     check('topicId', 'Topic id is required').not().isEmpty(),
     check('message', 'Message is required').not().isEmpty(),
-    check('accountId', 'Account Id is required').not().isEmpty()
+    check('accountId', 'Account Id is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);

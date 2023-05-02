@@ -1,6 +1,5 @@
 import { ARRAY_KEYS, HCS_TYPES, HCS_KEYS } from './constants';
 import { toast } from 'react-toastify';
-import {} from '@hashgraph/sdk';
 import { submitHcsMessage } from '../services/hederaService';
 
 // Private Keys and Token Ids

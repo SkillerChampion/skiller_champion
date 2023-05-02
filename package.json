@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "config": "^3.3.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "express-validator": "^6.15.0",
     "fs": "^0.0.1-security",
@@ -26,8 +27,7 @@
     "moment-timezone": "^0.5.33",
     "mybatis-mapper": "^0.6.8",
     "pg": "^8.10.0",
-    "request": "^2.88.2",
-    "dotenv": "^16.0.3"
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "concurrently": "^8.0.1",

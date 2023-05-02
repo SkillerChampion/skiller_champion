@@ -8,7 +8,7 @@ import WinnerLoserAnimation from './components/Common/WinnerLoserAnimation/Winne
 import Header from './components/Common/Header/index';
 import Admin from './components/Admin/Index';
 
-import { scrollToTop } from './utils/helperFunctions';
+import { scrollToTop, getTreasuryPrivateKey } from './utils/helperFunctions';
 import { FortuneContext } from './context/FortuneContext';
 import { WalletContext } from './context/WalletContext';
 import SocialMediaLinks from './components/Common/SocialMediaLinks/SocialMediaLinks';
@@ -43,7 +43,11 @@ function App() {
     />
   );
 
-  console.log('CHECKING ENVS FE - ', process.env);
+  console.log(
+    'getTreasuryPrivateKey - ',
+    getTreasuryPrivateKey(),
+    process.env.REACT_APP_NODE_BE_OPEN_SOURCE_API
+  );
 
   return (
     <div className={`${isWheelOfFortuneSpinning && 'pointer-events-none'} h-screen`}>

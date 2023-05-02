@@ -9,7 +9,7 @@ const ARRAY_KEYS = {
   DATA: 'DATA',
   ANGLE: 'ANGLE',
   IS_WIN: 'IS_WIN',
-  FUNCTION: 'FUNCTION'
+  FUNCTION: 'FUNCTION',
 };
 
 const HASH_CONNECT_KEYS = {
@@ -19,7 +19,7 @@ const HASH_CONNECT_KEYS = {
   ACCOUNT_ID: 'accountId',
   PAIRING_DATA: 'pairingData',
   NAME: 'name',
-  DESCRIPTION: 'description'
+  DESCRIPTION: 'description',
 };
 
 const HCS_KEYS = {
@@ -35,17 +35,18 @@ const HCS_KEYS = {
   messages: 'messages',
   payer_account_id: 'payer_account_id',
   modified_timestamp: 'modified_timestamp',
-  email: 'email'
+  email: 'email',
 };
 
 const NODE_ENVS = {
-  dev: 'dev',
-  st: 'st'
+  development: 'development',
+  production: 'production',
+  st: 'st',
 };
 
 const MAPPER_NAMESPACES = {
   buyOrUsePasses: 'buyOrUsePasses',
-  userInformation: 'userInformation'
+  userInformation: 'userInformation',
 };
 
 const QUERIES = {
@@ -57,12 +58,12 @@ const QUERIES = {
   insertUserEmail: 'insertUserEmail',
   selectUserEmail: 'selectUserEmail',
   updateUserEmail: 'updateUserEmail',
-  selectLeaderBoardUsePassByAccountId: 'selectLeaderBoardUsePassByAccountId'
+  selectLeaderBoardUsePassByAccountId: 'selectLeaderBoardUsePassByAccountId',
 };
 
 const HCS_TYPES = {
   BUY_PASSES: 'BUY_PASSES',
-  USE_PASSES: 'USE_PASSES'
+  USE_PASSES: 'USE_PASSES',
 };
 
 module.exports = {
@@ -74,5 +75,5 @@ module.exports = {
   NODE_ENVS,
   MAPPER_NAMESPACES,
   QUERIES,
-  HCS_TYPES
+  HCS_TYPES,
 };

@@ -38,7 +38,7 @@ const getDbConnection = async () => {
     if (connection) {
       return connection;
     } else {
-      return Database.initialize();
+      return initializePgConnection();
     }
   } catch (err) {
     console.log('Database connection error: ', err);
