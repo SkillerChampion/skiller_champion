@@ -1,5 +1,5 @@
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
-const { getSecretAccessName } = require('./secretManager');
+const { getSecretAccessName } = require('./helperFunctions');
 const { GCP_PROJECT_ID } = require('./constants');
 
 const client = new SecretManagerServiceClient({ fallback: true });

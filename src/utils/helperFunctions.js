@@ -1,7 +1,7 @@
 require('dotenv').config();
 const moment = require('moment');
 
-const { HCS_KEYS, ZERO_INDEX, DOT, HCS_TYPES, ARRAY_KEYS } = require('./constants');
+const { HCS_KEYS, ZERO_INDEX, DOT } = require('./constants');
 
 const getTreasuryAccountId = () => process.env.TREASURY_ACCOUNT_ID;
 const getTreasuryPrivateKey = () => process.env.TREASURY_PRIVATE_KEY;
