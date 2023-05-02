@@ -5,7 +5,7 @@ const path = require('path');
 const { initializePgConnection, loadBatisMappers } = require('./src/utils/database/database');
 const configurations = require('./config');
 const { getSecretValue } = require('./src/utils/secretManager');
-const { DEPLOYED_ORIGIN_URL } = require('./src/utils/constants');
+const { DEPLOYED_ORIGIN_URL, NODE_ENVS } = require('./src/utils/constants');
 
 loadBatisMappers();
 initializePgConnection();
