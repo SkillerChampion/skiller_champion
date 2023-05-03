@@ -1,6 +1,8 @@
 const DOT = '.';
-
+const X_ACCOUNT_ID = 'X-ACCOUNT-ID';
+const AUTHORIZATION = 'AUTHORIZATION';
 const ZERO_INDEX = 0;
+const FIVE_SECONDS_SHORT = '5s';
 
 const ARRAY_KEYS = {
   LABEL: 'LABEL',
@@ -80,5 +82,8 @@ module.exports = {
   QUERIES,
   HCS_TYPES,
   DEPLOYED_ORIGIN_URL,
+  X_ACCOUNT_ID,
   GCP_PROJECT_ID,
+  AUTHORIZATION,
+  FIVE_SECONDS_SHORT,
 };

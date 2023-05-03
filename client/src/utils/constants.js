@@ -3,12 +3,17 @@ export const THREE_SECONDS = 3000;
 export const FOUR_SECONDS = 4000;
 
 export const FIVE_SECONDS = 5000;
+export const FIVE_SECONDS_SHORT = '5s';
 export const SIX_SECONDS = 6000;
 export const TEN_SECONDS = 10000;
 export const TWELVE_SECONDS = 12000;
 export const FIFTEEN_SECONDS = 15000;
 export const TWENTY_SECONDS = 20000;
 export const PLATFORM_FEES = 1.5;
+
+// HEADER REQUESTS
+export const X_ACCOUNT_ID = 'X-ACCOUNT-ID';
+export const AUTHORIZATION = 'AUTHORIZATION';
 
 export const SPACE = ' ';
 
@@ -41,7 +46,8 @@ export const HASH_CONNECT_KEYS = {
   PAIRING_STRING: 'pairingString',
   SAVED_PAIRING_DATA: 'savedPairings',
   PAIRING_DATA: 'pairingData',
-  ACCOUNT_ID: 'accountIds',
+  ACCOUNT_IDS: 'accountIds',
+  ACCOUNT_ID: 'accountId',
   NAME: 'name',
   DESCRIPTION: 'description',
   SIGNER: 'signer',
@@ -56,7 +62,7 @@ export const HASH_CONNECT_META_DATA = {
 
 export const hashConnectInitialData = {
   [HASH_CONNECT_KEYS.TOPIC]: '',
-  [HASH_CONNECT_KEYS.ACCOUNT_ID]: '',
+  [HASH_CONNECT_KEYS.ACCOUNT_IDS]: '',
   [HASH_CONNECT_KEYS.PAIRING_STRING]: '',
   [HASH_CONNECT_KEYS.SAVED_PAIRING_DATA]: null,
   [HASH_CONNECT_KEYS.SIGNER]: null

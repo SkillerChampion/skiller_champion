@@ -28,10 +28,11 @@ const getSecretValue = async (secretName) => {
     const getFullSecretName = getSecretAccessName(GCP_PROJECT_ID, secretName);
     const version = await getSecret(getFullSecretName);
 
-    const data = version?.payload?.data ? version.payload.data.toString() : '';
+    const data = version?.payload?.data ? version.payload.data.toString('utf8') : '';
     const decodedSecret = Buffer.from(data, 'base64').toString();
 
     console.log(`Found Secret for key: ${secretName}`);
+    console.log(`Secret value -  ${data}`);
     return decodedSecret;
   } catch (error) {
     console.log(`An Error Occurred while SecretAccessError: ${error}`);

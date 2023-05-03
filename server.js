@@ -6,6 +6,7 @@ const { initializePgConnection, loadBatisMappers } = require('./src/utils/databa
 const configurations = require('./config');
 const { getSecretValue } = require('./src/utils/secretManager');
 const { DEPLOYED_ORIGIN_URL, NODE_ENVS } = require('./src/utils/constants');
+const { validateToken } = require('./src/middleware/auth');
 
 loadBatisMappers();
 initializePgConnection();
@@ -33,7 +34,9 @@ app.get('/api/health', async (req, res) => {
   res.send('FE Node app is running');
 });
 
-app.use('/api/hederaService', require('./src/routes/hederaService'));
+app.use('/api/public', require('./src/routes/openService'));
+
+app.use('/api/hederaService', validateToken, require('./src/routes/hederaService'));
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));

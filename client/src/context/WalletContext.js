@@ -42,7 +42,7 @@ const hashconnect = new HashConnect();
 
 const WalletContextComponent = (props) => {
   const [walletData, setWalletData] = useState();
-  const userAccount = walletData?.[HASH_CONNECT_KEYS.ACCOUNT_ID];
+  const userAccount = walletData?.[HASH_CONNECT_KEYS.ACCOUNT_IDS];
 
   const [userAccountId, setUserAccountId] = useState();
   const [isPlatinumPassAssociated, setIsPlatinumPassAssociated] = useState(false);
@@ -120,7 +120,7 @@ const WalletContextComponent = (props) => {
     let initData = await hashconnect.init(HASH_CONNECT_META_DATA, 'testnet');
 
     if (initData) {
-      const getAccountId = initData.savedPairings[ZERO]?.[HASH_CONNECT_KEYS.ACCOUNT_ID]?.[ZERO];
+      const getAccountId = initData.savedPairings[ZERO]?.[HASH_CONNECT_KEYS.ACCOUNT_IDS]?.[ZERO];
       const getTopic = initData[HASH_CONNECT_KEYS.TOPIC];
       const getPairingString = initData[HASH_CONNECT_KEYS.PAIRING_STRING];
       const getSavedPairingData = initData.savedPairings[ZERO];
@@ -128,7 +128,7 @@ const WalletContextComponent = (props) => {
       const provider = hashconnect.getProvider('testnet', getTopic, getAccountId);
       const signer = hashconnect.getSigner(provider);
 
-      saveWalletData[HASH_CONNECT_KEYS.ACCOUNT_ID] = getAccountId;
+      saveWalletData[HASH_CONNECT_KEYS.ACCOUNT_IDS] = getAccountId;
       saveWalletData[HASH_CONNECT_KEYS.TOPIC] = getTopic;
       saveWalletData[HASH_CONNECT_KEYS.PAIRING_STRING] = getPairingString;
       saveWalletData[HASH_CONNECT_KEYS.SAVED_PAIRING_DATA] = getSavedPairingData;
@@ -142,7 +142,7 @@ const WalletContextComponent = (props) => {
   const setUpHashConnectEvents = (saveWalletData) => {
     hashconnect.pairingEvent.on((data) => {
       const getAccountId =
-        data[HASH_CONNECT_KEYS.PAIRING_DATA]?.[HASH_CONNECT_KEYS.ACCOUNT_ID]?.[ZERO];
+        data[HASH_CONNECT_KEYS.PAIRING_DATA]?.[HASH_CONNECT_KEYS.ACCOUNT_IDS]?.[ZERO];
       const getSavedPairingData = data[HASH_CONNECT_KEYS.PAIRING_DATA];
       const getTopic = saveWalletData[HASH_CONNECT_KEYS.TOPIC];
 
@@ -150,7 +150,7 @@ const WalletContextComponent = (props) => {
       const signer = hashconnect.getSigner(provider);
 
       saveWalletData[HASH_CONNECT_KEYS.SIGNER] = signer;
-      saveWalletData[HASH_CONNECT_KEYS.ACCOUNT_ID] = getAccountId;
+      saveWalletData[HASH_CONNECT_KEYS.ACCOUNT_IDS] = getAccountId;
       saveWalletData[HASH_CONNECT_KEYS.SAVED_PAIRING_DATA] = getSavedPairingData;
       saveWalletData[HASH_CONNECT_KEYS.PROVIDER] = provider;
 
@@ -179,7 +179,7 @@ const WalletContextComponent = (props) => {
 
   const buyPassAndTransferNftToUserAccount = async (amountHbar, passType, tokenId) => {
     try {
-      const userAccountId = walletData[HASH_CONNECT_KEYS.ACCOUNT_ID];
+      const userAccountId = walletData[HASH_CONNECT_KEYS.ACCOUNT_IDS];
 
       if (!amountHbar || !passType || !userAccountId || !tokenId) {
         toast.error('Something went wrong...');

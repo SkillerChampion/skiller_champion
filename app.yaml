@@ -3,7 +3,7 @@ runtime: nodejs16
 env_variables:
   NODE_ENV: production
   PORT: 8080
-
+  API_ACCESS_KEY: eyeyetbsookfudgjd..,sjsjdfh9nbsffxabkvokausagasg
   TREASURY_ACCOUNT_ID: 0.0.3833523
   TREASURY_PRIVATE_KEY: 302e020100300506032b657004220420a9f9e81bbc4cc1d43af5fd4936713a2a9f2e2a66554987fe47e63d71ce7d3013
   TOPIC_ID_FORTUNE_WHEEL: 0.0.3851161

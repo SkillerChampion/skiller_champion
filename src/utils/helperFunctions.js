@@ -8,6 +8,8 @@ const getTreasuryPrivateKey = () => process.env.TREASURY_PRIVATE_KEY;
 
 const getFortuneWheelTopicId = () => process.env.TOPIC_ID_FORTUNE_WHEEL;
 
+const getApiAccessKey = () => process.env.API_ACCESS_KEY;
+
 const b64_to_utf8 = (str) => {
   const decode = decodeURIComponent(atob(str));
 
@@ -85,4 +87,5 @@ module.exports = {
   decodeHcsTimeStamp,
   isEmptyArray,
   getSecretAccessName,
+  getApiAccessKey,
 };

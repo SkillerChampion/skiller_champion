@@ -10,7 +10,7 @@ const ConnectedWallet = () => {
 
   return (
     <>
-      <DropdownMenu options={options} label={walletData?.[HASH_CONNECT_KEYS.ACCOUNT_ID]} />
+      <DropdownMenu options={options} label={walletData?.[HASH_CONNECT_KEYS.ACCOUNT_IDS]} />
     </>
   );
 };
