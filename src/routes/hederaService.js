@@ -53,6 +53,8 @@ router.post(
 
       const transactionId = TransactionId.generate(accountId);
 
+      const pvKey = await getTreasuryPrivateKey();
+
       const txn = new TransferTransaction()
         .addHbarTransfer(AccountId.fromString(getTreasuryAccountId()), Math.abs(amountHbar))
         .addHbarTransfer(AccountId.fromString(accountId), -Math.abs(amountHbar))
@@ -65,13 +67,12 @@ router.post(
         .setNodeAccountIds(nodeId)
         .setTransactionId(transactionId)
         .freeze();
-
-      const treasurySigned = await txn.sign(PrivateKey.fromString(getTreasuryPrivateKey()));
+      const treasurySigned = await txn.sign(PrivateKey.fromString(pvKey));
       const bytes = treasurySigned.toBytes();
 
       res.json(bytes);
     } catch (err) {
-      console.log(err.message);
+      console.log('Error /buyPassForHbars - ', err.message);
       res.status(500).send('Server Error');
     }
   }
@@ -100,6 +101,7 @@ router.post(
       nodeId.push(new AccountId(3));
 
       const transactionId = TransactionId.generate(accountId);
+      const pvKey = await getTreasuryPrivateKey();
 
       const txn = new TransferTransaction()
         .addNftTransfer(
@@ -112,7 +114,7 @@ router.post(
         .setTransactionId(transactionId)
         .freeze();
 
-      const treasurySigned = await txn.sign(PrivateKey.fromString(getTreasuryPrivateKey()));
+      const treasurySigned = await txn.sign(PrivateKey.fromString(pvKey));
       const bytes = treasurySigned.toBytes();
 
       res.json(bytes);
@@ -144,6 +146,7 @@ router.post(
       nodeId.push(new AccountId(3));
 
       const transactionId = TransactionId.generate(accountId);
+      const pvKey = await getTreasuryPrivateKey();
 
       const txn = await new TokenAssociateTransaction()
         .setAccountId(accountId)
@@ -152,7 +155,7 @@ router.post(
         .setTransactionId(transactionId)
         .freeze();
 
-      const treasurySigned = await txn.sign(PrivateKey.fromString(getTreasuryPrivateKey()));
+      const treasurySigned = await txn.sign(PrivateKey.fromString(pvKey));
       const bytes = treasurySigned.toBytes();
 
       res.json(bytes);
@@ -275,7 +278,7 @@ router.post(
     const { accountId } = req.body;
 
     try {
-      const client = getHederaClient();
+      const client = await getHederaClient();
       const balanceCheckTx = await new AccountBalanceQuery().setAccountId(accountId).execute(client);
 
       const hbarBalance = Number(balanceCheckTx?.hbars?.toString()?.split(SPACE)?.[ZERO]) ?? 0;
@@ -306,7 +309,7 @@ router.post(
     const { accountId, winningAmount } = req.body;
 
     try {
-      const client = getHederaClient();
+      const client = await getHederaClient();
 
       const computePlatformFees = (PLATFORM_FEES * winningAmount) / 100;
       const deductPlatformFees = winningAmount - computePlatformFees;

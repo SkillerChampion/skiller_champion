@@ -4,7 +4,6 @@ const cors = require('cors');
 const path = require('path');
 const { initializePgConnection, loadBatisMappers } = require('./src/utils/database/database');
 const configurations = require('./config');
-const { getSecretValue } = require('./src/utils/secretManager');
 const { DEPLOYED_ORIGIN_URL, NODE_ENVS } = require('./src/utils/constants');
 const { validateToken } = require('./src/middleware/auth');
 
@@ -16,21 +15,16 @@ const corsOptions = {
   origin: DEPLOYED_ORIGIN_URL,
 };
 
-if (process.env.NODE_ENV === NODE_ENVS.development) app.use(cors());
-else app.use(cors(corsOptions));
+if (configurations.NODE_ENV === NODE_ENVS.development) {
+  app.use(cors());
+} else {
+  console.log('Activated CORS to whitelist deployed domain - ', corsOptions.origin);
+  app.use(cors(corsOptions));
+}
 
 app.use(express.json({ extended: false }));
 
-console.log(
-  'CHECKING ENVS - ',
-  process.env.NODE_ENV,
-  configurations.dbPassword,
-  configurations.database,
-  configurations.dbHost
-);
-
 app.get('/api/health', async (req, res) => {
-  console.log('Secret check - ', await getSecretValue(configurations.dbPassword));
   res.send('FE Node app is running');
 });
 
@@ -46,7 +40,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = configurations.PORT || 8080;
 
 app.listen(PORT, function () {
   console.log(`Server started on PORT ${PORT}`);

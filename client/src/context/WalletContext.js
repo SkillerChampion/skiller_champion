@@ -49,7 +49,6 @@ const WalletContextComponent = (props) => {
   const [isGoldPassAssociated, setIsGoldPassAssociated] = useState(false);
   const [isSilverPassAssociated, setIsSilverPassAssociated] = useState(false);
 
-  console.log('userAccountId', getTreasuryAccountId());
   const isAdmin = userAccountId === getTreasuryAccountId();
 
   const { data: tokenRelationships, refetch: refetchTokenRelationships } = useQuery(

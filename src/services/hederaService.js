@@ -10,20 +10,12 @@ const { HCS_KEYS, QUERIES, MAPPER_NAMESPACES, ARRAY_KEYS, HCS_TYPES } = require(
 
 const {
   getTreasuryAccountId,
-  getTreasuryPrivateKey,
   decodeHcsTimeStamp,
   isEmptyArray,
+  getHederaClient,
 } = require('../utils/helperFunctions');
 
 const { executeQuery } = require('../utils/database/database');
-
-const getHederaClient = () => {
-  if (process.env.RUN_TESTNET) {
-    return Client.forTestnet().setOperator(getTreasuryAccountId(), getTreasuryPrivateKey());
-  } else {
-    return Client.forMainnet().setOperator(getTreasuryAccountId(), getTreasuryPrivateKey());
-  }
-};
 
 const getTopicMessagesByTopicId = async (topicId, order = 'desc') => {
   const limit = 1000000000000000000;
@@ -105,7 +97,7 @@ const findAndCallQueryFnByPassType = async (passType, params) => {
 };
 
 const submitHcsMessage = async (topicId, message = {}, userAccountId) => {
-  const client = getHederaClient();
+  const client = await getHederaClient();
   const appendUserAccountId = { ...message, [HCS_KEYS.user_account_id]: userAccountId };
 
   const stringifyMessage = JSON.stringify(appendUserAccountId);
@@ -151,5 +143,4 @@ module.exports = {
   getLeaderBoardByPassType,
   insertUserEmail,
   getLeaderBoardByAccountId,
-  getHederaClient,
 };

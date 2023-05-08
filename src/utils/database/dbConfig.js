@@ -1,17 +1,17 @@
 const configurations = require('../../../config');
-const secretManager = require('../secretManager');
 const { NODE_ENVS } = require('../constants');
+const { getDynamicEnv } = require('../helperFunctions');
 
 const getPoolConfigurations = async () => {
   const config = {
     pool: {
       max: 10,
       min: 2,
-      acquireTimeoutMillis: 60000
+      acquireTimeoutMillis: 60000,
     },
     createTimeoutMillis: 30000,
     idleTimeoutMillis: 600000,
-    createRetryIntervalMillis: 200
+    createRetryIntervalMillis: 200,
   };
   return await createTcpPool(config);
 };
@@ -28,21 +28,16 @@ const createTcpPool = async (config) => {
       password: dbPass,
       database: configurations.database,
       host: dbSocketAddr?.[0],
-      port: dbSocketAddr?.[1]
+      port: dbSocketAddr?.[1],
     },
 
-    ...config
+    ...config,
   };
   return dbConfig;
 };
 
 const getPassword = async () => {
-  if (process.env.NODE_ENV === NODE_ENVS.development || process.env.NODE_ENV === NODE_ENVS.st) {
-    return configurations.dbPassword;
-  } else {
-    console.log('Fix secret manager');
-    return await secretManager.getSecretValue(configurations.dbPassword);
-  }
+  return getDynamicEnv(configurations.dbPassword);
 };
 
 module.exports = { getPoolConfigurations };

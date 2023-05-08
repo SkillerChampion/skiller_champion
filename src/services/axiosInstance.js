@@ -1,9 +1,10 @@
 const axios = require('axios');
+const configurations = require('../../config');
 
 const HEDERA_NODE_API = axios.create({
-  baseURL: process.env.HEDERA_NODE_API
+  baseURL: configurations.hederaApi,
 });
 
 module.exports = {
-  HEDERA_NODE_API
+  HEDERA_NODE_API,
 };

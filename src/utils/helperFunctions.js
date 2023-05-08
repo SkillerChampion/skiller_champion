@@ -1,21 +1,30 @@
 require('dotenv').config();
 const { Client } = require('@hashgraph/sdk');
-
 const moment = require('moment');
 const { enc, AES } = require('crypto-js');
 
-const { HCS_KEYS, ZERO, DOT } = require('./constants');
+const secretManager = require('./secretManager');
+const { HCS_KEYS, ZERO, DOT, NODE_ENVS } = require('./constants');
+const configurations = require('../../config');
 
-const getTreasuryAccountId = () => process.env.TREASURY_ACCOUNT_ID;
-const getTreasuryPrivateKey = () => process.env.TREASURY_PRIVATE_KEY;
-const getApiAccessKey = () => process.env.API_ACCESS_KEY;
-const getEncryptionKey = () => process.env.ENCRYPTION_KEY;
-
-const getHederaClient = () => {
-  if (process.env.RUN_TESTNET) {
-    return Client.forTestnet().setOperator(getTreasuryAccountId(), getTreasuryPrivateKey());
+const getDynamicEnv = async (key) => {
+  if (configurations.NODE_ENV === NODE_ENVS.development || configurations.NODE_ENV === NODE_ENVS.st) {
+    return key;
   } else {
-    return Client.forMainnet().setOperator(getTreasuryAccountId(), getTreasuryPrivateKey());
+    return await secretManager.getSecretValue(key);
+  }
+};
+
+const getTreasuryPrivateKey = async () => await getDynamicEnv(configurations.treasuryPrivateKey);
+const getTreasuryAccountId = () => configurations.treasuryAccountId;
+const getApiAccessKey = () => configurations.apiAccessKey;
+const getEncryptionKey = () => configurations.encryptionKey;
+
+const getHederaClient = async () => {
+  if (configurations.runTestNet) {
+    return Client.forTestnet().setOperator(getTreasuryAccountId(), await getTreasuryPrivateKey());
+  } else {
+    return Client.forMainnet().setOperator(getTreasuryAccountId(), await getTreasuryPrivateKey());
   }
 };
 
@@ -104,4 +113,5 @@ module.exports = {
   getApiAccessKey,
   decryptData,
   getHederaClient,
+  getDynamicEnv,
 };
