@@ -93,9 +93,6 @@ const isEmptyArray = (input = []) => {
   return Array.isArray(input) && input?.length > 0 ? false : true;
 };
 
-const getSecretAccessName = (projectId, secretName) => {
-  return `projects/${projectId}/secrets/${secretName}/versions/latest`;
-};
 
 const decryptData = (text) => {
   const bytes = AES.decrypt(text, getEncryptionKey());
@@ -109,7 +106,6 @@ module.exports = {
   decodeAllMessagesWithUserId,
   decodeHcsTimeStamp,
   isEmptyArray,
-  getSecretAccessName,
   getApiAccessKey,
   decryptData,
   getHederaClient,

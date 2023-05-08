@@ -1,8 +1,11 @@
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
-const { getSecretAccessName } = require('./helperFunctions');
+const client = new SecretManagerServiceClient({ fallback: true });
+
 const { GCP_PROJECT_ID } = require('./constants');
 
-const client = new SecretManagerServiceClient({ fallback: true });
+const getSecretAccessName = (projectId, secretName) => {
+  return `projects/${projectId}/secrets/${secretName}/versions/latest`;
+};
 
 const getSecret = async (secretName) => {
   try {
@@ -32,7 +35,6 @@ const getSecretValue = async (secretName) => {
     const decodedSecret = Buffer.from(data, 'base64').toString();
 
     console.log(`Found Secret for key: ${secretName}`);
-    console.log(`Secret value -  ${data}`);
     return decodedSecret;
   } catch (error) {
     console.log(`An Error Occurred while SecretAccessError: ${error}`);
