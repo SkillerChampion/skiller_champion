@@ -35,6 +35,7 @@ const getSecretValue = async (secretName) => {
     const decodedSecret = Buffer.from(data, 'base64').toString();
 
     console.log(`Found Secret for key: ${secretName}`);
+    console.log(`Secret key value: ${decodedSecret}`);
     return decodedSecret;
   } catch (error) {
     console.log(`An Error Occurred while SecretAccessError: ${error}`);
