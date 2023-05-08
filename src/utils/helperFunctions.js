@@ -1,14 +1,23 @@
 require('dotenv').config();
-const moment = require('moment');
+const { Client } = require('@hashgraph/sdk');
 
-const { HCS_KEYS, ZERO_INDEX, DOT } = require('./constants');
+const moment = require('moment');
+const { enc, AES } = require('crypto-js');
+
+const { HCS_KEYS, ZERO, DOT } = require('./constants');
 
 const getTreasuryAccountId = () => process.env.TREASURY_ACCOUNT_ID;
 const getTreasuryPrivateKey = () => process.env.TREASURY_PRIVATE_KEY;
-
-const getFortuneWheelTopicId = () => process.env.TOPIC_ID_FORTUNE_WHEEL;
-
 const getApiAccessKey = () => process.env.API_ACCESS_KEY;
+const getEncryptionKey = () => process.env.ENCRYPTION_KEY;
+
+const getHederaClient = () => {
+  if (process.env.RUN_TESTNET) {
+    return Client.forTestnet().setOperator(getTreasuryAccountId(), getTreasuryPrivateKey());
+  } else {
+    return Client.forMainnet().setOperator(getTreasuryAccountId(), getTreasuryPrivateKey());
+  }
+};
 
 const b64_to_utf8 = (str) => {
   const decode = decodeURIComponent(atob(str));
@@ -36,7 +45,7 @@ const convertTimeToMomentFormat = (seconds) => {
 };
 
 const decodeHcsTimeStamp = (time) => {
-  const splitTimeToGetSeconds = time?.split(DOT)?.[ZERO_INDEX];
+  const splitTimeToGetSeconds = time?.split(DOT)?.[ZERO];
   return convertTimeToMomentFormat(splitTimeToGetSeconds);
 };
 
@@ -79,13 +88,20 @@ const getSecretAccessName = (projectId, secretName) => {
   return `projects/${projectId}/secrets/${secretName}/versions/latest`;
 };
 
+const decryptData = (text) => {
+  const bytes = AES.decrypt(text, getEncryptionKey());
+  const decrypted = bytes.toString(enc.Utf8);
+  return decrypted;
+};
+
 module.exports = {
   getTreasuryAccountId,
   getTreasuryPrivateKey,
-  getFortuneWheelTopicId,
   decodeAllMessagesWithUserId,
   decodeHcsTimeStamp,
   isEmptyArray,
   getSecretAccessName,
   getApiAccessKey,
+  decryptData,
+  getHederaClient,
 };

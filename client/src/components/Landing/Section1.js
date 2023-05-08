@@ -34,7 +34,7 @@ const Section1 = () => {
             </li> */}
             <li>You can try your luck to earn 3 times of your played HBARS</li>
 
-            <li>The winner wins all of the bet amount. Fees is {PLATFORM_FEES}% + network fees</li>
+            <li>The winner wins all of the bet amount. We have {PLATFORM_FEES}% platform fees</li>
           </ul>
           <div className="mt-6">
             <Button text="Try Wheel of fortune" onClick={redirectToWheelOfFortune} />

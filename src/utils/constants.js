@@ -1,8 +1,9 @@
 const DOT = '.';
-const X_ACCOUNT_ID = 'X-ACCOUNT-ID';
+const SPACE = ' ';
+const ZERO = 0;
+const PLATFORM_FEES = ZERO;
+const THREE_MINUTES = '3m';
 const AUTHORIZATION = 'AUTHORIZATION';
-const ZERO_INDEX = 0;
-const FIVE_SECONDS_SHORT = '5s';
 
 const ARRAY_KEYS = {
   LABEL: 'LABEL',
@@ -22,6 +23,7 @@ const HASH_CONNECT_KEYS = {
   PAIRING_DATA: 'pairingData',
   NAME: 'name',
   DESCRIPTION: 'description',
+  TOKEN: 'token',
 };
 
 const HCS_KEYS = {
@@ -74,7 +76,7 @@ const GCP_PROJECT_ID = 948181003317;
 module.exports = {
   ARRAY_KEYS,
   HASH_CONNECT_KEYS,
-  ZERO_INDEX,
+  ZERO,
   DOT,
   HCS_KEYS,
   NODE_ENVS,
@@ -82,8 +84,9 @@ module.exports = {
   QUERIES,
   HCS_TYPES,
   DEPLOYED_ORIGIN_URL,
-  X_ACCOUNT_ID,
   GCP_PROJECT_ID,
+  THREE_MINUTES,
+  SPACE,
   AUTHORIZATION,
-  FIVE_SECONDS_SHORT,
+  PLATFORM_FEES,
 };

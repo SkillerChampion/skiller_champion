@@ -3,16 +3,14 @@ export const THREE_SECONDS = 3000;
 export const FOUR_SECONDS = 4000;
 
 export const FIVE_SECONDS = 5000;
-export const FIVE_SECONDS_SHORT = '5s';
 export const SIX_SECONDS = 6000;
 export const TEN_SECONDS = 10000;
 export const TWELVE_SECONDS = 12000;
 export const FIFTEEN_SECONDS = 15000;
 export const TWENTY_SECONDS = 20000;
-export const PLATFORM_FEES = 1.5;
+export const PLATFORM_FEES = 0;
 
 // HEADER REQUESTS
-export const X_ACCOUNT_ID = 'X-ACCOUNT-ID';
 export const AUTHORIZATION = 'AUTHORIZATION';
 
 export const SPACE = ' ';

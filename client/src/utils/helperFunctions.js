@@ -1,17 +1,18 @@
 import { ARRAY_KEYS, HCS_TYPES, HCS_KEYS } from './constants';
 import { toast } from 'react-toastify';
+import { AES } from 'crypto-js';
 import { submitHcsMessage } from '../services/hederaService';
 
 // Private Keys and Token Ids
 export const getTreasuryAccountId = () => process.env.REACT_APP_TREASURY_ACCOUNT_ID;
-export const getTreasuryPrivateKey = () => process.env.REACT_APP_TREASURY_PRIVATE_KEY;
+
 export const getTreasuryPublicKey = () => process.env.REACT_APP_TREASURY_PUBLIC_KEY;
 export const getPlatinumPassTokenId = () => process.env.REACT_APP_PLATINUM_PASS_TOKEN_ID;
 export const getGoldPassTokenId = () => process.env.REACT_APP_GOLD_PASS_TOKEN_ID;
 export const getSilverPassTokenId = () => process.env.REACT_APP_SILVER_PASS_TOKEN_ID;
 export const getFortuneWheelTopicId = () => process.env.REACT_APP_TOPIC_ID_FORTUNE_WHEEL;
 export const getHashScanUrl = () => process.env.REACT_APP_HASHSCAN_URL;
-export const getApiAccessKey = () => process.env.REACT_APP_API_ACCESS_KEY;
+export const getEncryptionKey = () => process.env.REACT_APP_ENCRYPTION_KEY;
 
 export const scrollToTop = (smooth = false) => {
   if (smooth) {
@@ -163,4 +164,9 @@ export const submitUsePassFailedHcsMsg = async (
 export const linkToHashScanTxn = (timeStamp = '') => {
   const url = getHashScanUrl();
   return `${url}/transaction/${timeStamp}`;
+};
+
+export const encryptData = async (text) => {
+  const data = await AES.encrypt(text, getEncryptionKey());
+  return data;
 };

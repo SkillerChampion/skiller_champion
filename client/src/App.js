@@ -8,7 +8,7 @@ import WinnerLoserAnimation from './components/Common/WinnerLoserAnimation/Winne
 import Header from './components/Common/Header/index';
 import Admin from './components/Admin/Index';
 
-import { scrollToTop, getTreasuryPrivateKey } from './utils/helperFunctions';
+import { scrollToTop } from './utils/helperFunctions';
 import { FortuneContext } from './context/FortuneContext';
 import { WalletContext } from './context/WalletContext';
 import SocialMediaLinks from './components/Common/SocialMediaLinks/SocialMediaLinks';
@@ -41,12 +41,6 @@ function App() {
       theme="dark"
       className="text-xs sm:text-sm toastStyles"
     />
-  );
-
-  console.log(
-    'getTreasuryPrivateKey - ',
-    getTreasuryPrivateKey(),
-    process.env.REACT_APP_NODE_BE_OPEN_SOURCE_API
   );
 
   return (

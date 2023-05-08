@@ -36,17 +36,24 @@ const Dashboard = () => {
     isGoldPassAssociated,
     isSilverPassAssociated,
     sendTxnToWallet,
-    refetchTokenRelationships
+    refetchTokenRelationships,
+    platinumPassesInUserAccount,
+    goldPassesInUserAccount,
+    silverPassesInUserAccount
   } = useContext(WalletContext);
 
   const navigate = useNavigate();
 
-  const { data, error } = useQuery(['getLeaderBoardByAccountId', userAccountId], () =>
+  const { data, error, refetch } = useQuery(['getLeaderBoardByAccountId', userAccountId], () =>
     getLeaderBoardByAccountId(userAccountId)
   );
 
   const [buySelectedPass, setBuySelectedPass] = useState();
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
+
+  useEffect(() => {
+    refetch();
+  }, [platinumPassesInUserAccount, silverPassesInUserAccount, goldPassesInUserAccount]);
 
   useEffect(() => {
     setBuySelectedPass(BUY_PASSES_OPTIONS?.[ZERO]);
@@ -155,6 +162,7 @@ const Dashboard = () => {
       />
     );
   };
+  console.log('getWinningAmount', data);
 
   const TotalWinnings = () => {
     const getTotalWinning = data?.reduce(

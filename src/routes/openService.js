@@ -64,7 +64,6 @@ router.post(
 
     try {
       const jwtToken = await generateJwtToken({ accountId });
-      console.log('jwtTokenjwtToken', jwtToken);
       res.json({ token: jwtToken });
     } catch (err) {
       console.log(err.message);

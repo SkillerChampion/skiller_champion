@@ -4,12 +4,14 @@ const {
   AccountId,
   TransactionId,
   PrivateKey,
+  AccountBalanceQuery,
 } = require('@hashgraph/sdk');
 
 const {
   getTreasuryPrivateKey,
   getTreasuryAccountId,
   decodeAllMessagesWithUserId,
+  getHederaClient,
 } = require('../utils/helperFunctions');
 
 const { check, validationResult } = require('express-validator');
@@ -22,7 +24,7 @@ const {
   getLeaderBoardByAccountId,
 } = require('../services/hederaService');
 
-const { HCS_KEYS } = require('../utils/constants');
+const { SPACE, ZERO, PLATFORM_FEES } = require('../utils/constants');
 const express = require('express');
 const router = express.Router();
 
@@ -242,8 +244,8 @@ router.get('/getBuyPassesByAccountId/:accountId', async (req, res) => {
   }
 });
 
-//@route GET api/getBuyPassesByAccountId
-//desc - Get use passes by account id
+//@route GET api/getLeaderBoardByAccountId
+//desc - Get Leader board by account id
 router.get('/getLeaderBoardByAccountId/:accountId', async (req, res) => {
   const accountId = req.params.accountId;
 
@@ -257,5 +259,83 @@ router.get('/getLeaderBoardByAccountId/:accountId', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+//@route POST api/getAccountBalances
+//desc - Post account balance by account id
+router.post(
+  '/getAccountBalances',
+  [check('accountId', 'Account Id is required').not().isEmpty()],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { accountId } = req.body;
+
+    try {
+      const client = getHederaClient();
+      const balanceCheckTx = await new AccountBalanceQuery().setAccountId(accountId).execute(client);
+
+      const hbarBalance = Number(balanceCheckTx?.hbars?.toString()?.split(SPACE)?.[ZERO]) ?? 0;
+
+      res.json(hbarBalance);
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+//@route POST api/transferPrizeToUserAccount
+//desc - Post account balance by account id
+router.post(
+  '/transferPrizeToUserAccount',
+  [
+    check('accountId', 'Account Id is required').not().isEmpty(),
+    check('winningAmount', 'Account Id is required').not().isEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { accountId, winningAmount } = req.body;
+
+    try {
+      const client = getHederaClient();
+
+      const computePlatformFees = (PLATFORM_FEES * winningAmount) / 100;
+      const deductPlatformFees = winningAmount - computePlatformFees;
+
+      const negativeAmount = -Math.abs(deductPlatformFees);
+      const positiveAmount = Math.abs(deductPlatformFees);
+
+      const sendHbar = await new TransferTransaction()
+        .addHbarTransfer(AccountId.fromString(getTreasuryAccountId()), negativeAmount) //Sending account
+        .addHbarTransfer(AccountId.fromString(accountId), positiveAmount) //Receiving account
+        .execute(client);
+
+      const transactionReceipt = await sendHbar.getReceipt(client);
+      const txnRecord = await sendHbar.getRecord(client);
+
+      const receiptStatus = transactionReceipt?.status?.toString();
+      const txnId = txnRecord?.transactionId?.toString();
+
+      console.log(
+        'The transfer transaction from my treasury to the user account was: ' + receiptStatus,
+        +' with txn id - ' + txnId
+      );
+
+      res.json({ receiptStatus, txnId });
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 module.exports = router;
