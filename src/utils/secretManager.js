@@ -32,7 +32,7 @@ const getSecretValue = async (secretName) => {
     const version = await getSecret(getFullSecretName);
 
     const data = version?.payload?.data ? version.payload.data : '';
-    const decodedSecret = Buffer.from([data], 'base64').toString();
+    const decodedSecret = Buffer.from(data, 'base64').toString('utf-8');
 
     console.log(`Found Secret for key: ${secretName}, ${version.payload.data.toString()}`);
     console.log(`Secret key value: ${decodedSecret}`);
