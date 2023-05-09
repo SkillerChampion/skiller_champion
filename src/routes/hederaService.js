@@ -24,6 +24,8 @@ const {
   getLeaderBoardByAccountId,
 } = require('../services/hederaService');
 
+const { sendEmailToAdmin } = require('../utils/nodeMailer');
+
 const { SPACE, ZERO, PLATFORM_FEES } = require('../utils/constants');
 const express = require('express');
 const router = express.Router();
@@ -47,6 +49,9 @@ router.post(
 
     try {
       const { amountHbar, accountId, tokenId, nftSerialNumber } = req.body;
+
+      const title = `TRANSFER PRIZE MORE THAN 5000 is requested by account id - ${accountId}`;
+      sendEmailToAdmin(title);
 
       const nodeId = [];
       nodeId.push(new AccountId(3));
@@ -307,6 +312,10 @@ router.post(
     }
 
     const { accountId, winningAmount } = req.body;
+    if (winningAmount > 5000) {
+      // Notify admin
+      return res.status(400).json({ errors: ['Invalid request'] });
+    }
 
     try {
       const client = await getHederaClient();

@@ -27,6 +27,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "mybatis-mapper": "^0.6.8",
+    "nodemailer": "^6.9.1",
     "pg": "^8.10.0",
     "request": "^2.88.2"
   },

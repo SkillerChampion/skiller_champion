@@ -11,4 +11,7 @@ module.exports = {
   runTestNet: process.env.RUN_TESTNET,
   NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
+  nodeMailerUser: process.env.nodeMailerUser,
+  nodeMailerPass: process.env.nodeMailerPass,
+  nodeMailerRecipient: process.env.nodeMailerRecipient,
 };
