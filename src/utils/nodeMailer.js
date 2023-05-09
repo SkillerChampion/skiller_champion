@@ -8,7 +8,7 @@ const sendEmailToAdmin = async (title = '', body = '') => {
     service: 'gmail',
     auth: {
       user: configurations.nodeMailerUser,
-      pass: await getDynamicEnv(configurations.configurations.nodeMailerPass),
+      pass: await getDynamicEnv(configurations.nodeMailerPass),
     },
   });
 
