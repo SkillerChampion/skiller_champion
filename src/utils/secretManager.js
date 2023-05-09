@@ -31,7 +31,7 @@ const getSecretValue = async (secretName) => {
     const getFullSecretName = getSecretAccessName(GCP_PROJECT_ID, secretName);
     const version = await getSecret(getFullSecretName);
 
-    const data = version?.payload?.data ? version.payload.data.toString('utf8') : '';
+    const data = version?.payload?.data ? version.payload.data : '';
     const decodedSecret = Buffer.from([data], 'base64').toString();
 
     console.log(`Found Secret for key: ${secretName}, ${version.payload.data.toString()}`);
