@@ -4,7 +4,7 @@ const moment = require('moment');
 const { enc, AES } = require('crypto-js');
 
 const secretManager = require('./secretManager');
-const { HCS_KEYS, ZERO, DOT, NODE_ENVS } = require('./constants');
+const { HCS_KEYS, ZERO, DOT, NODE_ENVS, UNAUTHORIZED } = require('./constants');
 const configurations = require('../../config');
 
 const getDynamicEnv = async (key) => {
@@ -93,11 +93,16 @@ const isEmptyArray = (input = []) => {
   return Array.isArray(input) && input?.length > 0 ? false : true;
 };
 
-
 const decryptData = (text) => {
   const bytes = AES.decrypt(text, getEncryptionKey());
   const decrypted = bytes.toString(enc.Utf8);
   return decrypted;
+};
+
+const handleServerError = (err, res) => {
+  if (err.message === UNAUTHORIZED) {
+    res.status(401).json({ msg: 'Unauthorized' });
+  } else res.status(500).send('Server Error');
 };
 
 module.exports = {
@@ -110,4 +115,5 @@ module.exports = {
   decryptData,
   getHederaClient,
   getDynamicEnv,
+  handleServerError,
 };

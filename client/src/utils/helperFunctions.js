@@ -136,7 +136,7 @@ export const submitUsePassFailedHcsMsg = async (
   tokenId,
   status,
   errorMsg,
-  txnId,
+  txnId = 0,
   nftTransferTxnId,
   accountId
 ) => {
@@ -153,6 +153,7 @@ export const submitUsePassFailedHcsMsg = async (
     [HCS_KEYS.status]: status,
     [HCS_KEYS.error_msg]: getError,
     [HCS_KEYS.txn_id]: txnId,
+    [HCS_KEYS.winner_amount]: 0,
     [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId
   };
 

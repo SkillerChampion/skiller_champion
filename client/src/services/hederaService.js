@@ -168,8 +168,33 @@ export const getAccountBalances = async (accountId) => {
     .then((res) => res.data);
 };
 
-export const transferPrizeToUserAccount = async (winningAmount, accountId) => {
-  if (!accountId || !winningAmount) return;
+export const transferPrizeToUserAccount = async (
+  winningAmount,
+  accountId,
+  passType,
+  nftTransferTxnId,
+  nftSerialNumber,
+  nftTokenId
+) => {
+  // !winningAmount for value=0 will execute if statement, so don't use it
+  if (!accountId || !passType || !nftTransferTxnId || !nftSerialNumber || !nftTokenId) {
+    console.log(
+      'transferPrizeToUserAccount API return executed',
+      !accountId,
+      !passType,
+      !nftTransferTxnId,
+      !nftSerialNumber,
+      !nftTokenId
+    );
+    return;
+  }
+
+  const payload = {
+    [HCS_KEYS.token_id]: nftTokenId,
+    [HCS_KEYS.pass_type]: passType,
+    [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId,
+    [HCS_KEYS.pass_serial_number]: nftSerialNumber
+  };
 
   const token = await getAuthToken(accountId);
 
@@ -178,7 +203,8 @@ export const transferPrizeToUserAccount = async (winningAmount, accountId) => {
       `/hederaService/transferPrizeToUserAccount?${AUTHORIZATION}=${token}&accountId=${accountId}`,
       {
         accountId,
-        winningAmount
+        winningAmount,
+        ...payload
       }
     )
     .then((res) => res.data);

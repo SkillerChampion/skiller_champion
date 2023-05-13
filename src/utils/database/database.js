@@ -47,7 +47,7 @@ const getDbConnection = async () => {
 };
 
 const executeQuery = async (mapperNamespace, sqlId, params = {}) => {
-  console.log('Called mapper - ', mapperNamespace, ' with param - ', params);
+  console.log('Called SQL Id - ', sqlId, ' with param - ', params);
 
   try {
     const connection = await getDbConnection();

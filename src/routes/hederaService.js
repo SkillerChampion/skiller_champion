@@ -12,6 +12,7 @@ const {
   getTreasuryAccountId,
   decodeAllMessagesWithUserId,
   getHederaClient,
+  handleServerError,
 } = require('../utils/helperFunctions');
 
 const { check, validationResult } = require('express-validator');
@@ -22,11 +23,13 @@ const {
   getUsePassesByUserId,
   getBuyPassesByAccountId,
   getLeaderBoardByAccountId,
+  checkIfUsePassTxnWithTrueRedemptionExists,
+  markUsePassRedeemed,
 } = require('../services/hederaService');
 
 const { sendEmailToAdmin } = require('../utils/nodeMailer');
 
-const { SPACE, ZERO, PLATFORM_FEES } = require('../utils/constants');
+const { SPACE, ZERO, PLATFORM_FEES, UNAUTHORIZED } = require('../utils/constants');
 const express = require('express');
 const router = express.Router();
 
@@ -49,9 +52,6 @@ router.post(
 
     try {
       const { amountHbar, accountId, tokenId, nftSerialNumber } = req.body;
-
-      const title = `TRANSFER PRIZE MORE THAN 5000 is requested by account id - ${accountId}`;
-      sendEmailToAdmin(title);
 
       const nodeId = [];
       nodeId.push(new AccountId(3));
@@ -209,12 +209,12 @@ router.post(
     const { topicId, message, accountId } = req.body;
 
     try {
-      const topicData = await submitHcsMessage(topicId, message, accountId);
+      const topicData = await submitHcsMessage(topicId, message, accountId, res);
 
       res.json(topicData);
     } catch (err) {
-      console.log(err.message);
-      res.status(500).send('Server Error');
+      console.log('/submitHcsMessage ERROR - ', err);
+      handleServerError(err, res);
     }
   }
 );
@@ -302,7 +302,11 @@ router.post(
   '/transferPrizeToUserAccount',
   [
     check('accountId', 'Account Id is required').not().isEmpty(),
-    check('winningAmount', 'Account Id is required').not().isEmpty(),
+    check('winningAmount', 'Winning amount is required').not().isEmpty(),
+    check('pass_type', 'pass_type is required').not().isEmpty(),
+    check('nft_transfer_txn_id', 'nft_transfer_txn_id is required').not().isEmpty(),
+    check('pass_serial_number', 'pass_serial_number is required').not().isEmpty(),
+    check('token_id', 'token_id is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -311,41 +315,54 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { accountId, winningAmount } = req.body;
-    if (winningAmount > 5000) {
-      // Notify admin
+    const params = req.body;
+
+    if (params.winningAmount > 5000) {
+      const title = `TRANSFER PRIZE OF ${params.winningAmount} is requested by account id - ${params.accountId}. MAX ALLOWED - 5000`;
+      sendEmailToAdmin(title);
+
       return res.status(400).json({ errors: ['Invalid request'] });
     }
 
     try {
-      const client = await getHederaClient();
+      const isRedeemAvailable = await checkIfUsePassTxnWithTrueRedemptionExists(params);
+      console.log('isRedeemAvailable', isRedeemAvailable);
 
-      const computePlatformFees = (PLATFORM_FEES * winningAmount) / 100;
-      const deductPlatformFees = winningAmount - computePlatformFees;
+      if (isRedeemAvailable) {
+        const client = await getHederaClient();
+        const computePlatformFees = (PLATFORM_FEES * params.winningAmount) / 100;
+        const deductPlatformFees = params.winningAmount - computePlatformFees;
+        const negativeAmount = -Math.abs(deductPlatformFees);
+        const positiveAmount = Math.abs(deductPlatformFees);
 
-      const negativeAmount = -Math.abs(deductPlatformFees);
-      const positiveAmount = Math.abs(deductPlatformFees);
+        const sendHbar = await new TransferTransaction()
+          .addHbarTransfer(AccountId.fromString(getTreasuryAccountId()), negativeAmount) //Sending account
+          .addHbarTransfer(AccountId.fromString(params.accountId), positiveAmount) //Receiving account
+          .execute(client);
 
-      const sendHbar = await new TransferTransaction()
-        .addHbarTransfer(AccountId.fromString(getTreasuryAccountId()), negativeAmount) //Sending account
-        .addHbarTransfer(AccountId.fromString(accountId), positiveAmount) //Receiving account
-        .execute(client);
+        const transactionReceipt = await sendHbar.getReceipt(client);
+        const txnRecord = await sendHbar.getRecord(client);
 
-      const transactionReceipt = await sendHbar.getReceipt(client);
-      const txnRecord = await sendHbar.getRecord(client);
+        const receiptStatus = transactionReceipt?.status?.toString();
+        const txnId = txnRecord?.transactionId?.toString();
 
-      const receiptStatus = transactionReceipt?.status?.toString();
-      const txnId = txnRecord?.transactionId?.toString();
+        console.log(
+          'The transfer transaction from my treasury to the user account was: ' + receiptStatus,
+          +' with txn id - ' + txnId
+        );
 
-      console.log(
-        'The transfer transaction from my treasury to the user account was: ' + receiptStatus,
-        +' with txn id - ' + txnId
-      );
+        markUsePassRedeemed(params);
 
-      res.json({ receiptStatus, txnId });
+        res.json({ receiptStatus, txnId });
+      } else {
+        const title = `/transferPrizeToUserAccount api called for redeeming token that is already redeemed`;
+        sendEmailToAdmin(title);
+
+        throw Error(UNAUTHORIZED);
+      }
     } catch (err) {
-      console.log(err.message);
-      res.status(500).send('Server Error');
+      console.log('/transferPrizeToUserAccount Error - ', err.message);
+      handleServerError(err, res);
     }
   }
 );

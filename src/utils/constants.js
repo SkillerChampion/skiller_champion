@@ -2,8 +2,10 @@ const DOT = '.';
 const SPACE = ' ';
 const ZERO = 0;
 const PLATFORM_FEES = ZERO;
-const THREE_MINUTES = '3m';
+const THREE_MINUTES = '10m';
 const AUTHORIZATION = 'AUTHORIZATION';
+const UNAUTHORIZED = 'UNAUTHORIZED';
+const USER_AGENT = 'user-agent';
 
 const ARRAY_KEYS = {
   LABEL: 'LABEL',
@@ -13,6 +15,7 @@ const ARRAY_KEYS = {
   ANGLE: 'ANGLE',
   IS_WIN: 'IS_WIN',
   FUNCTION: 'FUNCTION',
+  VALIDATION: 'VALIDATION',
 };
 
 const HASH_CONNECT_KEYS = {
@@ -40,6 +43,7 @@ const HCS_KEYS = {
   payer_account_id: 'payer_account_id',
   modified_timestamp: 'modified_timestamp',
   email: 'email',
+  txn_id: 'txn_id',
 };
 
 const NODE_ENVS = {
@@ -63,6 +67,9 @@ const QUERIES = {
   selectUserEmail: 'selectUserEmail',
   updateUserEmail: 'updateUserEmail',
   selectLeaderBoardUsePassByAccountId: 'selectLeaderBoardUsePassByAccountId',
+  selectUsePassByTxnId: 'selectUsePassByTxnId',
+  checkIfUsePassTxnWithTrueRedemptionExists: 'checkIfUsePassTxnWithTrueRedemptionExists',
+  markUsePassRedeemed: 'markUsePassRedeemed',
 };
 
 const HCS_TYPES = {
@@ -89,4 +96,6 @@ module.exports = {
   SPACE,
   AUTHORIZATION,
   PLATFORM_FEES,
+  UNAUTHORIZED,
+  USER_AGENT,
 };

@@ -6,7 +6,16 @@ const {
   TopicMessageSubmitTransaction,
 } = require('@hashgraph/sdk');
 
-const { HCS_KEYS, QUERIES, MAPPER_NAMESPACES, ARRAY_KEYS, HCS_TYPES } = require('../utils/constants');
+const {
+  HCS_KEYS,
+  QUERIES,
+  MAPPER_NAMESPACES,
+  ARRAY_KEYS,
+  HCS_TYPES,
+  ZERO,
+  UNAUTHORIZED,
+} = require('../utils/constants');
+const { sendEmailToAdmin } = require('../utils/nodeMailer');
 
 const {
   getTreasuryAccountId,
@@ -23,6 +32,36 @@ const getTopicMessagesByTopicId = async (topicId, order = 'desc') => {
   return HEDERA_NODE_API.get(`/api/v1/topics/${topicId}/messages?order=${order}&limit=${limit}`).then(
     (res) => res.data
   );
+};
+
+const checkIfUsePassTxnExists = async (params) => {
+  const result = await executeQuery(MAPPER_NAMESPACES.buyOrUsePasses, QUERIES.selectUsePassByTxnId, params);
+
+  const count = result?.rows?.[ZERO]?.count;
+
+  if (count == ZERO) {
+    // ONLY USE == as count is string
+    return false;
+  } else return true;
+};
+
+const checkIfUsePassTxnWithTrueRedemptionExists = async (params) => {
+  const result = await executeQuery(
+    MAPPER_NAMESPACES.buyOrUsePasses,
+    QUERIES.checkIfUsePassTxnWithTrueRedemptionExists,
+    params
+  );
+
+  const count = result?.rows?.[ZERO]?.count;
+
+  if (count == ZERO) {
+    // ONLY USE == as count is string
+    return false;
+  } else return true;
+};
+
+const markUsePassRedeemed = async (params) => {
+  await executeQuery(MAPPER_NAMESPACES.buyOrUsePasses, QUERIES.markUsePassRedeemed, params);
 };
 
 const insertBuyPassTable = async (params) => {
@@ -81,26 +120,51 @@ const insertUserEmail = async (params) => {
   await executeQuery(MAPPER_NAMESPACES.userInformation, QUERIES.insertUserEmail, params);
 };
 
-const findAndCallQueryFnByPassType = async (passType, params) => {
+const findAndCallQueryFnByPassType = async (params = {}, res) => {
   const dataSet = [
-    { [ARRAY_KEYS.VALUE]: HCS_TYPES.BUY_PASSES, [ARRAY_KEYS.FUNCTION]: insertBuyPassTable },
-    { [ARRAY_KEYS.VALUE]: HCS_TYPES.USE_PASSES, [ARRAY_KEYS.FUNCTION]: insertUsePassTable },
+    {
+      [ARRAY_KEYS.VALUE]: HCS_TYPES.BUY_PASSES,
+      [ARRAY_KEYS.FUNCTION]: insertBuyPassTable,
+      [ARRAY_KEYS.VALIDATION]: checkIfUsePassTxnExists,
+    },
+    {
+      [ARRAY_KEYS.VALUE]: HCS_TYPES.USE_PASSES,
+      [ARRAY_KEYS.FUNCTION]: insertUsePassTable,
+    },
   ];
 
-  const queryFn = dataSet?.find((item) => item[ARRAY_KEYS.VALUE] === passType)?.[ARRAY_KEYS.FUNCTION];
-
   try {
-    if (queryFn) await queryFn(params);
+    const filterFnType = dataSet?.find((item) => item[ARRAY_KEYS.VALUE] === params[HCS_KEYS.type]);
+    const queryFn = filterFnType?.[ARRAY_KEYS.FUNCTION];
+
+    // Only call validation for buy pass insertion
+    // The validation for use pass happens inside /transferPrizeToUserAccount api
+    const doesTxnAlreadyExists = await filterFnType?.[ARRAY_KEYS.VALIDATION]?.(params);
+
+    if (doesTxnAlreadyExists) {
+      const title = `Duplicate buy pass insertion with txn id - ${params[HCS_KEYS.txn_id]} detected by user id - ${
+        params[HCS_KEYS.user_account_id]
+      }`;
+
+      sendEmailToAdmin(title);
+
+      throw Error(UNAUTHORIZED);
+    }
+
+    if (queryFn && !doesTxnAlreadyExists) return queryFn;
   } catch (error) {
     console.log('Database query error - ', error);
+    throw error;
   }
 };
 
-const submitHcsMessage = async (topicId, message = {}, userAccountId) => {
+const submitHcsMessage = async (topicId, message = {}, userAccountId, res) => {
   const client = await getHederaClient();
   const appendUserAccountId = { ...message, [HCS_KEYS.user_account_id]: userAccountId };
 
   const stringifyMessage = JSON.stringify(appendUserAccountId);
+
+  const queryFn = await findAndCallQueryFnByPassType(appendUserAccountId, res);
 
   let sendResponse = await new TopicMessageSubmitTransaction({
     topicId: topicId,
@@ -130,7 +194,7 @@ const submitHcsMessage = async (topicId, message = {}, userAccountId) => {
     queryData
   );
 
-  await findAndCallQueryFnByPassType(appendUserAccountId?.[HCS_KEYS.type], queryData);
+  await queryFn(queryData);
 
   return transactionStatus;
 };
@@ -143,4 +207,6 @@ module.exports = {
   getLeaderBoardByPassType,
   insertUserEmail,
   getLeaderBoardByAccountId,
+  checkIfUsePassTxnWithTrueRedemptionExists,
+  markUsePassRedeemed,
 };

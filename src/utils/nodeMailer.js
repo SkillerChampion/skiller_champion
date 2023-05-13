@@ -1,8 +1,13 @@
 const nodemailer = require('nodemailer');
 const configurations = require('../../config');
 const { getDynamicEnv } = require('./helperFunctions');
+const { NODE_ENVS } = require('./constants');
 
 const sendEmailToAdmin = async (title = '', body = '') => {
+  console.log('SECURITY NOTIFICATION - ', title);
+
+  if (configurations.NODE_ENV === NODE_ENVS.development) return;
+
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     service: 'gmail',

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { HASH_CONNECT_KEYS, THREE_MINUTES, AUTHORIZATION } = require('../utils/constants');
+const { HASH_CONNECT_KEYS, THREE_MINUTES, AUTHORIZATION, USER_AGENT } = require('../utils/constants');
 const { getApiAccessKey, decryptData } = require('../utils/helperFunctions');
+const { sendEmailToAdmin } = require('../utils/nodeMailer');
 
 const generateJwtToken = async (data) => {
   try {
@@ -17,7 +18,17 @@ const generateJwtToken = async (data) => {
 };
 
 const validateToken = async (req, res, next) => {
+  const allowedUserAgents = ['Chrome', 'Safari', 'Firefox', 'Edg'];
+
   try {
+    // const getUserAgent = req.headers[USER_AGENT];
+    // const isAgentAllowed = allowedUserAgents.some((agent) => getUserAgent.includes(agent));
+
+    // if (!isAgentAllowed) {
+    //   console.log(`User Agent - ${getUserAgent} is not allowed`);
+    //   throw Error;
+    // }
+
     //Get token from header
     const allSpacesRegex = / /g;
 
@@ -26,7 +37,9 @@ const validateToken = async (req, res, next) => {
 
     const decrypt = decryptData(token);
 
-    if (!token || !accountId || !decrypt) return res.status(401).json({ msg: 'Unauthorized' });
+    if (!token || !accountId || !decrypt) {
+      throw Error;
+    }
 
     const decoded = await jwt.verify(decrypt, getApiAccessKey());
 
@@ -36,7 +49,8 @@ const validateToken = async (req, res, next) => {
       next();
     }
   } catch (err) {
-    console.log('Token decode failed: ', err);
+    const title = 'JWT token decode failed - ' + err;
+    sendEmailToAdmin(title);
 
     res.status(401).json({ msg: 'Unauthorized' });
   }

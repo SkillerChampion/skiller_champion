@@ -14,7 +14,8 @@
             user_account_id, 
             consensus_timestamp, 
             payer_account_id,
-            modified_timestamp
+            modified_timestamp,
+            is_redeemed
         )			                                              
         VALUES
         (
@@ -28,7 +29,8 @@
             #{user_account_id},
             #{consensus_timestamp},
             #{payer_account_id},
-            #{modified_timestamp}
+            #{modified_timestamp},
+            false
         ) 
         RETURNING status as status 
     </insert>
@@ -73,10 +75,36 @@
                 ''	  	 		
                 </otherwise>
             </choose>,
-            #{modified_timestamp}	
+            #{modified_timestamp}
         ) 
         RETURNING status as status 
     </insert>
+
+    <select id="selectUsePassByTxnId">
+        SELECT COUNT(*) FROM skiller_champion.buy_passes
+        WHERE txn_id=E#{txn_id}
+        LIMIT 5
+    </select>
+
+    <select id="checkIfUsePassTxnWithTrueRedemptionExists">
+        SELECT COUNt(*) FROM skiller_champion.buy_passes
+        WHERE token_id=#{token_id}
+        AND   pass_type=#{pass_type}
+        AND   pass_serial_number=#{pass_serial_number}
+        AND   user_account_id=#{accountId}
+        AND   is_redeemed=false
+        LIMIT 5
+    </select>
+
+    <update id="markUsePassRedeemed">
+        UPDATE skiller_champion.buy_passes
+        SET is_redeemed=true
+        WHERE token_id=#{token_id}
+        AND   pass_type=#{pass_type}
+        AND   pass_serial_number=#{pass_serial_number}
+        AND   user_account_id=#{accountId}
+        AND   is_redeemed=false
+    </update>
 
     <select id="selectUsePassByUserId">
         SELECT * FROM skiller_champion.use_passes
@@ -109,8 +137,5 @@
         WHERE user_account_id = #{account_id}
         GROUP BY user_account_id, pass_type
         ORDER by winner_amount DESC
-    </select>
-
-
-    
+    </select>    
 </mapper>

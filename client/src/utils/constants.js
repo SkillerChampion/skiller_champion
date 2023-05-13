@@ -1,4 +1,5 @@
 export const ZERO = 0;
+export const TWO_SECONDS = 2000;
 export const THREE_SECONDS = 3000;
 export const FOUR_SECONDS = 4000;
 

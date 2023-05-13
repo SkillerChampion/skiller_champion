@@ -14,6 +14,7 @@ import {
   THREE_SECONDS,
   HEDERA_API_KEYS
 } from '../../../utils/constants';
+import { displayErrors } from '../../../utils/helperFunctions';
 import {
   setCssVariable,
   scrollToTop,
@@ -85,7 +86,15 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
           const randomSlice = await getRandomSlice(betAmount);
           winningAmount = randomSlice[ARRAY_KEYS.VALUE];
 
-          const res = await transferPrizeToUserAccount(winningAmount, userAccountId);
+          const res = await transferPrizeToUserAccount(
+            winningAmount,
+            userAccountId,
+            passType,
+            nftTransferTxnId,
+            nftSerialNumber,
+            nftTokenId
+          );
+
           transferPrizeTxnId = res?.txnId;
 
           if (res?.receiptStatus) {
@@ -119,7 +128,10 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
           userAccountId
         );
 
-        toast.error('Error - Please contact admin');
+        const errors = err.response?.data?.errors;
+        if (errors) {
+          displayErrors(errors);
+        } else toast.error('Error - Please contact admin');
       }
     } else {
       toast.error('Error in spinning wheel');
