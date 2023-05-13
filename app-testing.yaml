@@ -8,10 +8,10 @@ env_variables:
   TREASURY_ACCOUNT_ID: 0.0.3833523
   TREASURY_PRIVATE_KEY: TREASURY_PRIVATE_KEY
   RUN_TESTNET: true
-  DB_USER: 'DB_USER'
-  DB_PASSWORD_KEY: 'DB_PASSWORD_KEY'
+  DB_USER: 'postgres'
+  DB_PASSWORD_KEY: 'TESTING_DB_PASSWORD_KEY'
   DATABASE: 'skiller_champion'
-  DB_HOST: '127.0.0.1:5432'
+  DB_HOST: '/cloudsql/skiller-champion:us-central1:testing-db'
   HEDERA_NODE_API: https://testnet.mirrornode.hedera.com
   ENCRYPTION_KEY: fpydn87d.12pvud21.shd.4545shivd.88764sajfhhof..rlah
   nodeMailerUser: stuntmania201@gmail.com

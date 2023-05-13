@@ -17,18 +17,19 @@ const getPoolConfigurations = async () => {
 };
 
 const createTcpPool = async (config) => {
-  const dbSocketAddr = configurations.dbHost?.split(':');
+  // const dbSocketAddr = configurations.dbHost?.split(':');
 
   const dbUser = configurations.dbUser;
   const dbPass = await getPassword();
+
   const dbConfig = {
     client: 'pg',
     connection: {
       user: dbUser,
       password: dbPass,
       database: configurations.database,
-      host: dbSocketAddr?.[0],
-      port: dbSocketAddr?.[1],
+      host: configurations.dbHost,
+      // port: dbSocketAddr?.[1],
     },
 
     ...config,
