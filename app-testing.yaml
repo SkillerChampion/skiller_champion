@@ -1,4 +1,5 @@
 runtime: nodejs16
+service: testingFe
 
 env_variables:
   NODE_ENV: testing
