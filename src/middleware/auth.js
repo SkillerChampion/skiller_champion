@@ -1,5 +1,11 @@
 const jwt = require('jsonwebtoken');
-const { HASH_CONNECT_KEYS, TOKEN_EXPIRY_TIME, AUTHORIZATION, USER_AGENT } = require('../utils/constants');
+const {
+  HASH_CONNECT_KEYS,
+  TOKEN_EXPIRY_TIME,
+  AUTHORIZATION,
+  USER_AGENT,
+  UNAUTHORIZED,
+} = require('../utils/constants');
 const { getApiAccessKey, decryptData } = require('../utils/helperFunctions');
 const { sendEmailToAdmin } = require('../utils/nodeMailer');
 
@@ -25,11 +31,7 @@ const validateToken = async (req, res, next) => {
     const isAgentAllowed = allowedUserAgents.some((agent) => getUserAgent.includes(agent));
 
     if (!isAgentAllowed) {
-      const title = `Middleware auth - User Agent - ${getUserAgent} is not allowed`;
-
-      console.log(title);
-      sendEmailToAdmin(title);
-      throw Error;
+      throw Error(UNAUTHORIZED);
     }
 
     //Get token from header
@@ -52,9 +54,15 @@ const validateToken = async (req, res, next) => {
       next();
     }
   } catch (err) {
-    const title = 'JWT token decode failed - ' + err.toString();
-    sendEmailToAdmin(title);
+    if (err.message === UNAUTHORIZED) {
+      const title = `Middleware auth error - User Agent ${getUserAgent} is not allowed`;
+      sendEmailToAdmin(title);
+    } else {
+      const title = 'JWT token decode failed - ' + err;
+      sendEmailToAdmin(title);
+    }
 
+    console.log('Middleware auth error - ', err);
     res.status(401).json({ msg: 'Unauthorized' });
   }
 };
