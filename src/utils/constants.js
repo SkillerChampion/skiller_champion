@@ -77,7 +77,10 @@ const HCS_TYPES = {
   USE_PASSES: 'USE_PASSES',
 };
 
-const DEPLOYED_ORIGIN_URL = 'https://skiller-champion.uc.r.appspot.com';
+const DEPLOYED_ORIGIN_URL = [
+  'https://skiller-champion.uc.r.appspot.com',
+  'https://testing-fe-dot-skiller-champion.uc.r.appspot.com',
+];
 const GCP_PROJECT_ID = 948181003317;
 
 module.exports = {
