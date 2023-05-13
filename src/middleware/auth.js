@@ -52,7 +52,7 @@ const validateToken = async (req, res, next) => {
       next();
     }
   } catch (err) {
-    const title = 'JWT token decode failed - ' + err.message;
+    const title = 'JWT token decode failed - ' + err.toString();
     sendEmailToAdmin(title);
 
     res.status(401).json({ msg: 'Unauthorized' });
