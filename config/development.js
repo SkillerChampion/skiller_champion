@@ -3,6 +3,7 @@ module.exports = {
   dbPassword: process.env.DB_PASSWORD_KEY,
   database: process.env.DATABASE,
   dbHost: process.env.DB_HOST,
+  dbPort: process.env.DB_PORT,
   hederaApi: process.env.HEDERA_NODE_API,
   treasuryAccountId: process.env.TREASURY_ACCOUNT_ID,
   treasuryPrivateKey: process.env.TREASURY_PRIVATE_KEY,

@@ -29,7 +29,7 @@ const createTcpPool = async (config) => {
       password: dbPass,
       database: configurations.database,
       host: configurations.dbHost,
-      // port: dbSocketAddr?.[1],
+      port: configurations.dbPort,
     },
 
     ...config,
