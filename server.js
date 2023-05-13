@@ -25,7 +25,8 @@ if (configurations.NODE_ENV === NODE_ENVS.development) {
 app.use(express.json({ extended: false }));
 
 app.get('/api/health', async (req, res) => {
-  res.send('FE Node app is running');
+  console.log(`Node environment set to - ${configurations.NODE_ENV}`);
+  res.send('FE Node app is running fine');
 });
 
 app.use('/api/public', require('./src/routes/openService'));

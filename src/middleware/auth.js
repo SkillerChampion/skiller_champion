@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { HASH_CONNECT_KEYS, THREE_MINUTES, AUTHORIZATION, USER_AGENT } = require('../utils/constants');
+const { HASH_CONNECT_KEYS, TOKEN_EXPIRY_TIME, AUTHORIZATION, USER_AGENT } = require('../utils/constants');
 const { getApiAccessKey, decryptData } = require('../utils/helperFunctions');
 const { sendEmailToAdmin } = require('../utils/nodeMailer');
 
@@ -9,7 +9,7 @@ const generateJwtToken = async (data) => {
       [HASH_CONNECT_KEYS.ACCOUNT_ID]: data?.[HASH_CONNECT_KEYS.ACCOUNT_ID],
     };
 
-    const token = await jwt.sign(payload, getApiAccessKey(), { expiresIn: THREE_MINUTES });
+    const token = await jwt.sign(payload, getApiAccessKey(), { expiresIn: TOKEN_EXPIRY_TIME });
 
     if (token) return token;
   } catch (error) {
@@ -21,13 +21,13 @@ const validateToken = async (req, res, next) => {
   const allowedUserAgents = ['Chrome', 'Safari', 'Firefox', 'Edg'];
 
   try {
-    // const getUserAgent = req.headers[USER_AGENT];
-    // const isAgentAllowed = allowedUserAgents.some((agent) => getUserAgent.includes(agent));
+    const getUserAgent = req.headers[USER_AGENT];
+    const isAgentAllowed = allowedUserAgents.some((agent) => getUserAgent.includes(agent));
 
-    // if (!isAgentAllowed) {
-    //   console.log(`User Agent - ${getUserAgent} is not allowed`);
-    //   throw Error;
-    // }
+    if (!isAgentAllowed) {
+      console.log(`User Agent - ${getUserAgent} is not allowed`);
+      throw Error;
+    }
 
     //Get token from header
     const allSpacesRegex = / /g;

@@ -8,7 +8,7 @@ const { HCS_KEYS, ZERO, DOT, NODE_ENVS, UNAUTHORIZED } = require('./constants');
 const configurations = require('../../config');
 
 const getDynamicEnv = async (key) => {
-  if (configurations.NODE_ENV === NODE_ENVS.development || configurations.NODE_ENV === NODE_ENVS.st) {
+  if (configurations.NODE_ENV === NODE_ENVS.development) {
     return key;
   } else {
     return await secretManager.getSecretValue(key);

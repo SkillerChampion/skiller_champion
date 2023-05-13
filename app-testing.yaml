@@ -1,0 +1,39 @@
+runtime: nodejs16
+
+env_variables:
+  NODE_ENV: testing
+  PORT: 8080
+  API_ACCESS_KEY: ey.at622.fuafjgk8f.gjsgaa.0paf9g6a.ghards
+  TREASURY_ACCOUNT_ID: 0.0.3833523
+  TREASURY_PRIVATE_KEY: TREASURY_PRIVATE_KEY
+  RUN_TESTNET: true
+  DB_USER: 'DB_USER'
+  DB_PASSWORD_KEY: 'DB_PASSWORD_KEY'
+  DATABASE: 'skiller_champion'
+  DB_HOST: '127.0.0.1:5432'
+  HEDERA_NODE_API: https://testnet.mirrornode.hedera.com
+  ENCRYPTION_KEY: fpydn87d.12pvud21.shd.4545shivd.88764sajfhhof..rlah
+  nodeMailerUser: stuntmania201@gmail.com
+  nodeMailerPass: nodeMailerPass
+  nodeMailerRecipient: stuntmania101@gmail.com
+
+handlers:
+  # Serve API routes using the Node.js app
+  - url: /api/.*
+    script: auto
+    secure: always
+    redirect_http_response_code: 301
+
+  # Serve static assets from the React build
+  - url: /(.*\.(js|css|png|jpg|gif|ico|json|html|otf))$
+    static_files: client/build/\1
+    upload: client/build/.*\.(js|css|png|jpg|gif|ico|json|html|otf)$
+    secure: always
+    redirect_http_response_code: 301
+
+  # Serve the index.html file for all other routes
+  - url: /.*
+    secure: always
+    redirect_http_response_code: 301
+    static_files: client/build/index.html
+    upload: client/build/index.html

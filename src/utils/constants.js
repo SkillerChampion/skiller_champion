@@ -2,7 +2,7 @@ const DOT = '.';
 const SPACE = ' ';
 const ZERO = 0;
 const PLATFORM_FEES = ZERO;
-const THREE_MINUTES = '10m';
+const TOKEN_EXPIRY_TIME = '10s';
 const AUTHORIZATION = 'AUTHORIZATION';
 const UNAUTHORIZED = 'UNAUTHORIZED';
 const USER_AGENT = 'user-agent';
@@ -49,7 +49,7 @@ const HCS_KEYS = {
 const NODE_ENVS = {
   development: 'development',
   production: 'production',
-  st: 'st',
+  testing: 'testing',
 };
 
 const MAPPER_NAMESPACES = {
@@ -92,7 +92,7 @@ module.exports = {
   HCS_TYPES,
   DEPLOYED_ORIGIN_URL,
   GCP_PROJECT_ID,
-  THREE_MINUTES,
+  TOKEN_EXPIRY_TIME,
   SPACE,
   AUTHORIZATION,
   PLATFORM_FEES,
