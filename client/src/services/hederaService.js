@@ -8,26 +8,28 @@ import { NODE_BE_API as axios, HEDERA_NODE_API as hederaApi, getAuthToken } from
 export const submitHcsMessage = async (topicId, message = {}, accountId, passType) => {
   const token = await getAuthToken(accountId);
 
-  return axios
-    .post(`/hederaService/submitHcsMessage?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
-      topicId,
-      message,
-      accountId
-    })
-    .then((res) => res.data);
+  if (token)
+    return axios
+      .post(`/hederaService/submitHcsMessage?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
+        topicId,
+        message,
+        accountId
+      })
+      .then((res) => res.data);
 };
 
 export const chargeUserAndTransferNft = async (amountHbar, accountId, tokenId, nftSerialNumber) => {
   const token = await getAuthToken(accountId);
 
-  return axios
-    .post(`/hederaService/buyPassForHbars?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
-      amountHbar,
-      accountId,
-      tokenId,
-      nftSerialNumber
-    })
-    .then((res) => res.data);
+  if (token)
+    return axios
+      .post(`/hederaService/buyPassForHbars?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
+        amountHbar,
+        accountId,
+        tokenId,
+        nftSerialNumber
+      })
+      .then((res) => res.data);
 };
 
 export const transferNftToTreasury = async (accountId, tokenId, nftSerialNumber) => {
@@ -35,24 +37,29 @@ export const transferNftToTreasury = async (accountId, tokenId, nftSerialNumber)
 
   const token = await getAuthToken(accountId);
 
-  return axios
-    .post(`/hederaService/transferNftToTreasury?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
-      accountId,
-      tokenId,
-      nftSerialNumber
-    })
-    .then((res) => res.data);
+  if (token)
+    return axios
+      .post(
+        `/hederaService/transferNftToTreasury?${AUTHORIZATION}=${token}&accountId=${accountId}`,
+        {
+          accountId,
+          tokenId,
+          nftSerialNumber
+        }
+      )
+      .then((res) => res.data);
 };
 
 export const associateTokens = async (accountId, tokenId) => {
   const token = await getAuthToken(accountId);
 
-  return axios
-    .post(`/hederaService/associateTokens?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
-      accountId,
-      tokenId
-    })
-    .then((res) => res.data);
+  if (token)
+    return axios
+      .post(`/hederaService/associateTokens?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
+        accountId,
+        tokenId
+      })
+      .then((res) => res.data);
 };
 
 export const getTokenRelationships = (accountId) => {
@@ -93,11 +100,12 @@ export const getUsePassesByAccountId = async (accountId) => {
 
   const token = await getAuthToken(accountId);
 
-  return axios
-    .get(
-      `/hederaService/getUsePassesByUserId/${accountId}?${AUTHORIZATION}=${token}&accountId=${accountId}`
-    )
-    .then((res) => res.data);
+  if (token)
+    return axios
+      .get(
+        `/hederaService/getUsePassesByUserId/${accountId}?${AUTHORIZATION}=${token}&accountId=${accountId}`
+      )
+      .then((res) => res.data);
 };
 
 export const getBuyPassesByAccountId = async (accountId) => {
@@ -105,11 +113,12 @@ export const getBuyPassesByAccountId = async (accountId) => {
 
   const token = await getAuthToken(accountId);
 
-  return axios
-    .get(
-      `/hederaService/getBuyPassesByAccountId/${accountId}?${AUTHORIZATION}=${token}&accountId=${accountId}`
-    )
-    .then((res) => res.data);
+  if (token)
+    return axios
+      .get(
+        `/hederaService/getBuyPassesByAccountId/${accountId}?${AUTHORIZATION}=${token}&accountId=${accountId}`
+      )
+      .then((res) => res.data);
 };
 
 export const getLeaderBoardData = async (passType = '') => {
@@ -133,26 +142,26 @@ export const getLeaderBoardByAccountId = async (accountId) => {
   if (!accountId) return;
 
   const token = await getAuthToken(accountId);
-
-  return axios
-    .get(
-      `/hederaService/getLeaderBoardByAccountId/${accountId}?${AUTHORIZATION}=${token}&accountId=${accountId}`
-    )
-    .then((res) => {
-      return res.data;
-    });
+  if (token)
+    return axios
+      .get(
+        `/hederaService/getLeaderBoardByAccountId/${accountId}?${AUTHORIZATION}=${token}&accountId=${accountId}`
+      )
+      .then((res) => {
+        return res.data;
+      });
 };
 
 export const getAccountBalances = async (accountId) => {
   if (!accountId) return;
 
   const token = await getAuthToken(accountId);
-
-  return axios
-    .post(`/hederaService/getAccountBalances?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
-      accountId
-    })
-    .then((res) => res.data);
+  if (token)
+    return axios
+      .post(`/hederaService/getAccountBalances?${AUTHORIZATION}=${token}&accountId=${accountId}`, {
+        accountId
+      })
+      .then((res) => res.data);
 };
 
 export const transferPrizeToUserAccount = async (
@@ -184,17 +193,17 @@ export const transferPrizeToUserAccount = async (
   };
 
   const token = await getAuthToken(accountId);
-
-  return axios
-    .post(
-      `/hederaService/transferPrizeToUserAccount?${AUTHORIZATION}=${token}&accountId=${accountId}`,
-      {
-        accountId,
-        winningAmount,
-        ...payload
-      }
-    )
-    .then((res) => res.data);
+  if (token)
+    return axios
+      .post(
+        `/hederaService/transferPrizeToUserAccount?${AUTHORIZATION}=${token}&accountId=${accountId}`,
+        {
+          accountId,
+          winningAmount,
+          ...payload
+        }
+      )
+      .then((res) => res.data);
 };
 
 // export const subscribeToTopicOnMainnet = () => {

@@ -55,10 +55,10 @@ const validateToken = async (req, res, next) => {
     }
   } catch (err) {
     if (err.message === UNAUTHORIZED) {
-      const title = `Middleware auth error - User Agent ${getUserAgent} is not allowed`;
+      const title = `Middleware auth error - User Agent ${getUserAgent} is not allowed for accountId = ${accountId}. Token value =${token}`;
       sendEmailToAdmin(title);
     } else {
-      const title = 'JWT token decode failed - ' + err;
+      const title = `JWT token decode failed for accountId = ${accountId}. Token value =${token} Error- ` + err;
       sendEmailToAdmin(title);
     }
 
