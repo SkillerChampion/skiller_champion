@@ -11,7 +11,7 @@ env_variables:
   DB_USER: 'postgres'
   DB_PASSWORD_KEY: 'TESTING_DB_PASSWORD_KEY'
   DATABASE: 'postgres'
-  DB_HOST: '/cloudsql/skiller-champion:us-central1:testing-db'
+  DB_HOST: '34.66.137.245'
   DB_PORT: '5432'
   HEDERA_NODE_API: https://testnet.mirrornode.hedera.com
   ENCRYPTION_KEY: fpydn87d.12pvud21.shd.4545shivd.88764sajfhhof..rlah
