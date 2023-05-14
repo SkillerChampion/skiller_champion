@@ -10,7 +10,6 @@ const {
 const {
   getTreasuryPrivateKey,
   getTreasuryAccountId,
-  decodeAllMessagesWithUserId,
   getHederaClient,
   handleServerError,
 } = require('../utils/helperFunctions');
@@ -18,7 +17,6 @@ const {
 const { check, validationResult } = require('express-validator');
 
 const {
-  getTopicMessagesByTopicId,
   submitHcsMessage,
   getUsePassesByUserId,
   getBuyPassesByAccountId,
@@ -170,25 +168,6 @@ router.post(
     }
   }
 );
-
-//@route GET api/getAllMessagesByTopicId
-//desc - Get consensus messages by topic id
-router.get('/getAllMessagesByTopicId/:topicId/:accountId', async (req, res) => {
-  const order = req.query.order;
-  const passType = req.query.passType;
-  const topicId = req.params.topicId;
-  const accountId = req.params.accountId;
-
-  try {
-    const topicData = await getTopicMessagesByTopicId(topicId, order);
-    const decodedMsgs = decodeAllMessagesWithUserId(topicData, passType, accountId);
-
-    res.json(decodedMsgs);
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send('Server Error');
-  }
-});
 
 //@route POST api/submitHcsMessage
 //desc - Post consensus messages

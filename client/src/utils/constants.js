@@ -10,6 +10,7 @@ export const TWELVE_SECONDS = 12000;
 export const FIFTEEN_SECONDS = 15000;
 export const TWENTY_SECONDS = 20000;
 export const PLATFORM_FEES = 0;
+export const DOT = '.';
 
 // HEADER REQUESTS
 export const AUTHORIZATION = 'AUTHORIZATION';
@@ -118,10 +119,10 @@ export const HCS_KEYS = {
   txn_id: 'txn_id',
   nft_transfer_txn_id: 'nft_transfer_txn_id',
   consensus_timestamp: 'consensus_timestamp',
-  modified_timestamp: 'modified_timestamp',
   message: 'message',
   messages: 'messages',
-  payer_account_id: 'payer_account_id'
+  payer_account_id: 'payer_account_id',
+  time: 'time'
 };
 
 export const HCS_TYPES = {

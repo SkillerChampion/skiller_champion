@@ -14,7 +14,6 @@
             user_account_id, 
             consensus_timestamp, 
             payer_account_id,
-            modified_timestamp,
             is_redeemed
         )			                                              
         VALUES
@@ -29,7 +28,6 @@
             #{user_account_id},
             #{consensus_timestamp},
             #{payer_account_id},
-            #{modified_timestamp},
             false
         ) 
         RETURNING status as status 
@@ -50,9 +48,7 @@
             payer_account_id,
             winner_amount,
             nft_transfer_txn_id,
-            error_msg,
-            modified_timestamp
-        )			                                              
+            error_msg        )			                                              
         VALUES
         (
             #{pass_serial_number},	                                               
@@ -74,9 +70,7 @@
                 <otherwise>
                 ''	  	 		
                 </otherwise>
-            </choose>,
-            #{modified_timestamp}
-        ) 
+            </choose>        ) 
         RETURNING status as status 
     </insert>
 

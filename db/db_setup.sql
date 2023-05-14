@@ -13,7 +13,6 @@ create table skiller_champion.BUY_PASSES (
    txn_id              VARCHAR(120)          null,
    user_account_id     VARCHAR(120)          null,
    payer_account_id    VARCHAR(120)          null,
-   modified_timestamp  VARCHAR(120)          null,
    is_redeemed         BOOLEAN
 );
 
@@ -35,8 +34,7 @@ create table skiller_champion.USE_PASSES (
    nft_transfer_txn_id VARCHAR(120)          null,
    user_account_id     VARCHAR(120)          null,
    payer_account_id    VARCHAR(120)          null,
-   error_msg           TEXT                  null,
-   modified_timestamp  VARCHAR(120)          null
+   error_msg           TEXT                  null
 );
 
 comment on table skiller_champion.USE_PASSES is

@@ -41,7 +41,6 @@ const HCS_KEYS = {
   message: 'message',
   messages: 'messages',
   payer_account_id: 'payer_account_id',
-  modified_timestamp: 'modified_timestamp',
   email: 'email',
   txn_id: 'txn_id',
 };

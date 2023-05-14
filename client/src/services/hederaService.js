@@ -88,19 +88,6 @@ export const getAllNftsFromAccountWithTokenId = (accountId, tokenId, returnOnlyC
   });
 };
 
-export const getTopicMessagesByTopicId = async (topicId, accountId, passType) => {
-  if (!topicId || !accountId) return;
-  const order = 'desc';
-
-  const token = await getAuthToken(accountId);
-
-  return axios
-    .get(
-      `/hederaService/getAllMessagesByTopicId/${topicId}/${accountId}?passType=${passType}&order=${order}&${AUTHORIZATION}=${token}&accountId=${accountId}`
-    )
-    .then((res) => res.data);
-};
-
 export const getUsePassesByAccountId = async (accountId) => {
   if (!accountId) return;
 

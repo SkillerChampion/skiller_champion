@@ -1,5 +1,7 @@
-import { ARRAY_KEYS, HCS_TYPES, HCS_KEYS } from './constants';
+import { ARRAY_KEYS, HCS_TYPES, HCS_KEYS, ZERO, DOT } from './constants';
 import { toast } from 'react-toastify';
+import moment from 'moment';
+
 import { AES } from 'crypto-js';
 import { submitHcsMessage } from '../services/hederaService';
 
@@ -170,4 +172,15 @@ export const linkToHashScanTxn = (timeStamp = '') => {
 export const encryptData = async (text) => {
   const data = await AES.encrypt(text, getEncryptionKey());
   return data;
+};
+
+const convertTimeToMomentFormat = (seconds) => {
+  const unixTime = moment.unix(seconds)?.locale('en');
+  const formattedTime = unixTime?.format('MMMM DD, YYYY - hh:mm A');
+  return formattedTime;
+};
+
+export const decodeHcsTimeStamp = (time) => {
+  const splitTimeToGetSeconds = time?.split(DOT)?.[ZERO];
+  return convertTimeToMomentFormat(splitTimeToGetSeconds);
 };
