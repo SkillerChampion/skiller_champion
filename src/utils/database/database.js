@@ -12,7 +12,7 @@ const initializePgConnection = async () => {
   }
   try {
     const poolConfig = await getPoolConfigurations();
-    connection = knex(poolConfig);
+    connection = await knex(poolConfig);
     console.log('Database connected successfully');
 
     return connection;
