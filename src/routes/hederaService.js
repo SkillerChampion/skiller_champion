@@ -305,7 +305,6 @@ router.post(
 
     try {
       const isRedeemAvailable = await checkIfUsePassTxnWithTrueRedemptionExists(params);
-      console.log('isRedeemAvailable', isRedeemAvailable);
 
       if (isRedeemAvailable) {
         const client = await getHederaClient();
@@ -334,7 +333,7 @@ router.post(
 
         res.json({ receiptStatus, txnId });
       } else {
-        const title = `/transferPrizeToUserAccount api called for redeeming token that is already redeemed`;
+        const title = `/transferPrizeToUserAccount api called for redeeming token that is already redeemed by user account id - ${params.accountId} for amount - ${params.winningAmount}. The NFT is ${params.pass_type} with token id -${params.token_id} and serial number - ${params.pass_serial_number}`;
         sendEmailToAdmin(title);
 
         throw Error(UNAUTHORIZED);
