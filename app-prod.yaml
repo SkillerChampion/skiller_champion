@@ -13,9 +13,9 @@ env_variables:
   DB_HOST: '127.0.0.1:5432'
   HEDERA_NODE_API: https://testnet.mirrornode.hedera.com
   ENCRYPTION_KEY: fpydn87d.12pvud21.shd.4545shivd.88764sajfhhof..rlah
-  nodeMailerUser: stuntmania201@gmail.com
-  nodeMailerPass: nodeMailerPass
-  nodeMailerRecipient: stuntmania101@gmail.com
+  NODE_MAILER_USER: stuntmania201@gmail.com
+  NODE_MAILER_PASS: NODE_MAILER_PASS
+  NODE_MAILER_RECIPIENT: stuntmania101@gmail.com
 
 handlers:
   # Serve API routes using the Node.js app

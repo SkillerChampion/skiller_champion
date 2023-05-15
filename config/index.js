@@ -17,7 +17,7 @@ module.exports = Object.freeze({
   runTestNet: process.env.RUN_TESTNET,
   NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
-  nodeMailerUser: process.env.nodeMailerUser,
-  nodeMailerPass: process.env.nodeMailerPass,
-  nodeMailerRecipient: process.env.nodeMailerRecipient,
+  NODE_MAILER_USER: process.env.NODE_MAILER_USER,
+  NODE_MAILER_PASS: process.env.NODE_MAILER_PASS,
+  NODE_MAILER_RECIPIENT: process.env.NODE_MAILER_RECIPIENT,
 });
