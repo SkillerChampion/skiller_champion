@@ -297,7 +297,7 @@ router.post(
     const params = req.body;
 
     if (params.winningAmount > 5000) {
-      const title = `TRANSFER PRIZE OF ${params.winningAmount} is requested by account id - ${params.accountId}. MAX ALLOWED - 5000`;
+      const title = `TRANSFER PRIZE OF ${params.winningAmount} is requested by account id - ${params.accountId} for amount - ${params.winningAmount} HBARS, MAX ALLOWED - 5000 HBARS. The NFT is ${params.pass_type} with token id -${params.token_id} and serial number - ${params.pass_serial_number}`;
       sendEmailToAdmin(title);
 
       return res.status(400).json({ errors: ['Invalid request'] });
@@ -333,7 +333,7 @@ router.post(
 
         res.json({ receiptStatus, txnId });
       } else {
-        const title = `/transferPrizeToUserAccount api called for redeeming token that is already redeemed by user account id - ${params.accountId} for amount - ${params.winningAmount}. The NFT is ${params.pass_type} with token id -${params.token_id} and serial number - ${params.pass_serial_number}`;
+        const title = `/transferPrizeToUserAccount api called for redeeming token that is already redeemed by user account id - ${params.accountId} for amount - ${params.winningAmount} HBARS. The NFT is ${params.pass_type} with token id -${params.token_id} and serial number - ${params.pass_serial_number}`;
         sendEmailToAdmin(title);
 
         throw Error(UNAUTHORIZED);

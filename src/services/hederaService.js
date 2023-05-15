@@ -134,7 +134,7 @@ const findAndCallQueryFnByPassType = async (params = {}, res) => {
     const doesTxnAlreadyExists = await filterFnType?.[ARRAY_KEYS.VALIDATION]?.(params);
 
     if (doesTxnAlreadyExists) {
-      const title = `Duplicate buy pass insertion with txn id - ${params[HCS_KEYS.txn_id]} detected by user id - ${
+      const title = `Duplicate buy pass insertion with txn id - ${params[HCS_KEYS.txn_id]} detected for user id - ${
         params[HCS_KEYS.user_account_id]
       }`;
 
