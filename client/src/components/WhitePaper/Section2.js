@@ -12,7 +12,7 @@ const Section2 = () => {
             Mock your opponent by betting and winning the riddle battle (coming soon..)
           </h1>
           <p className="mt-6 text-xxs md:text-base  leading-8 text-white lg:pr-24 text-center lg:text-left heliosFontFamily">
-            Connect to audio and mock your opponent using mic.
+            To be announced soon...
           </p>
         </div>
 
