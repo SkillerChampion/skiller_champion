@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import classes from './SocialMediaLinks.module.css';
-import { TWENTY_SECONDS } from '../../../utils/constants';
+import { TWENTY_SECONDS, EXTERNAL_LINKS } from '../../../utils/constants';
 import discordIcon from '../../../assets/discordIcon.png';
 import { useLocation } from 'react-router-dom';
 
@@ -38,11 +38,22 @@ const SocialMediaLinks = () => {
     }
   };
 
+  const handleTwitterClick = () => {
+    if (!showAllIcons) return;
+    window.open(EXTERNAL_LINKS.SKILLER_TWITTER, '_blank').focus();
+  };
+
+  const handleDiscordClick = () => {
+    if (!showAllIcons) return;
+    window.open(EXTERNAL_LINKS.SKILLER_DISCORD, '_blank').focus();
+  };
+
   const TwitterButton = () => {
     return (
       <div
         className={`w-14 h-14 rounded-full flex justify-center items-center ${classes.twitterParent} cursor-pointer `}
-        id={mainCircleId}>
+        id={mainCircleId}
+        onClick={handleTwitterClick}>
         <TwitterIcon className={`${classes.twitter}`} />
       </div>
     );
@@ -53,7 +64,11 @@ const SocialMediaLinks = () => {
       <div
         className={`h-14 bg-gray-900 w-14 rounded-full ${classes.allIconsRoot}`}
         id={revealDivId}>
-        <img src={discordIcon} className="rounded-full w-14 h-14 cursor-pointer" />
+        <img
+          src={discordIcon}
+          className="rounded-full w-14 h-14 cursor-pointer"
+          onClick={handleDiscordClick}
+        />
       </div>
     );
   };

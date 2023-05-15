@@ -1,7 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useQuery } from 'react-query';
 import { getBuyPassesByAccountId } from '../../../services/hederaService';
-import { isArrayReady } from '../../../utils/helperFunctions';
+import {
+  isArrayReady,
+  decodeHcsTimeStamp,
+  getUserLocalTimezone
+} from '../../../utils/helperFunctions';
 import { ARRAY_KEYS, HCS_KEYS } from '../../../utils/constants';
 import TableData from '../../Common/Table/Table';
 import SearchTxn from '../../Common/Table/SearchTxn';
@@ -16,8 +20,8 @@ const PassPurchaseHistory = ({ userAccountId, setLocalUserAccountId }) => {
     { [ARRAY_KEYS.HEADER]: 'Spent (ℏ)', [ARRAY_KEYS.VALUE]: HCS_KEYS.pass_amount },
     { [ARRAY_KEYS.HEADER]: 'Token Id', [ARRAY_KEYS.VALUE]: HCS_KEYS.token_id },
     {
-      [ARRAY_KEYS.HEADER]: 'Time',
-      [ARRAY_KEYS.VALUE]: HCS_KEYS.modified_timestamp,
+      [ARRAY_KEYS.HEADER]: `Time (${getUserLocalTimezone()})`,
+      [ARRAY_KEYS.VALUE]: HCS_KEYS.time,
       [ARRAY_KEYS.MIN_WIDTH]: '170px'
     },
     { [ARRAY_KEYS.HEADER]: 'Status', [ARRAY_KEYS.VALUE]: HCS_KEYS.status },
@@ -29,7 +33,7 @@ const PassPurchaseHistory = ({ userAccountId, setLocalUserAccountId }) => {
       [HCS_KEYS.pass_type]: item[HCS_KEYS.pass_type],
       [HCS_KEYS.pass_amount]: item[HCS_KEYS.pass_amount],
       [HCS_KEYS.token_id]: item[HCS_KEYS.token_id],
-      [HCS_KEYS.modified_timestamp]: item[HCS_KEYS.modified_timestamp],
+      [HCS_KEYS.time]: decodeHcsTimeStamp(item[HCS_KEYS.consensus_timestamp]),
       [HCS_KEYS.status]: item[HCS_KEYS.status],
       [ARRAY_KEYS.DISPLAY_FN]: <SearchTxn timeStamp={item[HCS_KEYS.consensus_timestamp]} />
     };

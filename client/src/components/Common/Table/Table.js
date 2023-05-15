@@ -141,7 +141,7 @@ const TableData = ({
                           } ${
                             dataText === HEDERA_API_KEYS.SUCCESS &&
                             'bg-green-700 text-white font-bold'
-                          }  ${classes.borders}`}>
+                          }  ${classes.borders} ${classes.fontSize14}`}>
                           {dataText}
                         </StyledTableCell>
                       );

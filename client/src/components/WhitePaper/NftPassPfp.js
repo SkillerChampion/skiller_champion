@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
-import classes from './Landing.module.css';
+import classes from './Nft.module.css';
 import wheel2000 from '../../assets/wheel2000.jpg';
 import wheel500 from '../../assets/wheel500.jpg';
 import wheel100 from '../../assets/wheel100.jpg';
@@ -60,13 +60,13 @@ const SideBarrels = ({ item, top, right }) => (
 const Diagram = () => {
   return (
     <div>
-      <BodyContainer>
-        <div className="flex flex-col items-center gap-20 pb-20">
+      <BodyContainer rootClassName={`rounded-xl`} className={classes.sizeBg}>
+        <div className={`flex flex-col items-center gap-14 lg:gap-20 pb-20  ${classes.size}`}>
           {data?.map((item, index) => {
             return (
-              <div className="h-full flex justify-center mt-[30px]" key={index}>
+              <div className={`h-full flex justify-center mt-[30px]`} key={index}>
                 <div
-                  className={`w-[500px] h-[500px] border-2 ${item.borderColorClassName} relative rounded-lg`}>
+                  className={`w-[500px] h-[500px] border-2 ${item.borderColorClassName} relative rounded-lg `}>
                   <div
                     className={`h-4 w-[500px] left-[-1.5px] bottom-[-2px] absolute  ${item.className}`}></div>
                   <div

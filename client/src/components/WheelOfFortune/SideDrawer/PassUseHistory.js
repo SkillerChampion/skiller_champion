@@ -4,7 +4,11 @@ import { getUsePassesByAccountId } from '../../../services/hederaService';
 import { ARRAY_KEYS, HCS_KEYS } from '../../../utils/constants';
 import TableData from '../../Common/Table/Table';
 import SearchTxn from '../../Common/Table/SearchTxn';
-import { isArrayReady } from '../../../utils/helperFunctions';
+import {
+  isArrayReady,
+  decodeHcsTimeStamp,
+  getUserLocalTimezone
+} from '../../../utils/helperFunctions';
 
 const PassUseHistory = ({ userAccountId, setLocalUserAccountId }) => {
   const { data, isFetching, error } = useQuery(['getUsePassesByAccountId', userAccountId], () =>
@@ -16,8 +20,8 @@ const PassUseHistory = ({ userAccountId, setLocalUserAccountId }) => {
     { [ARRAY_KEYS.HEADER]: 'Spent (ℏ)', [ARRAY_KEYS.VALUE]: HCS_KEYS.pass_amount },
     { [ARRAY_KEYS.HEADER]: 'Won (ℏ)', [ARRAY_KEYS.VALUE]: HCS_KEYS.winner_amount },
     {
-      [ARRAY_KEYS.HEADER]: 'Time',
-      [ARRAY_KEYS.VALUE]: HCS_KEYS.modified_timestamp,
+      [ARRAY_KEYS.HEADER]: `Time (${getUserLocalTimezone()})`,
+      [ARRAY_KEYS.VALUE]: HCS_KEYS.time,
       [ARRAY_KEYS.MIN_WIDTH]: '180px'
     },
     { [ARRAY_KEYS.HEADER]: 'Status', [ARRAY_KEYS.VALUE]: HCS_KEYS.status },
@@ -29,7 +33,7 @@ const PassUseHistory = ({ userAccountId, setLocalUserAccountId }) => {
       [HCS_KEYS.pass_type]: item[HCS_KEYS.pass_type],
       [HCS_KEYS.pass_amount]: item[HCS_KEYS.pass_amount],
       [HCS_KEYS.winner_amount]: item[HCS_KEYS.winner_amount],
-      [HCS_KEYS.modified_timestamp]: item[HCS_KEYS.modified_timestamp],
+      [HCS_KEYS.time]: decodeHcsTimeStamp(item[HCS_KEYS.consensus_timestamp]),
       [HCS_KEYS.status]: item[HCS_KEYS.status],
       [ARRAY_KEYS.DISPLAY_FN]: <SearchTxn timeStamp={item[HCS_KEYS.consensus_timestamp]} />
     };

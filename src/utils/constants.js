@@ -41,7 +41,6 @@ const HCS_KEYS = {
   message: 'message',
   messages: 'messages',
   payer_account_id: 'payer_account_id',
-  modified_timestamp: 'modified_timestamp',
   email: 'email',
   txn_id: 'txn_id',
 };
@@ -77,7 +76,10 @@ const HCS_TYPES = {
   USE_PASSES: 'USE_PASSES',
 };
 
-const DEPLOYED_ORIGIN_URL = 'https://skiller-champion.uc.r.appspot.com';
+const DEPLOYED_ORIGIN_URL = [
+  'https://skiller-champion.uc.r.appspot.com',
+  'https://testing-fe-dot-skiller-champion.uc.r.appspot.com',
+];
 const GCP_PROJECT_ID = 948181003317;
 
 module.exports = {

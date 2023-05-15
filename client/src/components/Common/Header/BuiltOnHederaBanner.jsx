@@ -34,10 +34,10 @@ export default function BuiltOnHederaBanner() {
 
       <div className="flex flex-col lg:flex-row gap-1 lg:gap-3 items-center">
         <div className="flex flex-col sm:flex-row sm:gap-2">
-          <p className="text-xxs sm:text-[14px] leading-6 flex justify-center items-center font-bold text-white heliosFontFamily">
+          <p className="text-xxxs sm:text-[14px] leading-6 flex justify-center items-center font-bold text-white heliosFontFamily">
             Founders NFTs soon.
           </p>
-          <p className="text-xxs sm:text-[14px] leading-6 flex justify-center items-center font-bold text-white heliosFontFamily">
+          <p className="text-xxxs sm:text-[14px] leading-6 flex justify-center items-center font-bold text-white heliosFontFamily">
             enter email to get updates -
           </p>
         </div>
@@ -45,7 +45,7 @@ export default function BuiltOnHederaBanner() {
         <form onSubmit={handleEmailSubmit}>
           <input
             type="email"
-            className="bg-gray-800 text-white rounded-md text-xxs sm:text-sm px-2 w-[210px] sm:w-[300px] py-1 MontserratFamily font-semibold "
+            className="bg-gray-800 text-white rounded-md text-xxxs sm:text-sm px-2 w-[210px] sm:w-[300px] py-1 MontserratFamily font-semibold "
             placeholder="yourEmail@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

@@ -12,15 +12,15 @@ const sendEmailToAdmin = async (title = '', body = '') => {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: configurations.nodeMailerUser,
-      pass: await getDynamicEnv(configurations.nodeMailerPass),
+      user: configurations.NODE_MAILER_USER,
+      pass: await getDynamicEnv(configurations.NODE_MAILER_PASS),
     },
   });
 
   // setup email data with unicode symbols
   let mailOptions = {
-    from: `"SECURITY NODEMAILER " <${configurations.nodeMailerUser}>`, // sender address
-    to: configurations.nodeMailerRecipient, // list of receivers
+    from: `"SECURITY NODEMAILER " <${configurations.NODE_MAILER_USER}>`, // sender address
+    to: configurations.NODE_MAILER_RECIPIENT, // list of receivers
     subject: 'URGENT SECURITY - SKILLER CHAMPION ✔', // Subject line
     text: body, // plain text body
     html: title, // html body

@@ -96,7 +96,7 @@ export default function Header() {
                   {userAccountId ? (
                     <ConnectedWallet />
                   ) : (
-                    <Button text="Connect HashPack" onClick={connectToHashPack} isHashPackBtn />
+                    <Button text="Connect Wallet" onClick={connectToHashPack} isHashPackBtn />
                   )}
                 </div>
               </div>

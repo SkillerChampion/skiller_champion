@@ -26,14 +26,6 @@ const {
 
 const { executeQuery } = require('../utils/database/database');
 
-const getTopicMessagesByTopicId = async (topicId, order = 'desc') => {
-  const limit = 1000000000000000000;
-
-  return HEDERA_NODE_API.get(`/api/v1/topics/${topicId}/messages?order=${order}&limit=${limit}`).then(
-    (res) => res.data
-  );
-};
-
 const checkIfUsePassTxnExists = async (params) => {
   const result = await executeQuery(MAPPER_NAMESPACES.buyOrUsePasses, QUERIES.selectUsePassByTxnId, params);
 
@@ -142,7 +134,7 @@ const findAndCallQueryFnByPassType = async (params = {}, res) => {
     const doesTxnAlreadyExists = await filterFnType?.[ARRAY_KEYS.VALIDATION]?.(params);
 
     if (doesTxnAlreadyExists) {
-      const title = `Duplicate buy pass insertion with txn id - ${params[HCS_KEYS.txn_id]} detected by user id - ${
+      const title = `Duplicate buy pass insertion with txn id - ${params[HCS_KEYS.txn_id]} detected for user id - ${
         params[HCS_KEYS.user_account_id]
       }`;
 
@@ -185,7 +177,6 @@ const submitHcsMessage = async (topicId, message = {}, userAccountId, res) => {
     ...appendUserAccountId,
     [HCS_KEYS.consensus_timestamp]: consensusTime,
     [HCS_KEYS.payer_account_id]: getTreasuryAccountId(),
-    [HCS_KEYS.modified_timestamp]: decodeHcsTimeStamp(consensusTime),
   };
 
   console.log(
@@ -200,7 +191,6 @@ const submitHcsMessage = async (topicId, message = {}, userAccountId, res) => {
 };
 
 module.exports = {
-  getTopicMessagesByTopicId,
   submitHcsMessage,
   getUsePassesByUserId,
   getBuyPassesByAccountId,

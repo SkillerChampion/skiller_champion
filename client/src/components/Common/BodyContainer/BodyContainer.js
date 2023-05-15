@@ -67,7 +67,7 @@ const BodyContainer = ({
           <div
             className={`${
               whiteHeading ? 'text-white' : 'pinkWhiteText'
-            } GrindFontFamily text-xl md:text-2xl lg:text-3xl pb-6 sm:pb-8 pt-2 sm:pt-6 ${
+            } GrindFontFamily text-lg sm:text-xl md:text-2xl lg:text-3xl pb-6 sm:pb-8 pt-2 sm:pt-6 ${
               reducePaddingOnSm && 'pb-2'
             } ${headingClass}`}>
             {heading}

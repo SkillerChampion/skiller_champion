@@ -9,17 +9,27 @@ const PageLevelTabs = ({
   spaceHr = false
 }) => {
   const handleTabClick = (tab) => {
+    console.log('tab', tab);
     setCurrentTab(tab);
+  };
+
+  const handleTabClickSm = (e) => {
+    const value = e.target.value;
+    const findTab = tabs?.find((item) => item[ARRAY_KEYS.LABEL] === value);
+    console.log('value', findTab);
+
+    setCurrentTab(findTab);
   };
 
   return (
     <div>
-      <div className="sm:hidden">
+      <div className={`sm:hidden ${spaceHr ? 'mb-4' : 'mb-0'}`}>
         <select
           id="tabs"
           name="tabs"
-          className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-          defaultValue={currentTab[ARRAY_KEYS.LABEL]}>
+          className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 pl-2 bg-indigo-600 text-sm text-white"
+          defaultValue={currentTab[ARRAY_KEYS.LABEL]}
+          onChange={handleTabClickSm}>
           {tabs.map((tab) => (
             <option key={tab[ARRAY_KEYS.VALUE]}>{tab[ARRAY_KEYS.LABEL]}</option>
           ))}

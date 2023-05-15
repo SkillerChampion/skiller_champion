@@ -17,27 +17,34 @@ const getPoolConfigurations = async () => {
 };
 
 const createTcpPool = async (config) => {
-  const dbSocketAddr = configurations.dbHost?.split(':');
+  // const dbSocketAddr = configurations.dbHost?.split(':');
 
-  const dbUser = configurations.dbUser;
-  const dbPass = await getPassword();
+  const dbUser = await getDynamicEnv(configurations.dbUser);
+  const dbPass = await getDynamicEnv(configurations.dbPassword);
+  const name = await getDynamicEnv(configurations.database);
+  const host = await getDynamicEnv(configurations.dbHost);
+
   const dbConfig = {
     client: 'pg',
     connection: {
       user: dbUser,
       password: dbPass,
-      database: configurations.database,
-      host: dbSocketAddr?.[0],
-      port: dbSocketAddr?.[1],
+      database: name,
+      host: host,
+      port: configurations.dbPort,
+      min: 2,
+      max: 6,
+      createTimeoutMillis: 3000,
+      acquireTimeoutMillis: 30000,
+      idleTimeoutMillis: 30000,
+      reapIntervalMillis: 1000,
+      createRetryIntervalMillis: 100,
+      propagateCreateError: false,
     },
 
     ...config,
   };
   return dbConfig;
-};
-
-const getPassword = async () => {
-  return getDynamicEnv(configurations.dbPassword);
 };
 
 module.exports = { getPoolConfigurations };

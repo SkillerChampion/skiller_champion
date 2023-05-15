@@ -10,6 +10,15 @@ export const TWELVE_SECONDS = 12000;
 export const FIFTEEN_SECONDS = 15000;
 export const TWENTY_SECONDS = 20000;
 export const PLATFORM_FEES = 0;
+export const DOT = '.';
+
+export const EXTERNAL_LINKS = {
+  GITHUB_OPEN_SOURCE_LINK: 'https://github.com/SkillerChampion/skiller_champ_open_source',
+  GITHUB_OPEN_SOURCE_LINK_ROUTER:
+    'https://github.com/SkillerChampion/skiller_champ_open_source/blob/3310ce9ee49c44a770cdd6bf01a07bb54b1d85c7/src/routes/fortuneWheel.js#LL24C13-L24C13',
+  SKILLER_TWITTER: 'https://twitter.com/SkillerChampion',
+  SKILLER_DISCORD: 'https://discord.gg/3xDcJuNr'
+};
 
 // HEADER REQUESTS
 export const AUTHORIZATION = 'AUTHORIZATION';
@@ -118,10 +127,10 @@ export const HCS_KEYS = {
   txn_id: 'txn_id',
   nft_transfer_txn_id: 'nft_transfer_txn_id',
   consensus_timestamp: 'consensus_timestamp',
-  modified_timestamp: 'modified_timestamp',
   message: 'message',
   messages: 'messages',
-  payer_account_id: 'payer_account_id'
+  payer_account_id: 'payer_account_id',
+  time: 'time'
 };
 
 export const HCS_TYPES = {

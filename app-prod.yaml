@@ -7,15 +7,16 @@ env_variables:
   TREASURY_ACCOUNT_ID: 0.0.3833523
   TREASURY_PRIVATE_KEY: TREASURY_PRIVATE_KEY
   RUN_TESTNET: true
-  DB_USER: 'DB_USER'
-  DB_PASSWORD_KEY: 'DB_PASSWORD_KEY'
-  DATABASE: 'skiller_champion'
-  DB_HOST: '127.0.0.1:5432'
+  DB_USER: 'TESTING_DB_USER_KEY'
+  DB_PASSWORD_KEY: 'TESTING_DB_PASSWORD_KEY'
+  DATABASE: 'TESTING_DB_NAME_KEY'
+  DB_HOST: 'TESTING_DB_HOST_KEY'
+  DB_PORT: '5432'
   HEDERA_NODE_API: https://testnet.mirrornode.hedera.com
   ENCRYPTION_KEY: fpydn87d.12pvud21.shd.4545shivd.88764sajfhhof..rlah
-  nodeMailerUser: stuntmania201@gmail.com
-  nodeMailerPass: nodeMailerPass
-  nodeMailerRecipient: stuntmania101@gmail.com
+  NODE_MAILER_USER: stuntmania201@gmail.com
+  NODE_MAILER_PASS: NODE_MAILER_PASS
+  NODE_MAILER_RECIPIENT: stuntmania101@gmail.com
 
 handlers:
   # Serve API routes using the Node.js app

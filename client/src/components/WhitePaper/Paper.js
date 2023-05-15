@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import mainpage from '../../assets/mainpage.jpg';
 import wheel2000 from '../../assets/wheel2000.jpg';
 import { ALL_ROUTES_PATHS } from '../../utils/routes';
+import Diagram from './NftPassPfp';
+import { EXTERNAL_LINKS } from '../../utils/constants';
 
 const SectionParagraph = ({ heading = '', id = '', children }) => {
   return (
@@ -37,15 +39,21 @@ const Paper = ({ linkName }) => {
             one of the top community driven Hedera gaming project and are working tirelessly on our
             product with trustless integration on Hedera Hashgraph.
           </div>
-          {
-            //TODO add github link
-          }
+
           <div className={`${classes.bodyText}`}>
             All of our gambling games are fair, 100% randomized and as a proof we have attached the
-            public <a className={`${classes.link}`}>link</a> of our Github code that our application
-            uses to obtain random winners. This is a community driven project in which we will share
-            the revenue generated from the upcoming NFTs secondary sales and platform fees (more
-            details soon..) with our premium NFT holders
+            public{' '}
+            <a
+              className={`${classes.link}`}
+              href={EXTERNAL_LINKS.GITHUB_OPEN_SOURCE_LINK}
+              target="_blank"
+              rel="noreferrer">
+              link
+            </a>{' '}
+            of our Github code that our application uses to obtain random winners. This is a
+            community driven project in which we will share the revenue generated from the upcoming
+            NFTs secondary sales and platform fees (more details soon..) with our premium NFT
+            holders
           </div>
         </div>
       </SectionParagraph>
@@ -60,7 +68,14 @@ const Paper = ({ linkName }) => {
             </Link>
             ) to rotate the wheel and try their luck. Based on the purchased pass, players can win
             upto 5000 HBARs. All of the games are 100% random and fair{' '}
-            <a className={`${classes.link}`}>(see proof)</a>.
+            <a
+              className={`${classes.link}`}
+              href={EXTERNAL_LINKS.GITHUB_OPEN_SOURCE_LINK_ROUTER}
+              target="_blank"
+              rel="noreferrer">
+              (see proof)
+            </a>
+            .
           </div>
           <img
             src={wheel2000}
@@ -68,6 +83,10 @@ const Paper = ({ linkName }) => {
           />
         </div>
       </SectionParagraph>
+
+      <div className="pt-10 pb-6">
+        <Diagram />
+      </div>
 
       <SectionParagraph heading={`${linkName.riddles} -`} id={linkName.riddles}>
         <div className="flex flex-col gap-5">
@@ -90,7 +109,7 @@ const Paper = ({ linkName }) => {
           </div>
 
           <div className={`${classes.bodyText}`}>
-            The holders will also be eligible to receive free fortune wheel passes frequently
+            The holders will also be eligible to receive additional benefits and early accesses
           </div>
         </div>
       </SectionParagraph>
