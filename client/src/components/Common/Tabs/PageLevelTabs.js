@@ -27,7 +27,7 @@ const PageLevelTabs = ({
         <select
           id="tabs"
           name="tabs"
-          className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 pl-2 bg-indigo-600 text-xs text-white"
+          className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 pl-2 bg-indigo-600 text-sm text-white"
           defaultValue={currentTab[ARRAY_KEYS.LABEL]}
           onChange={handleTabClickSm}>
           {tabs.map((tab) => (
