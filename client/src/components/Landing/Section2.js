@@ -1,5 +1,5 @@
 import React from 'react';
-import playSection from '../../assets/playSection.PNG';
+import playSection from '../../assets/playSection.png';
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
 
 const Section2 = () => {

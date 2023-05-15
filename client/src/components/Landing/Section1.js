@@ -1,6 +1,6 @@
 import React from 'react';
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
-import wheelSection from '../../assets/wheelSection.PNG';
+import wheelSection from '../../assets/wheelSection.png';
 import Button from '../Common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { PLATFORM_FEES } from '../../utils/constants';
