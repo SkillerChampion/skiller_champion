@@ -1,6 +1,7 @@
 import { ARRAY_KEYS, HCS_TYPES, HCS_KEYS, ZERO, DOT } from './constants';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import * as momentTimezone from 'moment-timezone';
 
 import { AES } from 'crypto-js';
 import { submitHcsMessage } from '../services/hederaService';
@@ -183,4 +184,8 @@ const convertTimeToMomentFormat = (seconds) => {
 export const decodeHcsTimeStamp = (time) => {
   const splitTimeToGetSeconds = time?.split(DOT)?.[ZERO];
   return convertTimeToMomentFormat(splitTimeToGetSeconds);
+};
+
+export const getUserLocalTimezone = () => {
+  return momentTimezone().tz(momentTimezone.tz.guess()).format('z');
 };

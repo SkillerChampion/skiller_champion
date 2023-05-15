@@ -1,7 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useQuery } from 'react-query';
 import { getBuyPassesByAccountId } from '../../../services/hederaService';
-import { isArrayReady, decodeHcsTimeStamp } from '../../../utils/helperFunctions';
+import {
+  isArrayReady,
+  decodeHcsTimeStamp,
+  getUserLocalTimezone
+} from '../../../utils/helperFunctions';
 import { ARRAY_KEYS, HCS_KEYS } from '../../../utils/constants';
 import TableData from '../../Common/Table/Table';
 import SearchTxn from '../../Common/Table/SearchTxn';
@@ -16,7 +20,7 @@ const PassPurchaseHistory = ({ userAccountId, setLocalUserAccountId }) => {
     { [ARRAY_KEYS.HEADER]: 'Spent (ℏ)', [ARRAY_KEYS.VALUE]: HCS_KEYS.pass_amount },
     { [ARRAY_KEYS.HEADER]: 'Token Id', [ARRAY_KEYS.VALUE]: HCS_KEYS.token_id },
     {
-      [ARRAY_KEYS.HEADER]: 'Time',
+      [ARRAY_KEYS.HEADER]: `Time (${getUserLocalTimezone()})`,
       [ARRAY_KEYS.VALUE]: HCS_KEYS.time,
       [ARRAY_KEYS.MIN_WIDTH]: '170px'
     },
