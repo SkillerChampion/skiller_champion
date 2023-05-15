@@ -1,6 +1,6 @@
 import React from 'react';
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
-import wheelSection from '../../assets/wheelSection.png';
+import wheelSections from '../../assets/wheelSections.png';
 import Button from '../Common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { PLATFORM_FEES } from '../../utils/constants';
@@ -43,7 +43,7 @@ const Section1 = () => {
         <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mt-0 lg:mr-0 lg:max-w-none lg:flex-none xl:ml-32">
           <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
             <img
-              src={wheelSection}
+              src={wheelSections}
               alt="Riddles Game"
               className="w-[60rem] rounded-xl bg-gray-700 shadow-2xl ring-1 ring-gray-700 lg:mt-12 "
             />

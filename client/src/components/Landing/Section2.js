@@ -1,5 +1,5 @@
 import React from 'react';
-import playSection from '../../assets/playSection.png';
+import playSections from '../../assets/playSections.png';
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
 
 const Section2 = () => {
@@ -19,7 +19,7 @@ const Section2 = () => {
         <div className="mx-auto mt-8 flex max-w-2xl sm:mt-14 lg:mr-10 lg:mt-0 lg:ml-0 lg:max-w-none lg:flex-none xl:mr-32">
           <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
             <img
-              src={playSection}
+              src={playSections}
               alt="Riddles Game"
               className="w-[60rem] rounded-xl bg-gray-700 shadow-2xl ring-1 ring-gray-700 mt-4"
             />
