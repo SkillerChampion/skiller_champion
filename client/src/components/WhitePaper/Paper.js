@@ -4,7 +4,7 @@ import mainpage from '../../assets/mainpage.jpg';
 import wheel2000 from '../../assets/wheel2000.jpg';
 import { ALL_ROUTES_PATHS } from '../../utils/routes';
 import Diagram from './NftPassPfp';
-import { GITHUB_OPEN_SOURCE_LINK, GITHUB_OPEN_SOURCE_LINK_ROUTER } from '../../utils/constants';
+import { EXTERNAL_LINKS } from '../../utils/constants';
 
 const SectionParagraph = ({ heading = '', id = '', children }) => {
   return (
@@ -39,15 +39,13 @@ const Paper = ({ linkName }) => {
             one of the top community driven Hedera gaming project and are working tirelessly on our
             product with trustless integration on Hedera Hashgraph.
           </div>
-          {
-            //TODO add github link
-          }
+
           <div className={`${classes.bodyText}`}>
             All of our gambling games are fair, 100% randomized and as a proof we have attached the
             public{' '}
             <a
               className={`${classes.link}`}
-              href={GITHUB_OPEN_SOURCE_LINK}
+              href={EXTERNAL_LINKS.GITHUB_OPEN_SOURCE_LINK}
               target="_blank"
               rel="noreferrer">
               link
@@ -72,7 +70,7 @@ const Paper = ({ linkName }) => {
             upto 5000 HBARs. All of the games are 100% random and fair{' '}
             <a
               className={`${classes.link}`}
-              href={GITHUB_OPEN_SOURCE_LINK_ROUTER}
+              href={EXTERNAL_LINKS.GITHUB_OPEN_SOURCE_LINK_ROUTER}
               target="_blank"
               rel="noreferrer">
               (see proof)
@@ -111,7 +109,7 @@ const Paper = ({ linkName }) => {
           </div>
 
           <div className={`${classes.bodyText}`}>
-            The holders will also be eligible to receive free fortune wheel passes frequently
+            The holders will also be eligible to receive additional benefits and early accesses
           </div>
         </div>
       </SectionParagraph>

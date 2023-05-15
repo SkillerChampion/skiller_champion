@@ -21,11 +21,11 @@ const Section1 = () => {
             className={`md:mt-6 md:pt-6 sm:pt-14 lg:pt-0 text-xl sm:text-3xl xl:text-4xl font-bold tracking-tight text-white pinkWhiteText GrindFontFamily`}>
             Multiplayer, Play & Earn with your skills or Wheel of Fortune
           </h1>
-          <p className="mt-6 text-xxs md:text-base leading-8 text-white heliosFontFamily">
+          <p className="mt-6 text-12px md:text-base leading-8 text-white heliosFontFamily">
             Try your luck with wheel of fortune to multiply your HBARs or solve riddles and beat
             your opponent and to the battle (coming soon). Read the following guidelines -
           </p>
-          <ul className="text-white bullet text-xxs md:text-base  leading-8 bulletList mt-6 pl-4 gap-[10px] lg:gap-[25px]">
+          <ul className="text-white bullet text-12px md:text-base  leading-8 bulletList mt-6 pl-4 gap-[10px] lg:gap-[25px]">
             {/* <li>You can play wheel of fortune or riddles</li>
             <li>Try to answer 5 riddles correctly faster than your opponent</li>
             <li>The player who answers the most riddles correctly wins the battle</li>
@@ -37,7 +37,7 @@ const Section1 = () => {
             <li>The winner wins all of the bet amount. We have {PLATFORM_FEES}% platform fees</li>
           </ul>
           <div className="mt-6">
-            <Button text="Try Wheel of fortune" onClick={redirectToWheelOfFortune} />
+            <Button text="Wheel of Fortune" onClick={redirectToWheelOfFortune} />
           </div>
         </div>
         <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mt-0 lg:mr-0 lg:max-w-none lg:flex-none xl:ml-32">

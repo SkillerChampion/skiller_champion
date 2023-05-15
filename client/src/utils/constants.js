@@ -11,11 +11,14 @@ export const FIFTEEN_SECONDS = 15000;
 export const TWENTY_SECONDS = 20000;
 export const PLATFORM_FEES = 0;
 export const DOT = '.';
-export const GITHUB_OPEN_SOURCE_LINK =
-  'https://github.com/SkillerChampion/skiller_champ_open_source';
 
-export const GITHUB_OPEN_SOURCE_LINK_ROUTER =
-  'https://github.com/SkillerChampion/skiller_champ_open_source/blob/3310ce9ee49c44a770cdd6bf01a07bb54b1d85c7/src/routes/fortuneWheel.js#LL24C13-L24C13';
+export const EXTERNAL_LINKS = {
+  GITHUB_OPEN_SOURCE_LINK: 'https://github.com/SkillerChampion/skiller_champ_open_source',
+  GITHUB_OPEN_SOURCE_LINK_ROUTER:
+    'https://github.com/SkillerChampion/skiller_champ_open_source/blob/3310ce9ee49c44a770cdd6bf01a07bb54b1d85c7/src/routes/fortuneWheel.js#LL24C13-L24C13',
+  SKILLER_TWITTER: 'https://twitter.com/SkillerChampion',
+  SKILLER_DISCORD: 'https://discord.gg/3xDcJuNr'
+};
 
 // HEADER REQUESTS
 export const AUTHORIZATION = 'AUTHORIZATION';

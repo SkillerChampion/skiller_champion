@@ -11,7 +11,7 @@ const Section2 = () => {
             className={`mt-10 text-xl sm:text-3xl xl:text-4xl font-bold tracking-tight text-white pinkWhiteText text-center lg:text-left GrindFontFamily`}>
             Mock your opponent by betting and winning the riddle battle (coming soon..)
           </h1>
-          <p className="mt-6 text-xxs md:text-base  leading-8 text-white lg:pr-24 text-center lg:text-left heliosFontFamily">
+          <p className="mt-6 text-12px md:text-base  leading-8 text-white lg:pr-24 text-center lg:text-left heliosFontFamily">
             To be announced soon...
           </p>
         </div>
