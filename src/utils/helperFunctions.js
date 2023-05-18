@@ -16,7 +16,7 @@ const getDynamicEnv = async (key) => {
 
 const getTreasuryPrivateKey = async () => await getDynamicEnv(configurations.treasuryPrivateKey);
 const getTreasuryAccountId = () => configurations.treasuryAccountId;
-const getApiAccessKey = () => configurations.apiAccessKey;
+const getApiAccessKey = async () => await getDynamicEnv(configurations.apiAccessKey);
 const getEncryptionKey = () => configurations.encryptionKey;
 
 const getHederaClient = async () => {

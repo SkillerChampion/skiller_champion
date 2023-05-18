@@ -18,7 +18,7 @@ const generateJwtToken = async (data) => {
       [HASH_CONNECT_KEYS.ACCOUNT_ID]: data?.[HASH_CONNECT_KEYS.ACCOUNT_ID],
     };
 
-    const token = await jwt.sign(payload, getApiAccessKey(), { expiresIn: TOKEN_EXPIRY_TIME });
+    const token = await jwt.sign(payload, await getApiAccessKey(), { expiresIn: TOKEN_EXPIRY_TIME });
 
     if (token) return token;
   } catch (error) {
@@ -57,7 +57,7 @@ const validateToken = async (req, res, next) => {
       throw Error;
     }
 
-    const decoded = await jwt.verify(decrypt, getApiAccessKey());
+    const decoded = await jwt.verify(decrypt, await getApiAccessKey());
 
     if (decoded[HASH_CONNECT_KEYS.ACCOUNT_ID] === accountId) {
       console.log('Auth Token verification successful - ', decoded);
