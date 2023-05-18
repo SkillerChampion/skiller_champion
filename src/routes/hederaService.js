@@ -13,7 +13,6 @@ const {
   getHederaClient,
   handleServerError,
 } = require('../utils/helperFunctions');
-const { mintWheelPasses } = require('../services/nftMinter');
 
 const { check, validationResult } = require('express-validator');
 
@@ -24,6 +23,7 @@ const {
   getLeaderBoardByAccountId,
   checkIfUsePassTxnWithTrueRedemptionExists,
   markUsePassRedeemed,
+  createNewTopic,
 } = require('../services/hederaService');
 
 const { sendEmailToAdmin } = require('../utils/nodeMailer');
@@ -348,18 +348,33 @@ router.post(
 
 //@route POST api/transferPrizeToUserAccount
 //desc - Post account balance by account id
-router.get('/mintWheelPasses', async (req, res) => {
-  try {
-    await mintWheelPasses();
-    const title = `Minted Wheel Pass Nfts`;
-    sendEmailToAdmin(title);
+router.get(
+  '/createNewTopic',
+  [
+    check('accountId').custom((value) => {
+      if (value === getTreasuryAccountId()) {
+        return true;
+      }
+      throw new Error('Admin access required');
+    }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
 
-    res.send('Wheel Passes minted');
-  } catch (err) {
-    console.log('/mintWheelPasses Error - ', err);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-    handleServerError(err, res);
+    try {
+      const topicId = await createNewTopic();
+
+      res.send(`New topic id generated - ${topicId}`);
+    } catch (err) {
+      console.log('/createNewTopic Error - ', err);
+
+      handleServerError(err, res);
+    }
   }
-});
+);
 
 module.exports = router;

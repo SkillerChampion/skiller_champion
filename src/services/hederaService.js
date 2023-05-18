@@ -19,9 +19,9 @@ const { sendEmailToAdmin } = require('../utils/nodeMailer');
 
 const {
   getTreasuryAccountId,
-  decodeHcsTimeStamp,
   isEmptyArray,
   getHederaClient,
+  getTreasuryPrivateKey,
 } = require('../utils/helperFunctions');
 
 const { executeQuery } = require('../utils/database/database');
@@ -134,9 +134,9 @@ const findAndCallQueryFnByPassType = async (params = {}, res) => {
     const doesTxnAlreadyExists = await filterFnType?.[ARRAY_KEYS.VALIDATION]?.(params);
 
     if (doesTxnAlreadyExists) {
-      const title = `Duplicate buy pass insertion with txn id - ${params[HCS_KEYS.txn_id]} detected for user id - ${
-        params[HCS_KEYS.user_account_id]
-      }`;
+      const title = `Duplicate buy pass insertion with txn id - ${
+        params[HCS_KEYS.txn_id]
+      } detected for user id - ${params[HCS_KEYS.user_account_id]}`;
 
       sendEmailToAdmin(title);
 
@@ -190,6 +190,24 @@ const submitHcsMessage = async (topicId, message = {}, userAccountId, res) => {
   return transactionStatus;
 };
 
+const createNewTopic = async () => {
+  const privateKey = await getTreasuryPrivateKey();
+  const client = await getHederaClient();
+  const txnId = await new TopicCreateTransaction().setSubmitKey(privateKey.publicKey).execute(client);
+  const receipt = await txnId.getReceipt(client);
+  const topicId = receipt.topicId?.toString();
+
+  const params = { topicId: topicId };
+  await executeQuery(MAPPER_NAMESPACES.topics, QUERIES.insertNewTopic, params);
+
+  console.log('Created new topic - ', topicId);
+
+  const title = `New topic generated with topic id - ${topicId}`;
+  sendEmailToAdmin(title);
+
+  return topicId;
+};
+
 module.exports = {
   submitHcsMessage,
   getUsePassesByUserId,
@@ -199,4 +217,5 @@ module.exports = {
   getLeaderBoardByAccountId,
   checkIfUsePassTxnWithTrueRedemptionExists,
   markUsePassRedeemed,
+  createNewTopic,
 };

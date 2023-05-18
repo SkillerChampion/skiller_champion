@@ -6,7 +6,6 @@ import SideDrawer from '../Common/SideDrawer/SideDrawer';
 import SideDrawerIndex from '../WheelOfFortune/SideDrawer/Index';
 
 import GrayCard from '../Common/Cards/GrayCard';
-import { createNewTopic } from '../../services/hederaService';
 
 const Index = () => {
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
@@ -23,7 +22,6 @@ const Index = () => {
     <BodyContainer rootClassName="h-full">
       <GrayCard>
         <div className="flex gap-5">
-          <Button onClick={createNewTopic} text="Create new topic" />
           <Button onClick={openSideModal} text="Search user txns" />
         </div>
       </GrayCard>
