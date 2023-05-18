@@ -197,7 +197,12 @@ const createNewTopic = async () => {
 
   // const txnId = await new TopicCreateTransaction().setSubmitKey(PrivateKey.fromString(privateKey)).execute(client);
   const txnId = await new TopicCreateTransaction().execute(client);
+  console.log('txnId 11- ', txnId);
+
   const receipt = await txnId.getReceipt(client);
+  console.log('receipt 11- ', receipt);
+  console.log('receipt 222 - ', receipt.topicId);
+
   const topicId = receipt.topicId?.toString();
 
   const params = { topicId: topicId };
