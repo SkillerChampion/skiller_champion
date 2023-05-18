@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "node server.js",
-    "clientBuild": "cd client && npm install --force && npm run build",
+    "clientBuildProd": "cd client && npm install --force && npm run build",
+    "clientBuildTesting": "cd client && npm install --force && npm run testBuild",
     "server": "set NODE_ENV=development&&nodemon server",
     "startNftMinter": "set NODE_ENV=development&&nodemon src/services/nftMinter.js",
     "client": "npm run startLocal --prefix client",
