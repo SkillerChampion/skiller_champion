@@ -85,7 +85,7 @@ const DEPLOYED_ORIGIN_URL = [
 ];
 
 const GCP_PROJECT_ID = 948181003317;
-const TOKEN_EXPIRY_TIME = configurations.NODE_ENV === NODE_ENVS.development ? '20m' : '10s';
+const TOKEN_EXPIRY_TIME = configurations.NODE_ENV === NODE_ENVS.development ? '20m' : '1m';
 
 module.exports = {
   ARRAY_KEYS,
