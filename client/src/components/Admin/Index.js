@@ -22,7 +22,6 @@ const Index = () => {
     setIsSideModalOpen(false);
   };
 
-  console.log('userAccountId - ', userAccountId);
   return (
     <BodyContainer rootClassName="h-full">
       <GrayCard>
