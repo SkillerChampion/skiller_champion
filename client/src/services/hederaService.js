@@ -217,6 +217,7 @@ export const transferPrizeToUserAccount = async (
 // };
 
 // export const subscribeToTopic = async () => {
+// REMOVED ENV
 //   if (!process.env.REACT_APP_RUN_TESTNET) return subscribeToTopicOnMainnet();
 // };
 
