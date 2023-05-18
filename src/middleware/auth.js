@@ -1,10 +1,13 @@
 const jwt = require('jsonwebtoken');
+const configurations = require('../../config');
+
 const {
   HASH_CONNECT_KEYS,
   TOKEN_EXPIRY_TIME,
   AUTHORIZATION,
   USER_AGENT,
   UNAUTHORIZED,
+  NODE_ENVS,
 } = require('../utils/constants');
 const { getApiAccessKey, decryptData } = require('../utils/helperFunctions');
 const { sendEmailToAdmin } = require('../utils/nodeMailer');
@@ -25,20 +28,23 @@ const generateJwtToken = async (data) => {
 
 const validateToken = async (req, res, next) => {
   const allowedUserAgents = ['Chrome', 'Safari', 'Firefox', 'Edg'];
+  const getUserAgent = req.headers[USER_AGENT];
+  const accountId = req.query.accountId;
+
+  const allSpacesRegex = / /g;
+  const token = req.query[AUTHORIZATION]?.replace(allSpacesRegex, '+');
 
   try {
-    const getUserAgent = req.headers[USER_AGENT];
-    const isAgentAllowed = allowedUserAgents.some((agent) => getUserAgent.includes(agent));
+    if (configurations.NODE_ENV === NODE_ENVS.development) {
+      console.log('Bypass auth middleware in local environment');
+      next();
+      return;
+    }
 
+    const isAgentAllowed = allowedUserAgents.some((agent) => getUserAgent.includes(agent));
     if (!isAgentAllowed) {
       throw Error(UNAUTHORIZED);
     }
-
-    //Get token from header
-    const allSpacesRegex = / /g;
-
-    const token = req.query[AUTHORIZATION]?.replace(allSpacesRegex, '+');
-    const accountId = req.query.accountId;
 
     const decrypt = decryptData(token);
 

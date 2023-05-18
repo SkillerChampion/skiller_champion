@@ -13,6 +13,7 @@ const {
   getHederaClient,
   handleServerError,
 } = require('../utils/helperFunctions');
+const { mintWheelPasses } = require('../services/nftMinter');
 
 const { check, validationResult } = require('express-validator');
 
@@ -344,5 +345,21 @@ router.post(
     }
   }
 );
+
+//@route POST api/transferPrizeToUserAccount
+//desc - Post account balance by account id
+router.get('/mintWheelPasses', async (req, res) => {
+  try {
+    await mintWheelPasses();
+    const title = `Minted Wheel Pass Nfts`;
+    sendEmailToAdmin(title);
+
+    res.send('Wheel Passes minted');
+  } catch (err) {
+    console.log('/mintWheelPasses Error - ', err);
+
+    handleServerError(err, res);
+  }
+});
 
 module.exports = router;

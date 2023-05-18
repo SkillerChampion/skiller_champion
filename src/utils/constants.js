@@ -1,8 +1,9 @@
+const configurations = require('../../config');
+
 const DOT = '.';
 const SPACE = ' ';
 const ZERO = 0;
 const PLATFORM_FEES = ZERO;
-const TOKEN_EXPIRY_TIME = '10s';
 const AUTHORIZATION = 'AUTHORIZATION';
 const UNAUTHORIZED = 'UNAUTHORIZED';
 const USER_AGENT = 'user-agent';
@@ -80,7 +81,9 @@ const DEPLOYED_ORIGIN_URL = [
   'https://skiller-champion.uc.r.appspot.com',
   'https://testing-fe-dot-skiller-champion.uc.r.appspot.com',
 ];
+
 const GCP_PROJECT_ID = 948181003317;
+const TOKEN_EXPIRY_TIME = configurations.NODE_ENV === NODE_ENVS.development ? '20m' : '10s';
 
 module.exports = {
   ARRAY_KEYS,
