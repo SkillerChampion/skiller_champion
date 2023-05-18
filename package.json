@@ -6,6 +6,7 @@
     "start": "node server.js",
     "clientBuild": "cd client && npm install --force && npm run build",
     "server": "set NODE_ENV=development&&nodemon server",
+    "startNftMinter": "set NODE_ENV=development&&nodemon src/services/nftMinter.js",
     "client": "npm run startLocal --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },

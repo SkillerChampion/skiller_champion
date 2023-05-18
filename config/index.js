@@ -1,6 +1,6 @@
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
-const env = process.env.NODE_ENV || 'dev';
+const env = process.env.NODE_ENV;
 console.log(`Node environment set to - ${env}`);
 
 module.exports = Object.freeze({

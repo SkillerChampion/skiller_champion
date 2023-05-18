@@ -9,7 +9,6 @@ import { submitHcsMessage } from '../services/hederaService';
 // Private Keys and Token Ids
 export const getTreasuryAccountId = () => process.env.REACT_APP_TREASURY_ACCOUNT_ID;
 
-export const getTreasuryPublicKey = () => process.env.REACT_APP_TREASURY_PUBLIC_KEY;
 export const getPlatinumPassTokenId = () => process.env.REACT_APP_PLATINUM_PASS_TOKEN_ID;
 export const getGoldPassTokenId = () => process.env.REACT_APP_GOLD_PASS_TOKEN_ID;
 export const getSilverPassTokenId = () => process.env.REACT_APP_SILVER_PASS_TOKEN_ID;
