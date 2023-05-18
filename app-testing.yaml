@@ -4,7 +4,7 @@ service: testing-fe
 env_variables:
   NODE_ENV: testing
   PORT: 8080
-  API_ACCESS_KEY: ey.at622.fuafjgk8f.gjsgaa.0paf9g6a.ghards
+  API_ACCESS_KEY: 'TESTING_JWT_KEY'
   TREASURY_ACCOUNT_ID: 0.0.3833523
   TREASURY_PRIVATE_KEY: 'TESTING_TREASURY_PRIVATE_KEY'
   RUN_TESTNET: true
