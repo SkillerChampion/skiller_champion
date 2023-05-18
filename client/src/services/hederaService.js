@@ -220,3 +220,11 @@ export const transferPrizeToUserAccount = async (
 // REMOVED ENV
 //   if (!process.env.REACT_APP_RUN_TESTNET) return subscribeToTopicOnMainnet();
 // };
+
+export const createNewTopic = async (accountId) => {
+  const token = await getAuthToken(accountId);
+  if (token)
+    return axios
+      .get(`/hederaService/createNewTopic?${AUTHORIZATION}=${token}&accountId=${accountId}`)
+      .then((res) => res.data);
+};

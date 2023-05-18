@@ -346,8 +346,8 @@ router.post(
   }
 );
 
-//@route POST api/transferPrizeToUserAccount
-//desc - Post account balance by account id
+//@route GET api/transferPrizeToUserAccount
+//desc - Get account balance by account id
 router.get(
   '/createNewTopic',
   [
