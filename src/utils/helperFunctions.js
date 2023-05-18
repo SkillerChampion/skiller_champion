@@ -21,11 +21,8 @@ const getEncryptionKey = () => configurations.encryptionKey;
 
 const getHederaClient = async () => {
   if (configurations.runTestNet) {
-    console.log('TESTNET RUNNING - ', configurations.runTestNet);
     return Client.forTestnet().setOperator(getTreasuryAccountId(), await getTreasuryPrivateKey());
   } else {
-    console.log('MAINNET RUNNING - ', configurations.runTestNet);
-
     return Client.forMainnet().setOperator(getTreasuryAccountId(), await getTreasuryPrivateKey());
   }
 };
