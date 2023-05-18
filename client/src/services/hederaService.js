@@ -85,14 +85,13 @@ export const getNftsSerialNumberFromTreasury = (accountId, tokenId) => {
 export const getAllNftsFromAccountWithTokenId = (accountId, tokenId, returnOnlyCount = false) => {
   if (!accountId) return;
 
-  return hederaApi.get(`/api/v1/accounts/${accountId}/nfts`).then((res) => {
-    const getAllNfts = res.data?.nfts ?? [];
+  return hederaApi
+    .get(`/api/v1/accounts/${accountId}/nfts?token.id=${tokenId}&limit=100`)
+    .then((res) => {
+      const getAllNfts = res.data?.nfts ?? [];
 
-    const filterNfts =
-      getAllNfts.filter((item) => item[HEDERA_API_KEYS.token_id] === tokenId) ?? [];
-
-    return returnOnlyCount ? filterNfts.length : filterNfts;
-  });
+      return returnOnlyCount ? getAllNfts.length : getAllNfts;
+    });
 };
 
 export const getUsePassesByAccountId = async (accountId) => {
