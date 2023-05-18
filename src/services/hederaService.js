@@ -195,15 +195,9 @@ const createNewTopic = async () => {
   const privateKey = await getTreasuryPrivateKey();
   const client = await getHederaClient();
 
-  // const txnId = await new TopicCreateTransaction().setSubmitKey(PrivateKey.fromString(privateKey)).execute(client);
-  console.log('client 11- ', client);
-
-  const txnId = await new TopicCreateTransaction().execute(client);
-  console.log('txnId 11- ', txnId);
+  const txnId = await new TopicCreateTransaction().setSubmitKey(PrivateKey.fromString(privateKey)).execute(client);
 
   const receipt = await txnId.getReceipt(client);
-  console.log('receipt 11- ', receipt);
-  console.log('receipt 222 - ', receipt.topicId);
 
   const topicId = receipt.topicId?.toString();
 
