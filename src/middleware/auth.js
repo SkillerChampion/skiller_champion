@@ -28,13 +28,13 @@ const generateJwtToken = async (data) => {
 
 const validateToken = async (req, res, next) => {
   const allowedUserAgents = ['Chrome', 'Safari', 'Firefox', 'Edg'];
-  const getUserAgent = req.headers[USER_AGENT];
-  const accountId = req.query.accountId;
-
-  const allSpacesRegex = / /g;
-  const token = req.query[AUTHORIZATION]?.replace(allSpacesRegex, '+');
+  let getUserAgent;
+  let accountId;
+  let token;
 
   try {
+    getUserAgent = req.headers[USER_AGENT];
+
     if (configurations.NODE_ENV === NODE_ENVS.development) {
       console.log('Bypass auth middleware in local environment');
       next();
@@ -45,6 +45,11 @@ const validateToken = async (req, res, next) => {
     if (!isAgentAllowed) {
       throw Error(UNAUTHORIZED);
     }
+
+    accountId = req.query.accountId;
+
+    const allSpacesRegex = / /g;
+    token = req.query[AUTHORIZATION]?.replace(allSpacesRegex, '+');
 
     const decrypt = decryptData(token);
 
@@ -61,10 +66,10 @@ const validateToken = async (req, res, next) => {
     }
   } catch (err) {
     if (err.message === UNAUTHORIZED) {
-      const title = `Middleware auth error - User Agent ${getUserAgent} is not allowed for accountId = ${accountId}. Token value =${token}`;
+      const title = `Middleware auth error - User Agent ${getUserAgent} is not allowed for accountId = ${accountId}. \n \n Token value =${token}`;
       sendEmailToAdmin(title);
     } else {
-      const title = `JWT token decode failed for user Agent ${getUserAgent} with accountId = ${accountId}. Token value =${token} Error- `;
+      const title = `JWT token decode failed for user Agent ${getUserAgent} with accountId = ${accountId}. \n \n Token value =${token} Error- `;
       sendEmailToAdmin(title);
     }
 
