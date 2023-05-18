@@ -196,6 +196,8 @@ const createNewTopic = async () => {
   const client = await getHederaClient();
 
   // const txnId = await new TopicCreateTransaction().setSubmitKey(PrivateKey.fromString(privateKey)).execute(client);
+  console.log('client 11- ', client);
+
   const txnId = await new TopicCreateTransaction().execute(client);
   console.log('txnId 11- ', txnId);
 
