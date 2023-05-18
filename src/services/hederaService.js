@@ -4,6 +4,7 @@ const {
   Client,
   TopicMessageQuery,
   TopicMessageSubmitTransaction,
+  PrivateKey,
 } = require('@hashgraph/sdk');
 
 const {
@@ -193,7 +194,9 @@ const submitHcsMessage = async (topicId, message = {}, userAccountId, res) => {
 const createNewTopic = async () => {
   const privateKey = await getTreasuryPrivateKey();
   const client = await getHederaClient();
-  const txnId = await new TopicCreateTransaction().setSubmitKey(privateKey.publicKey).execute(client);
+  console.log('CHECK KEY ', privateKey);
+
+  const txnId = await new TopicCreateTransaction().setSubmitKey(PrivateKey.fromString(privateKey)).execute(client);
   const receipt = await txnId.getReceipt(client);
   const topicId = receipt.topicId?.toString();
 
