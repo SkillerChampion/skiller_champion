@@ -139,6 +139,7 @@ const WalletContextComponent = (props) => {
     }
   };
 
+  console.log('getCurrentHashNet - ', getCurrentHashNet());
   const setUpHashConnectEvents = (saveWalletData) => {
     hashconnect.pairingEvent.on((data) => {
       const getAccountId =
