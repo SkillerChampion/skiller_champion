@@ -48,3 +48,10 @@ create table skiller_champion.USER_INFO (
 
 comment on table skiller_champion.USER_INFO is
 'DESCRIPTION: Store user information';
+
+create table skiller_champion.TOPICS (
+   topic_id            VARCHAR(120)          null
+);
+
+comment on table skiller_champion.TOPICS is
+'DESCRIPTION: Store topic ids';

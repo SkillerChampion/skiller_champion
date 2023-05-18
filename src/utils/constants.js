@@ -55,6 +55,7 @@ const NODE_ENVS = {
 const MAPPER_NAMESPACES = {
   buyOrUsePasses: 'buyOrUsePasses',
   userInformation: 'userInformation',
+  topics: 'topics',
 };
 
 const QUERIES = {
@@ -70,6 +71,7 @@ const QUERIES = {
   selectUsePassByTxnId: 'selectUsePassByTxnId',
   checkIfUsePassTxnWithTrueRedemptionExists: 'checkIfUsePassTxnWithTrueRedemptionExists',
   markUsePassRedeemed: 'markUsePassRedeemed',
+  insertNewTopic: 'insertNewTopic',
 };
 
 const HCS_TYPES = {

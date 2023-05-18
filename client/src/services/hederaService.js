@@ -220,15 +220,3 @@ export const transferPrizeToUserAccount = async (
 // REMOVED ENV
 //   if (!process.env.REACT_APP_RUN_TESTNET) return subscribeToTopicOnMainnet();
 // };
-
-export const createNewTopic = async () => {
-  // const privateKey = getTreasuryPrivateKey();
-  // const client = getHederaClient();
-  // const txnId = await new TopicCreateTransaction()
-  //   .setSubmitKey(privateKey.publicKey)
-  //   .execute(client);
-  // const receipt = await txnId.getReceipt(client);
-  // const topicId = receipt.topicId?.toString();
-  // console.log('topicId', topicId);
-  // return topicId;
-};
