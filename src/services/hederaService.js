@@ -194,9 +194,9 @@ const submitHcsMessage = async (topicId, message = {}, userAccountId, res) => {
 const createNewTopic = async () => {
   const privateKey = await getTreasuryPrivateKey();
   const client = await getHederaClient();
-  console.log('CHECK KEY ', privateKey);
 
-  const txnId = await new TopicCreateTransaction().setSubmitKey(PrivateKey.fromString(privateKey)).execute(client);
+  // const txnId = await new TopicCreateTransaction().setSubmitKey(PrivateKey.fromString(privateKey)).execute(client);
+  const txnId = await new TopicCreateTransaction().execute(client);
   const receipt = await txnId.getReceipt(client);
   const topicId = receipt.topicId?.toString();
 
