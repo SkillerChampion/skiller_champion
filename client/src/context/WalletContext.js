@@ -22,6 +22,7 @@ import {
   getSilverPassTokenId,
   getTreasuryAccountId,
   isValidNftSerialNumber,
+  getCurrentHashNet,
   submitBuyPassHcsMsg
 } from '../utils/helperFunctions';
 
@@ -116,7 +117,7 @@ const WalletContextComponent = (props) => {
     setUpHashConnectEvents(saveWalletData);
 
     //initialize and use returned data
-    let initData = await hashconnect.init(HASH_CONNECT_META_DATA, 'testnet');
+    let initData = await hashconnect.init(HASH_CONNECT_META_DATA, getCurrentHashNet());
 
     if (initData) {
       const getAccountId = initData.savedPairings[ZERO]?.[HASH_CONNECT_KEYS.ACCOUNT_IDS]?.[ZERO];
@@ -124,7 +125,7 @@ const WalletContextComponent = (props) => {
       const getPairingString = initData[HASH_CONNECT_KEYS.PAIRING_STRING];
       const getSavedPairingData = initData.savedPairings[ZERO];
 
-      const provider = hashconnect.getProvider('testnet', getTopic, getAccountId);
+      const provider = hashconnect.getProvider(getCurrentHashNet(), getTopic, getAccountId);
       const signer = hashconnect.getSigner(provider);
 
       saveWalletData[HASH_CONNECT_KEYS.ACCOUNT_IDS] = getAccountId;
@@ -145,7 +146,7 @@ const WalletContextComponent = (props) => {
       const getSavedPairingData = data[HASH_CONNECT_KEYS.PAIRING_DATA];
       const getTopic = saveWalletData[HASH_CONNECT_KEYS.TOPIC];
 
-      const provider = hashconnect.getProvider('testnet', getTopic, getAccountId);
+      const provider = hashconnect.getProvider(getCurrentHashNet(), getTopic, getAccountId);
       const signer = hashconnect.getSigner(provider);
 
       saveWalletData[HASH_CONNECT_KEYS.SIGNER] = signer;
