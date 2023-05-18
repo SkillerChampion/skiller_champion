@@ -206,21 +206,6 @@ export const transferPrizeToUserAccount = async (
       .then((res) => res.data);
 };
 
-// export const subscribeToTopicOnMainnet = () => {
-//   const client = getHederaClient();
-//   const topicId = getFortuneWheelTopicId();
-
-//   new TopicMessageQuery().setTopicId(topicId).subscribe(client, null, (message) => {
-//     let messageAsString = Buffer.from(message.contents, 'utf8').toString();
-//     console.log(`${message.consensusTimestamp.toDate()} Received: ${messageAsString}`);
-//   });
-// };
-
-// export const subscribeToTopic = async () => {
-// REMOVED ENV
-//   if (!process.env.REACT_APP_RUN_TESTNET) return subscribeToTopicOnMainnet();
-// };
-
 export const createNewTopic = async (accountId) => {
   const token = await getAuthToken(accountId);
   if (token)
