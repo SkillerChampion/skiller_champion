@@ -8,6 +8,8 @@ import trophyTwo from '../../../assets/lotties/trophyTwo';
 import moneyFlying from '../../../assets/lotties/moneyFlying';
 import Lottie from 'react-lottie';
 import Button from '../Button/Button';
+import losingSound from '../../../assets/losingSound.mp3';
+import laughWinningSound from '../../../assets/laughWinningSound.mp3';
 
 const trophyTwoConfig = {
   loop: true,
@@ -87,6 +89,9 @@ const WinnerOrLoserModal = ({
 };
 
 const WinnerLoserAnimation = ({ data, setData }) => {
+  const loserSound = new Audio(losingSound);
+  const winnerSound = new Audio(laughWinningSound);
+
   const { width, height } = useWindowSize();
 
   const [localData, setLocalData] = useState();
@@ -107,10 +112,14 @@ const WinnerLoserAnimation = ({ data, setData }) => {
 
   useEffect(() => {
     if (localData) {
+      const isWinner = localData?.[ARRAY_KEYS.IS_WIN];
       setNumPieces(400);
       setRun(true);
       setShowModal(true);
       setData();
+
+      if (isWinner) winnerSound.play();
+      else loserSound.play();
     }
   }, [localData]);
 

@@ -11,6 +11,7 @@ import {
   TEN_SECONDS,
   TWELVE_SECONDS,
   ZERO,
+  ONE_AND_HALF_SECONDS,
   THREE_SECONDS,
   HEDERA_API_KEYS
 } from '../../../utils/constants';
@@ -23,6 +24,7 @@ import {
 } from '../../../utils/helperFunctions';
 import hederaWhiteIcon from '../../../assets/hederaWhiteIcon.png';
 import { FortuneContext } from '../../../context/FortuneContext';
+import wheelRotatingSound from '../../../assets/wheelRotatingSound.mp3';
 import { WalletContext } from '../../../context/WalletContext';
 
 import Button from '../Button/Button';
@@ -31,6 +33,8 @@ import { toast } from 'react-toastify';
 const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount, passType }) => {
   const { setIsWheelOfFortuneSpinning, setShowWinnerLoser } = useContext(FortuneContext);
   const { transferNftFromUserToTreasury, userAccountId } = useContext(WalletContext);
+
+  const rotationSound = new Audio(wheelRotatingSound);
 
   const passesCount = passesInUserAccount?.length ?? 0;
 
@@ -109,6 +113,10 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
               nftTransferTxnId,
               userAccountId
             );
+
+            setTimeout(() => {
+              rotationSound.play();
+            }, ONE_AND_HALF_SECONDS);
 
             setTimeout(() => {
               startSpin(randomSlice);

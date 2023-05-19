@@ -15,6 +15,7 @@ import {
 } from '../utils/constants';
 import { useQuery } from 'react-query';
 import { TransferTransaction } from '@hashgraph/sdk';
+import eventSaved from '../assets/eventSaved.mp3';
 
 import {
   getPlatinumPassTokenId,
@@ -42,6 +43,8 @@ export const WalletContext = createContext();
 const hashconnect = new HashConnect();
 
 const WalletContextComponent = (props) => {
+  const successSound = new Audio(eventSaved);
+
   const [walletData, setWalletData] = useState();
   const userAccount = walletData?.[HASH_CONNECT_KEYS.ACCOUNT_IDS];
 
@@ -285,6 +288,7 @@ const WalletContextComponent = (props) => {
       const receiptStatus = receipt?.status?.toString();
 
       if (receiptStatus === HEDERA_API_KEYS.SUCCESS) {
+        successSound.play();
         toast.success('Transaction submitted successfully...');
         return { receiptStatus, txnId };
       } else {
