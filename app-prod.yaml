@@ -25,7 +25,7 @@ handlers:
     redirect_http_response_code: 301
 
   # Serve static assets from the React build
-  - url: /(.*\.(js|css|png|jpg|gif|ico|json|html|otf))$
+  - url: /(.*\.(js|css|png|jpg|gif|ico|json|html|otf|mp3))$
     static_files: client/build/\1
     upload: client/build/.*\.(js|css|png|jpg|gif|ico|json|html|otf|mp3)$
     secure: always

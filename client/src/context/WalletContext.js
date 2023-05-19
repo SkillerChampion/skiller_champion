@@ -268,6 +268,8 @@ const WalletContextComponent = (props) => {
     }
   };
 
+  console.log('successSound - ', successSound);
+
   const sendTxnToWallet = async (byteCode) => {
     try {
       const signer = walletData[HASH_CONNECT_KEYS.SIGNER];
