@@ -1,8 +1,8 @@
 export const ZERO = 0;
+export const ONE_AND_HALF_SECONDS = 1500;
 export const TWO_SECONDS = 2000;
 export const THREE_SECONDS = 3000;
 export const FOUR_SECONDS = 4000;
-
 export const FIVE_SECONDS = 5000;
 export const SIX_SECONDS = 6000;
 export const TEN_SECONDS = 10000;
