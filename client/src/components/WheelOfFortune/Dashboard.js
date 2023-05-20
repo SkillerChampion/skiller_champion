@@ -10,16 +10,9 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { isArrayReady } from '../../utils/helperFunctions';
 
-import {
-  ZERO,
-  ARRAY_KEYS,
-  SIX_SECONDS,
-  PASSES_TYPES,
-  WHEEL_BET_AMOUNTS,
-  HCS_KEYS
-} from '../../utils/constants';
+import { ZERO, ARRAY_KEYS, PASSES_TYPES, WHEEL_BET_AMOUNTS, HCS_KEYS } from '../../utils/constants';
 import { toast } from 'react-toastify';
-import { associateTokens, getLeaderBoardByAccountId } from '../../services/hederaService';
+import { getLeaderBoardByAccountId } from '../../services/hederaService';
 
 import {
   getPlatinumPassTokenId,
@@ -32,11 +25,6 @@ const Dashboard = () => {
   const {
     buyPassAndTransferNftToUserAccount,
     userAccountId,
-    isPlatinumPassAssociated,
-    isGoldPassAssociated,
-    isSilverPassAssociated,
-    sendTxnToWallet,
-    refetchTokenRelationships,
     platinumPassesInUserAccount,
     goldPassesInUserAccount,
     silverPassesInUserAccount
@@ -57,28 +45,25 @@ const Dashboard = () => {
 
   useEffect(() => {
     setBuySelectedPass(BUY_PASSES_OPTIONS?.[ZERO]);
-  }, [isPlatinumPassAssociated, isGoldPassAssociated, isSilverPassAssociated]);
+  }, []);
 
   const BUY_PASSES_OPTIONS = [
     {
       [ARRAY_KEYS.VALUE]: WHEEL_BET_AMOUNTS.PLATINUM,
       [ARRAY_KEYS.LABEL]: PASSES_TYPES.PLATINUM,
       [ARRAY_KEYS.DESCRIPTION]: '- 2000 HBAR',
-      [ARRAY_KEYS.IS_TOKEN_ASSOCIATED]: isPlatinumPassAssociated,
       [ARRAY_KEYS.ASSOCIATE_TOKEN_ID]: getPlatinumPassTokenId()
     },
     {
       [ARRAY_KEYS.VALUE]: WHEEL_BET_AMOUNTS.GOLD,
       [ARRAY_KEYS.LABEL]: PASSES_TYPES.GOLD,
       [ARRAY_KEYS.DESCRIPTION]: '- 500 HBAR',
-      [ARRAY_KEYS.IS_TOKEN_ASSOCIATED]: isGoldPassAssociated,
       [ARRAY_KEYS.ASSOCIATE_TOKEN_ID]: getGoldPassTokenId()
     },
     {
       [ARRAY_KEYS.VALUE]: WHEEL_BET_AMOUNTS.SILVER,
       [ARRAY_KEYS.LABEL]: PASSES_TYPES.SILVER,
       [ARRAY_KEYS.DESCRIPTION]: '- 100 HBAR',
-      [ARRAY_KEYS.IS_TOKEN_ASSOCIATED]: isSilverPassAssociated,
       [ARRAY_KEYS.ASSOCIATE_TOKEN_ID]: getSilverPassTokenId()
     }
   ];
@@ -120,28 +105,16 @@ const Dashboard = () => {
     );
   };
 
-  const associateToken = async () => {
-    const tokenIdForAssociation = buySelectedPass?.[ARRAY_KEYS.ASSOCIATE_TOKEN_ID];
-
-    if (!tokenIdForAssociation) return toast.error('Missing association token id');
-
-    const byteCode = await associateTokens(userAccountId, tokenIdForAssociation);
-    const isAssociationSuccess = await sendTxnToWallet(byteCode);
-
-    setTimeout(() => {
-      // Wait for Txn to be posted on network
-      if (isAssociationSuccess) refetchTokenRelationships();
-    }, SIX_SECONDS);
-  };
-
-  const BuyOrAssociateToken = () => {
-    return buySelectedPass?.[ARRAY_KEYS.IS_TOKEN_ASSOCIATED] ? (
+  const BuyToken = () => {
+    return (
       <>
         <div className="mt-[30px] text-xs md:text-sm w-full text-white">
           Total - {getTotalBuyHbars()} Hbars
         </div>
         <Button
-          text={`Buy 1 ${buySelectedPass?.[ARRAY_KEYS.LABEL]} Pass`}
+          text={`${
+            userAccountId ? `Buy 1 ${buySelectedPass?.[ARRAY_KEYS.LABEL]} Pass` : 'Connect wallet'
+          }`}
           className={`mt-[10px]`}
           btnClassName="justify-center"
           onClick={handleBuyClick}
@@ -149,20 +122,8 @@ const Dashboard = () => {
           allowFullWidth
         />
       </>
-    ) : (
-      <Button
-        text={
-          userAccountId ? `Associate ${buySelectedPass?.[ARRAY_KEYS.LABEL]} Pass` : 'Connect wallet'
-        }
-        className={`mt-[25px]`}
-        btnClassName="justify-center"
-        onClick={associateToken}
-        disabled={!userAccountId}
-        allowFullWidth
-      />
     );
   };
-  console.log('getWinningAmount', data);
 
   const TotalWinnings = () => {
     const getTotalWinning = data?.reduce(
@@ -241,7 +202,7 @@ const Dashboard = () => {
                 setData={setBuySelectedPass}
               />
 
-              <BuyOrAssociateToken />
+              <BuyToken />
             </>
           </GrayCard>
         </div>
