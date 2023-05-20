@@ -67,6 +67,7 @@ const WalletContextComponent = (props) => {
   );
 
   useEffect(() => {
+    console.log('Current environment - ', getCurrentHashNet());
     initWallet();
   }, []);
 
@@ -219,8 +220,6 @@ const WalletContextComponent = (props) => {
       toast.error('Something went wrong...');
     }
   };
-
-  console.log('successSound - ', successSound);
 
   const sendTxnToWallet = async (byteCode) => {
     try {

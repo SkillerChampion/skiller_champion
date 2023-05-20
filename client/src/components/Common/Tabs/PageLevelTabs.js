@@ -9,14 +9,12 @@ const PageLevelTabs = ({
   spaceHr = false
 }) => {
   const handleTabClick = (tab) => {
-    console.log('tab', tab);
     setCurrentTab(tab);
   };
 
   const handleTabClickSm = (e) => {
     const value = e.target.value;
     const findTab = tabs?.find((item) => item[ARRAY_KEYS.LABEL] === value);
-    console.log('value', findTab);
 
     setCurrentTab(findTab);
   };
