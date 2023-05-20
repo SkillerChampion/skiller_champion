@@ -14,6 +14,7 @@ import { WalletContext } from './context/WalletContext';
 import SocialMediaLinks from './components/Common/SocialMediaLinks/SocialMediaLinks';
 import { ALL_ROUTES, ALL_ROUTES_PATHS } from './utils/routes';
 import { ToastContainer } from 'react-toastify';
+import TermsAndConditions from './components/Common/TermsAndConditions/TermsAndConditions';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
   return (
     <div className={`${isWheelOfFortuneSpinning && 'pointer-events-none'} h-screen`}>
       <ToastWrapper />
+      <TermsAndConditions />
       <WinnerLoserAnimation data={showWinnerLoser} setData={setShowWinnerLoser} />
       <Header />
       <SocialMediaLinks />

@@ -11,6 +11,7 @@ export const FIFTEEN_SECONDS = 15000;
 export const TWENTY_SECONDS = 20000;
 export const PLATFORM_FEES = 0;
 export const DOT = '.';
+export const TRUE_STRING = 'true';
 
 export const EXTERNAL_LINKS = {
   GITHUB_OPEN_SOURCE_LINK: 'https://github.com/SkillerChampion/skiller_champ_open_source',
@@ -77,7 +78,8 @@ export const hashConnectInitialData = {
 };
 
 export const LOCAL_STORAGE_KEYS = {
-  HASH_CONNECT_WALLET_DATA: 'hashconnectData'
+  HASH_CONNECT_WALLET_DATA: 'hashconnectData',
+  IS_T_AND_C_ACCEPTED: 'IS_T_AND_C_ACCEPTED'
 };
 
 export const HEDERA_API_KEYS = {
@@ -130,7 +132,8 @@ export const HCS_KEYS = {
   message: 'message',
   messages: 'messages',
   payer_account_id: 'payer_account_id',
-  time: 'time'
+  time: 'time',
+  is_terms_and_conditions_accepted: 'is_terms_and_conditions_accepted'
 };
 
 export const HCS_TYPES = {

@@ -1,0 +1,102 @@
+.modalRoot > div:nth-child(2) {
+  width: 480px !important;
+  height: 600px !important;
+  padding: 20px 0 20px 20px !important;
+}
+
+.modalRoot > div:nth-child(2) > span {
+  display: none !important;
+}
+
+.root,
+.heading,
+.bottom {
+  font-family: 'Montserrat' !important;
+  color: white !important;
+  font-size: 14px !important;
+}
+
+.bottom {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+
+.root > *,
+.bottom > * {
+  font-family: 'Montserrat' !important;
+  font-size: 14px !important;
+  font-weight: 300 !important;
+  line-height: 150% !important;
+}
+
+.bottom,
+.heading {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.modalRootChild > div:nth-child(1) {
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.modalRootChild > div:nth-child(2) {
+  background: var(--gray-900) !important;
+  border: 2px solid var(--indigo-400) !important;
+  box-shadow: 0 0 5px var(--indigo-400) !important;
+}
+
+.modalRootChild > div:nth-child(2) > div > div > div:nth-child(2) > div {
+  background: var(--indigo-600) !important;
+  width: 5px !important;
+}
+
+.customBtn {
+  background: #fff !important;
+  color: black !important;
+  padding-left: 45px !important;
+  padding-right: 45px !important;
+}
+
+.greenBtn:hover {
+  background: rgb(151, 252, 117) !important;
+}
+
+.scrollbarColor {
+  background-color: red;
+  height: 10px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .modalRoot > div:nth-child(2) {
+    width: 400px !important;
+    height: 450px !important;
+  }
+
+  .root > *,
+  .bottom > * {
+    font-size: 12px !important;
+  }
+
+  .bottom,
+  .heading {
+    font-size: 13px !important;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .modalRoot > div:nth-child(2) {
+    width: 260px !important;
+    height: 400px !important;
+    padding: 15px 0 15px 15px !important;
+  }
+
+  .root > *,
+  .bottom > * {
+    font-size: 10px !important;
+  }
+
+  .bottom,
+  .heading {
+    font-size: 11px !important;
+  }
+}
