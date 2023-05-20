@@ -103,7 +103,6 @@ const WalletContextComponent = (props) => {
     }
   };
 
-  console.log('getCurrentHashNet - ', getCurrentHashNet());
   const setUpHashConnectEvents = (saveWalletData) => {
     hashconnect.pairingEvent.on((data) => {
       const getAccountId =
@@ -124,7 +123,6 @@ const WalletContextComponent = (props) => {
   };
 
   const connectToHashPack = async () => {
-    console.log('connectToHashPack');
     hashconnect.connectToLocalWallet(walletData[HASH_CONNECT_KEYS.PAIRING_STRING]);
   };
 
