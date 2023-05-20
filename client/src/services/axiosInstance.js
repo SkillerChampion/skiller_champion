@@ -28,17 +28,3 @@ export const getAuthToken = async (accountId) => {
     console.log('Error getting Token - ', error);
   }
 };
-
-// export const getTokenForAuth = async (accountId) => {
-//   const configReq = { [HASH_CONNECT_KEYS.ACCOUNT_ID]: accountId };
-
-//   try {
-//     const { token = '' } = await generateJwtToken(configReq);
-//     const encryptToken = await encryptData(token);
-
-//     console.log('encryptTokenencryptToken', encryptToken);
-//     return encryptToken;
-//   } catch (error) {
-//     console.log('Error getting Token - ', error);
-//   }
-// };

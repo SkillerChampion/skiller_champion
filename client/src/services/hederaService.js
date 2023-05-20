@@ -62,11 +62,12 @@ export const associateTokens = async (accountId, tokenId) => {
       .then((res) => res.data);
 };
 
-export const getTokenRelationships = (accountId) => {
-  if (!accountId) return;
+// Removing token association logic as hashpack handled it automatically
+// export const getTokenRelationships = (accountId) => {
+//   if (!accountId) return;
 
-  return hederaApi.get(`/api/v1/accounts/${accountId}/tokens`).then((res) => res.data);
-};
+//   return hederaApi.get(`/api/v1/accounts/${accountId}/tokens`).then((res) => res.data);
+// };
 
 export const getNftsSerialNumberFromTreasury = (accountId, tokenId) => {
   if (!accountId) return;

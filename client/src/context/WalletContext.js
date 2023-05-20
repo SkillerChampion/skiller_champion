@@ -10,8 +10,7 @@ import {
   hashConnectInitialData,
   ZERO,
   HEDERA_API_KEYS,
-  FIVE_SECONDS,
-  TWENTY_SECONDS
+  SIX_SECONDS
 } from '../utils/constants';
 import { useQuery } from 'react-query';
 import { TransferTransaction } from '@hashgraph/sdk';
@@ -29,7 +28,6 @@ import {
 
 import {
   chargeUserAndTransferNft,
-  getTokenRelationships,
   getNftsSerialNumberFromTreasury,
   getAllNftsFromAccountWithTokenId,
   getAccountBalances,
@@ -49,16 +47,8 @@ const WalletContextComponent = (props) => {
   const userAccount = walletData?.[HASH_CONNECT_KEYS.ACCOUNT_IDS];
 
   const [userAccountId, setUserAccountId] = useState();
-  const [isPlatinumPassAssociated, setIsPlatinumPassAssociated] = useState(false);
-  const [isGoldPassAssociated, setIsGoldPassAssociated] = useState(false);
-  const [isSilverPassAssociated, setIsSilverPassAssociated] = useState(false);
 
   const isAdmin = userAccountId === getTreasuryAccountId();
-
-  const { data: tokenRelationships, refetch: refetchTokenRelationships } = useQuery(
-    ['getTokenRelationships', userAccountId],
-    () => getTokenRelationships(userAccountId)
-  );
 
   const { data: platinumPassesInUserAccount, refetch: refetchPlatinumPassesInUserAccount } =
     useQuery(
@@ -77,6 +67,7 @@ const WalletContextComponent = (props) => {
   );
 
   useEffect(() => {
+    console.log('Current environment - ', getCurrentHashNet());
     initWallet();
   }, []);
 
@@ -84,35 +75,6 @@ const WalletContextComponent = (props) => {
     if (userAccount) setUserAccountId(userAccount);
     else setUserAccountId();
   }, [userAccount]);
-
-  useEffect(() => {
-    if (userAccountId) refetchTokenRelationships();
-  }, [userAccountId]);
-
-  useEffect(() => {
-    // Check Passes token association
-    const tokens = tokenRelationships?.[HEDERA_API_KEYS.tokens];
-
-    if (isArray(tokens)) {
-      const findPlatinumPassTokenId = tokens.find(
-        (item) => item[HEDERA_API_KEYS.token_id] === getPlatinumPassTokenId()
-      );
-
-      const findGoldPassTokenId = tokens.find(
-        (item) => item[HEDERA_API_KEYS.token_id] === getGoldPassTokenId()
-      );
-
-      const findSilverPassTokenId = tokens.find(
-        (item) => item[HEDERA_API_KEYS.token_id] === getSilverPassTokenId()
-      );
-
-      findPlatinumPassTokenId
-        ? setIsPlatinumPassAssociated(true)
-        : setIsPlatinumPassAssociated(false);
-      findGoldPassTokenId ? setIsGoldPassAssociated(true) : setIsGoldPassAssociated(false);
-      findSilverPassTokenId ? setIsSilverPassAssociated(true) : setIsSilverPassAssociated(false);
-    }
-  }, [tokenRelationships]);
 
   const initWallet = async () => {
     let saveWalletData = { ...hashConnectInitialData };
@@ -142,7 +104,6 @@ const WalletContextComponent = (props) => {
     }
   };
 
-  console.log('getCurrentHashNet - ', getCurrentHashNet());
   const setUpHashConnectEvents = (saveWalletData) => {
     hashconnect.pairingEvent.on((data) => {
       const getAccountId =
@@ -163,7 +124,6 @@ const WalletContextComponent = (props) => {
   };
 
   const connectToHashPack = async () => {
-    console.log('connectToHashPack');
     hashconnect.connectToLocalWallet(walletData[HASH_CONNECT_KEYS.PAIRING_STRING]);
   };
 
@@ -176,7 +136,6 @@ const WalletContextComponent = (props) => {
     hashconnect.disconnect(topic);
     setWalletData(pairingStringObj);
     setUserAccountId(false);
-    setIsPlatinumPassAssociated(false);
 
     localStorage.removeItem(LOCAL_STORAGE_KEYS.HASH_CONNECT_WALLET_DATA);
   };
@@ -219,7 +178,7 @@ const WalletContextComponent = (props) => {
             refetchPlatinumPassesInUserAccount();
             refetchGoldPassesInUserAccount();
             refetchSilverPassesInUserAccount();
-          }, FIVE_SECONDS);
+          }, SIX_SECONDS);
         }
       } else {
         toast.error('Sorry, we are out of stock...');
@@ -251,12 +210,6 @@ const WalletContextComponent = (props) => {
         const txnId = res?.txnId;
 
         if (receiptStatus) {
-          setTimeout(() => {
-            refetchPlatinumPassesInUserAccount();
-            refetchGoldPassesInUserAccount();
-            refetchSilverPassesInUserAccount();
-          }, TWENTY_SECONDS);
-
           return { receiptStatus, txnId };
         }
       } else {
@@ -267,8 +220,6 @@ const WalletContextComponent = (props) => {
       toast.error('Something went wrong...');
     }
   };
-
-  console.log('successSound - ', successSound);
 
   const sendTxnToWallet = async (byteCode) => {
     try {
@@ -307,19 +258,19 @@ const WalletContextComponent = (props) => {
       value={{
         walletData,
         userAccountId,
-        isPlatinumPassAssociated,
-        isGoldPassAssociated,
-        isSilverPassAssociated,
+
         disconnectHashPack,
         connectToHashPack,
         buyPassAndTransferNftToUserAccount,
         transferNftFromUserToTreasury,
-        refetchTokenRelationships,
         sendTxnToWallet,
         platinumPassesInUserAccount,
         goldPassesInUserAccount,
         silverPassesInUserAccount,
-        isAdmin
+        isAdmin,
+        refetchPlatinumPassesInUserAccount,
+        refetchGoldPassesInUserAccount,
+        refetchSilverPassesInUserAccount
       }}>
       {' '}
       {props.children}{' '}

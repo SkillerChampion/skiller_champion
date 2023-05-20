@@ -32,7 +32,13 @@ import { toast } from 'react-toastify';
 
 const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount, passType }) => {
   const { setIsWheelOfFortuneSpinning, setShowWinnerLoser } = useContext(FortuneContext);
-  const { transferNftFromUserToTreasury, userAccountId } = useContext(WalletContext);
+  const {
+    transferNftFromUserToTreasury,
+    userAccountId,
+    refetchPlatinumPassesInUserAccount,
+    refetchGoldPassesInUserAccount,
+    refetchSilverPassesInUserAccount
+  } = useContext(WalletContext);
 
   const rotationSound = new Audio(wheelRotatingSound);
 
@@ -59,6 +65,10 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
         wheel.classList.remove('spinning');
         images.classList.remove('spinning');
         setIsWheelOfFortuneSpinning(false);
+
+        refetchPlatinumPassesInUserAccount();
+        refetchGoldPassesInUserAccount();
+        refetchSilverPassesInUserAccount();
       }, TWELVE_SECONDS);
     } catch (err) {
       console.log('error spinning - ', err);
