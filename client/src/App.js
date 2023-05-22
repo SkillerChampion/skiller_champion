@@ -46,13 +46,6 @@ function App() {
     />
   );
 
-  console.log(
-    'path - ',
-    pathname,
-    ALL_ROUTES_PATHS.KEY_PRESSER_GAME_PLAY,
-    pathname !== ALL_ROUTES_PATHS.KEY_PRESSER_GAME_PLAY
-  );
-
   return (
     <div className={`${isWheelOfFortuneSpinning && 'pointer-events-none'} h-screen`}>
       <ToastWrapper />
