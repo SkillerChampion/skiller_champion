@@ -15,7 +15,7 @@ const Section1 = () => {
 
   return (
     <BodyContainer>
-      <div className="flex flex-col lg:flex-row pb-24 sm:pb-32">
+      <div className="flex flex-col lg:flex-row pb-24 sm:pb-32 pt-8 lg:pt-0">
         <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl pt-6 lg:pt-20">
           <h1
             className={`md:mt-6 md:pt-6 sm:pt-14 lg:pt-0 text-xl sm:text-3xl xl:text-4xl font-bold tracking-tight text-white pinkWhiteText GrindFontFamily`}>

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import SmallTabs from '../../Common/Tabs/SmallTabs';
+import SmallTabs from '../../../Common/Tabs/SmallTabs';
 import PassPurchaseHistory from './PassPurchaseHistory';
 import PassUseHistory from './PassUseHistory';
 import { useState, useEffect } from 'react';

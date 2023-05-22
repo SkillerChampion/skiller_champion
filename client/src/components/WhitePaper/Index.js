@@ -23,12 +23,12 @@ const Index = () => {
     { name: linkName.founderNfts, path: `${ALL_ROUTES_PATHS.WHITE_PAPER}#${linkName.founderNfts}` }
   ];
   return (
-    <div className={`w-full flex h-full relative`}>
+    <div className={`w-full flex h-full relative -mt-[20px]`}>
       <SideBar navigation={navigation} />
 
       <Scrollbar className={`h-full w-full`}>
         <BodyContainer
-          rootClassName="w-full bg-indigo-700 md:pl-[200px] lg:pl-[300px] pt-[60px]"
+          rootClassName="w-full bg-indigo-700 md:pl-[200px] lg:pl-[300px] -mt-[10px] pt-0"
           heading="WHITEPAPER V1 -"
           headingClass="MontserratFamily font-bold"
           whiteHeading>

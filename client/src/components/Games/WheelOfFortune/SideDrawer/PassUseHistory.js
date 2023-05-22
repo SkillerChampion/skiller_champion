@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { useQuery } from 'react-query';
-import { getUsePassesByAccountId } from '../../../services/hederaService';
-import { ARRAY_KEYS, HCS_KEYS } from '../../../utils/constants';
-import TableData from '../../Common/Table/Table';
-import SearchTxn from '../../Common/Table/SearchTxn';
+import { getUsePassesByAccountId } from '../../../../services/hederaService';
+import { ARRAY_KEYS, HCS_KEYS } from '../../../../utils/constants';
+import TableData from '../../../Common/Table/Table';
+import SearchTxn from '../../../Common/Table/SearchTxn';
 import {
   isArrayReady,
   decodeHcsTimeStamp,
   getUserLocalTimezone
-} from '../../../utils/helperFunctions';
+} from '../../../../utils/helperFunctions';
 
 const PassUseHistory = ({ userAccountId, setLocalUserAccountId }) => {
   const { data, isFetching, error } = useQuery(['getUsePassesByAccountId', userAccountId], () =>

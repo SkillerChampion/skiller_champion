@@ -12,13 +12,19 @@ export const TWENTY_SECONDS = 20000;
 export const PLATFORM_FEES = 0;
 export const DOT = '.';
 export const TRUE_STRING = 'true';
+export const NINETY_FIVE = 95;
+export const FIVE = 5;
+export const HUNDRED_POINT_FIVE_NUMBER = 100.5;
 
 export const EXTERNAL_LINKS = {
   GITHUB_OPEN_SOURCE_LINK: 'https://github.com/SkillerChampion/skiller_champ_open_source',
   GITHUB_OPEN_SOURCE_LINK_ROUTER:
     'https://github.com/SkillerChampion/skiller_champ_open_source/blob/3310ce9ee49c44a770cdd6bf01a07bb54b1d85c7/src/routes/fortuneWheel.js#LL24C13-L24C13',
   SKILLER_TWITTER: 'https://twitter.com/SkillerChampion',
-  SKILLER_DISCORD: 'https://discord.gg/3xDcJuNr'
+  SKILLER_DISCORD: 'https://discord.gg/3xDcJuNr',
+
+  HASHSCAN_MAINNET: 'https://hashscan.io/mainnet/dashboard',
+  GOOGLE_CLOUD_TERMS: 'https://cloud.google.com/terms/cloud-privacy-notice'
 };
 
 // HEADER REQUESTS
@@ -140,3 +146,32 @@ export const HCS_TYPES = {
   BUY_PASSES: 'BUY_PASSES',
   USE_PASSES: 'USE_PASSES'
 };
+
+export const KEY_PRESS_GAME_KEYS = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'u',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z'
+];

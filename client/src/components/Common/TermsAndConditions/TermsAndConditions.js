@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { TRUE_STRING } from '../../../utils/constants';
 import Modal from '../Modal/Modal';
 import classes from './TermsAndConditions.module.css';
 import { Scrollbar } from 'react-scrollbars-custom';
@@ -8,6 +7,7 @@ import Switch from '../Button/Switch';
 import { LOCAL_STORAGE_KEYS } from '../../../utils/constants';
 import Button from '../Button/Button';
 import { isTermsAccepted } from '../../../utils/helperFunctions';
+import TermsAndPrivacy from './TermsAndPrivacy';
 
 const TermsAndConditions = () => {
   const [checked, setChecked] = useState(false);
@@ -37,27 +37,10 @@ const TermsAndConditions = () => {
         }`}>
         <Modal showModal={showModal} className={`${classes.modalRoot} ${classes.modalRootChild}`}>
           <div className="h-full w-full flex flex-col gap-4">
-            <div className={classes.heading}>Terms And Conditions</div>
+            <div className={classes.heading}>Platform policies</div>
             <Scrollbar>
               <div className={`pr-[15px] break-words ${classes.root}`}>
-                <div>
-                  ssssajsahsjkhasjkhja kshjkahsjkashjhshsajkhsakjhashjshah
-                  ajkshahhaskhkashkhshjkdhkj hfoijsiodfjsldjflksjfj sdkfhsdkfhksdjfhksdhfksdfkjshdfj
-                  ksdbfkjsciosjfuaiehfiuwh afjeoifheiuvakwjosd fuhfskdfklposduf8
-                  shfoijpowief8wehfefoe dfoishdfiusfld ssssajsahsjkhasjkhja
-                  kshjkahsjkashjhshsajkhsakjhashjshah ajkshahhaskhkashkhshjkdhkj
-                  hfoijsiodfjsldjflksjfj sdkfhsdkfhksdjfhksdhfksdfkjshdfj ksdbfkjsciosjfuaiehfiuwh
-                  afjeoifheiuvakwjosd fuhfskdfklposduf8 shfoijpowief8wehfefoe dfoishdfiusfld
-                  ssssajsahsjkhasjkhja kshjkahsjkashjhshsajkhsakjhashjshah
-                  ajkshahhaskhkashkhshjkdhkj hfoijsiodfjsldjflksjfj sdkfhsdkfhksdjfhksdhfksdfkjshdfj
-                  ksdbfkjsciosjfuaiehfiuwh afjeoifheiuvakwjosd fuhfskdfklposduf8
-                  shfoijpowief8wehfefoe dfoishdfiusfld ssssajsahsjkhasjkhja
-                  kshjkahsjkashjhshsajkhsakjhashjshah ajkshahhaskhkashkhshjkdhkj
-                  hfoijsiodfjsldjflksjfj sdkfhsdkfhksdjfhksdhfksdfkjshdfj ksdbfkjsciosjfuaiehfiuwh
-                  afjeoifheiuvakwjosd fuhfskdfklposduf8 shfoijpowief8wehfefoe dfoishdfiusfld
-                </div>
-
-                <div>ENDDDD</div>
+                <TermsAndPrivacy showContainer={false} isModalView />
               </div>
             </Scrollbar>
 
@@ -67,7 +50,7 @@ const TermsAndConditions = () => {
                 <Switch checked={checked} setChecked={setChecked} />
               </div>
               <Button
-                text="Accept"
+                text="I Accept"
                 allowFullWidth
                 disabled={!checked}
                 btnClassName="flex justify-center"

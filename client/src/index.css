@@ -25,7 +25,7 @@
   --indigo-400: #818cfb;
   --gray-900: #111827;
   --fullRotationDeg: '7110deg';
-  --navbarHeight: '120px';
+  --navbarHeight: 80px;
   --sideDrawer-bg: #e5e0ff;
 }
 
@@ -47,6 +47,10 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.marginTopRoot {
+  margin-top: var(--navbarHeight);
 }
 
 .headerPurpleBG {

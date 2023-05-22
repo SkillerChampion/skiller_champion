@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import BodyContainer from '../Common/BodyContainer/BodyContainer';
 import Button from '../Common/Button/Button';
 import SideDrawer from '../Common/SideDrawer/SideDrawer';
-import SideDrawerIndex from '../WheelOfFortune/SideDrawer/Index';
+import SideDrawerIndex from '../Games/WheelOfFortune/SideDrawer/Index';
 import { WalletContext } from '../../context/WalletContext';
 
 import GrayCard from '../Common/Cards/GrayCard';
