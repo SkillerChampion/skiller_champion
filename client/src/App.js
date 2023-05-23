@@ -12,6 +12,7 @@ import Admin from './components/Admin/Index';
 
 import { scrollToTop } from './utils/helperFunctions';
 import { FortuneContext } from './context/FortuneContext';
+
 import { WalletContext } from './context/WalletContext';
 import SocialMediaLinks from './components/Common/SocialMediaLinks/SocialMediaLinks';
 import { ALL_ROUTES, ALL_ROUTES_PATHS } from './utils/routes';

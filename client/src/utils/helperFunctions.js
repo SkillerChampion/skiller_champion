@@ -24,6 +24,7 @@ export const getSilverPassTokenId = () => process.env.REACT_APP_SILVER_PASS_TOKE
 export const getFortuneWheelTopicId = () => process.env.REACT_APP_TOPIC_ID_FORTUNE_WHEEL;
 export const getHashScanUrl = () => process.env.REACT_APP_HASHSCAN_URL;
 export const getEncryptionKey = () => process.env.REACT_APP_ENCRYPTION_KEY;
+export const getSocketApi = () => process.env.REACT_APP_SOCKET_API;
 
 export const scrollToTop = (smooth = false) => {
   if (smooth) {

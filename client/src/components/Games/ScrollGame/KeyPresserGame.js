@@ -50,7 +50,7 @@ const KeyPresserGame = () => {
     setCurrentKey(randomWord);
   };
 
-  const handleScroll = (e) => {
+  const handleScroll = () => {
     const scrollSpeed = 0.6; // scroll speed
 
     const addSpeedInHeight = (prevHeight) => {
