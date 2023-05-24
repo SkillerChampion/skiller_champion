@@ -1,21 +1,21 @@
 import React, { useState, useCallback, useMemo, useContext } from 'react';
-import BodyContainer from '../Common/BodyContainer/BodyContainer';
+import BodyContainer from '../../Common/BodyContainer/BodyContainer';
 
-import Wheel from '../Common/FortuneWheel/Wheel';
-import Error from '../Common/Error/Error';
+import Wheel from '../../Common/FortuneWheel/Wheel';
+import Error from '../../Common/Error/Error';
 
-import PageLevelTabs from '../Common/Tabs/PageLevelTabs';
+import PageLevelTabs from '../../Common/Tabs/PageLevelTabs';
 import {
   ZERO,
   ARRAY_KEYS,
   PASSES_TYPES,
   WHEEL_BET_AMOUNTS,
   WHEEL_MAX_WINNER_AMOUNTS
-} from '../../utils/constants';
-import { FortuneContext } from '../../context/FortuneContext';
-import { WalletContext } from '../../context/WalletContext';
-import { isArrayReady } from '../../utils/helperFunctions';
-import Spinner from '../Common/Spinner/Spinner';
+} from '../../../utils/constants';
+import { FortuneContext } from '../../../context/FortuneContext';
+import { WalletContext } from '../../../context/WalletContext';
+import { isArrayReady } from '../../../utils/helperFunctions';
+import Spinner from '../../Common/Spinner/Spinner';
 
 const WheelContainer = () => {
   const { wheelData2000, wheelData500, wheelData100, isDataQueryLoading, isDataQueryError } =

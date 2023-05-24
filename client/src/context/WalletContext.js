@@ -23,7 +23,8 @@ import {
   getTreasuryAccountId,
   isValidNftSerialNumber,
   getCurrentHashNet,
-  submitBuyPassHcsMsg
+  submitBuyPassHcsMsg,
+  isTermsAccepted
 } from '../utils/helperFunctions';
 
 import {
@@ -144,6 +145,18 @@ const WalletContextComponent = (props) => {
     try {
       const userAccountId = walletData[HASH_CONNECT_KEYS.ACCOUNT_IDS];
 
+      const isTermsChecked = isTermsAccepted();
+
+      if (!isTermsChecked) {
+        toast.error('Please accept Terms and conditions');
+
+        setTimeout(() => {
+          location.reload();
+        }, SIX_SECONDS);
+
+        return;
+      }
+
       if (!amountHbar || !passType || !userAccountId || !tokenId) {
         toast.error('Something went wrong...');
         return;
@@ -192,6 +205,18 @@ const WalletContextComponent = (props) => {
   };
 
   const transferNftFromUserToTreasury = async (nftDetails, winnerMaxAmount) => {
+    const isTermsChecked = isTermsAccepted();
+
+    if (!isTermsChecked) {
+      toast.error('Please accept Terms and conditions');
+
+      setTimeout(() => {
+        location.reload();
+      }, SIX_SECONDS);
+
+      return;
+    }
+
     const nftTokenId = nftDetails[HEDERA_API_KEYS.token_id];
     const nftSerialNumber = nftDetails[HEDERA_API_KEYS.serial_number];
 

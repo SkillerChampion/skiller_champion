@@ -4,11 +4,19 @@
 }
 
 .modalRootLoser > div:nth-child(2) {
-  background: rgb(204, 39, 39);
+  background: rgb(204, 39, 39) !important;
 }
 
 .modalRootWinner > div:nth-child(2) {
-  background: rgb(59, 176, 20);
+  background: rgb(59, 176, 20) !important;
+}
+
+.modalRootLoser > div:nth-child(1) {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+.modalRootWinner > div:nth-child(1) {
+  background: rgba(0, 0, 0, 0.5) !important;
 }
 
 .customBtn {

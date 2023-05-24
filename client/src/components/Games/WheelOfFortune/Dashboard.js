@@ -1,25 +1,31 @@
 import { useState, useEffect, useContext } from 'react';
-import BodyContainer from '../Common/BodyContainer/BodyContainer';
-import RadioButtons from '../Common/Inputs/RadioButtons';
-import { WalletContext } from '../../context/WalletContext';
-import GrayCard from '../Common/Cards/GrayCard';
-import Button from '../Common/Button/Button';
-import SideDrawer from '../Common/SideDrawer/SideDrawer';
+import BodyContainer from '../../Common/BodyContainer/BodyContainer';
+import RadioButtons from '../../Common/Inputs/RadioButtons';
+import { WalletContext } from '../../../context/WalletContext';
+import GrayCard from '../../Common/Cards/GrayCard';
+import Button from '../../Common/Button/Button';
+import SideDrawer from '../../Common/SideDrawer/SideDrawer';
 import SideDrawerIndex from './SideDrawer/Index';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { isArrayReady } from '../../utils/helperFunctions';
+import { isArrayReady } from '../../../utils/helperFunctions';
 
-import { ZERO, ARRAY_KEYS, PASSES_TYPES, WHEEL_BET_AMOUNTS, HCS_KEYS } from '../../utils/constants';
+import {
+  ZERO,
+  ARRAY_KEYS,
+  PASSES_TYPES,
+  WHEEL_BET_AMOUNTS,
+  HCS_KEYS
+} from '../../../utils/constants';
 import { toast } from 'react-toastify';
-import { getLeaderBoardByAccountId } from '../../services/hederaService';
+import { getLeaderBoardByAccountId } from '../../../services/hederaService';
 
 import {
   getPlatinumPassTokenId,
   getGoldPassTokenId,
   getSilverPassTokenId
-} from '../../utils/helperFunctions';
-import { ALL_ROUTES_PATHS } from '../../utils/routes';
+} from '../../../utils/helperFunctions';
+import { ALL_ROUTES_PATHS } from '../../../utils/routes';
 
 const Dashboard = () => {
   const {

@@ -1,4 +1,12 @@
-import { ARRAY_KEYS, HCS_TYPES, HCS_KEYS, ZERO, DOT } from './constants';
+import {
+  ARRAY_KEYS,
+  HCS_TYPES,
+  HCS_KEYS,
+  ZERO,
+  DOT,
+  TRUE_STRING,
+  LOCAL_STORAGE_KEYS
+} from './constants';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import * as momentTimezone from 'moment-timezone';
@@ -16,6 +24,7 @@ export const getSilverPassTokenId = () => process.env.REACT_APP_SILVER_PASS_TOKE
 export const getFortuneWheelTopicId = () => process.env.REACT_APP_TOPIC_ID_FORTUNE_WHEEL;
 export const getHashScanUrl = () => process.env.REACT_APP_HASHSCAN_URL;
 export const getEncryptionKey = () => process.env.REACT_APP_ENCRYPTION_KEY;
+export const getSocketApi = () => process.env.REACT_APP_SOCKET_API;
 
 export const scrollToTop = (smooth = false) => {
   if (smooth) {
@@ -64,6 +73,10 @@ export const wheelRevenueEstimator = (wheelData = [], initialPrice) => {
   console.log('overal - ', profit - loss);
 };
 
+export const isTermsAccepted = () => {
+  return localStorage.getItem(LOCAL_STORAGE_KEYS.IS_T_AND_C_ACCEPTED) === TRUE_STRING;
+};
+
 export const displayErrors = (errors = []) => {
   errors.forEach((item) => toast.error(item.msg));
 };
@@ -94,7 +107,8 @@ export const submitBuyPassHcsMsg = async (
     [HCS_KEYS.pass_amount]: passAmount,
     [HCS_KEYS.pass_serial_number]: passSerialNum,
     [HCS_KEYS.status]: status,
-    [HCS_KEYS.txn_id]: txnId
+    [HCS_KEYS.txn_id]: txnId,
+    [HCS_KEYS.is_terms_and_conditions_accepted]: isTermsAccepted()
   };
 
   const res = await submitHcsMessage(topicId, msg, accountId);
@@ -124,7 +138,8 @@ export const submitUsePassHcsMsg = async (
     [HCS_KEYS.status]: status,
     [HCS_KEYS.winner_amount]: winnerAmount,
     [HCS_KEYS.txn_id]: txnId,
-    [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId
+    [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId,
+    [HCS_KEYS.is_terms_and_conditions_accepted]: isTermsAccepted()
   };
 
   const res = await submitHcsMessage(topicId, msg, accountId);
@@ -157,7 +172,8 @@ export const submitUsePassFailedHcsMsg = async (
     [HCS_KEYS.error_msg]: getError,
     [HCS_KEYS.txn_id]: txnId,
     [HCS_KEYS.winner_amount]: 0,
-    [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId
+    [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId,
+    [HCS_KEYS.is_terms_and_conditions_accepted]: isTermsAccepted()
   };
 
   const res = await submitHcsMessage(topicId, msg, accountId);

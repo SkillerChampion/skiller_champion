@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import FortuneWheelContextComponent from './context/FortuneContext';
 import WalletContextComponent from './context/WalletContext';
+import SocketContextComponent from './context/SocketContext';
 
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -22,7 +23,9 @@ ReactDOM.render(
       <QueryClientProvider client={queryClient}>
         <FortuneWheelContextComponent>
           <WalletContextComponent>
-            <App />
+            <SocketContextComponent>
+              <App />
+            </SocketContextComponent>
           </WalletContextComponent>
         </FortuneWheelContextComponent>
       </QueryClientProvider>

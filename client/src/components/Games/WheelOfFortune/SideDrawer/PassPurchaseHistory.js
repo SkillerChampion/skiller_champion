@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { useQuery } from 'react-query';
-import { getBuyPassesByAccountId } from '../../../services/hederaService';
+import { getBuyPassesByAccountId } from '../../../../services/hederaService';
 import {
   isArrayReady,
   decodeHcsTimeStamp,
   getUserLocalTimezone
-} from '../../../utils/helperFunctions';
-import { ARRAY_KEYS, HCS_KEYS } from '../../../utils/constants';
-import TableData from '../../Common/Table/Table';
-import SearchTxn from '../../Common/Table/SearchTxn';
+} from '../../../../utils/helperFunctions';
+import { ARRAY_KEYS, HCS_KEYS } from '../../../../utils/constants';
+import TableData from '../../../Common/Table/Table';
+import SearchTxn from '../../../Common/Table/SearchTxn';
 
 const PassPurchaseHistory = ({ userAccountId, setLocalUserAccountId }) => {
   const { data, isFetching, error } = useQuery(['getBuyPassesByAccountId', userAccountId], () =>
