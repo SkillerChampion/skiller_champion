@@ -24,7 +24,8 @@ import {
   isValidNftSerialNumber,
   getCurrentHashNet,
   submitBuyPassHcsMsg,
-  isTermsAccepted
+  isTermsAccepted,
+  getSkillerTokenId
 } from '../utils/helperFunctions';
 
 import {
@@ -32,7 +33,10 @@ import {
   getNftsSerialNumberFromTreasury,
   getAllNftsFromAccountWithTokenId,
   getAccountBalances,
-  transferNftToTreasury
+  submitUserTermsAccepted,
+  transferNftToTreasury,
+  getTokenRelationshipsByTokenId,
+  associateTokens
 } from '../services/hederaService';
 
 import { displayErrors, isArray } from '../utils/helperFunctions';
@@ -72,9 +76,23 @@ const WalletContextComponent = (props) => {
     initWallet();
   }, []);
 
+  const submitUserTerms = async (accountId, isTermsAccepted) => {
+    try {
+      await submitUserTermsAccepted(accountId, isTermsAccepted);
+    } catch (err) {
+      const errors = err.response?.data?.errors;
+      localStorage.clear();
+      window.location.reload();
+    }
+  };
+
   useEffect(() => {
-    if (userAccount) setUserAccountId(userAccount);
-    else setUserAccountId();
+    if (userAccount) {
+      setUserAccountId(userAccount);
+      const isTermsChecked = isTermsAccepted();
+
+      submitUserTerms(userAccount, isTermsChecked);
+    } else setUserAccountId();
   }, [userAccount]);
 
   const initWallet = async () => {
@@ -204,6 +222,39 @@ const WalletContextComponent = (props) => {
     }
   };
 
+  const associateSkillerToken = async () => {
+    try {
+      const userAccountId = walletData[HASH_CONNECT_KEYS.ACCOUNT_IDS];
+      const isTermsChecked = isTermsAccepted();
+
+      if (!isTermsChecked) {
+        toast.error('Please accept Terms and conditions');
+
+        setTimeout(() => {
+          location.reload();
+        }, SIX_SECONDS);
+
+        return;
+      }
+
+      const getTokenData = await getTokenRelationshipsByTokenId(userAccountId, getSkillerTokenId());
+      if (getTokenData?.tokens?.length) return;
+
+      const mintByteCode = await associateTokens(userAccountId, getSkillerTokenId());
+
+      const res = await sendTxnToWallet(mintByteCode);
+      if (res?.receiptStatus) {
+        return res?.receiptStatus;
+      }
+    } catch (err) {
+      console.log('err', err);
+      const errors = err.response?.data?.errors;
+      if (errors) {
+        displayErrors(errors);
+      } else toast.error('Something went wrong...');
+    }
+  };
+
   const transferNftFromUserToTreasury = async (nftDetails, winnerMaxAmount) => {
     const isTermsChecked = isTermsAccepted();
 
@@ -283,10 +334,10 @@ const WalletContextComponent = (props) => {
       value={{
         walletData,
         userAccountId,
-
         disconnectHashPack,
         connectToHashPack,
         buyPassAndTransferNftToUserAccount,
+        associateSkillerToken,
         transferNftFromUserToTreasury,
         sendTxnToWallet,
         platinumPassesInUserAccount,

@@ -67,7 +67,7 @@ const Paper = ({ linkName }) => {
               click here
             </Link>
             ) to rotate the wheel and try their luck. Based on the purchased pass, players can win
-            upto 5000 HBARs. All of the games are 100% random and fair{' '}
+            upto 4000 HBARs. All of the games are 100% random and fair{' '}
             <a
               className={`${classes.link}`}
               href={EXTERNAL_LINKS.GITHUB_OPEN_SOURCE_LINK_ROUTER}

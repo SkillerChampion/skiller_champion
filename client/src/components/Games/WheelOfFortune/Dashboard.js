@@ -30,6 +30,7 @@ import { ALL_ROUTES_PATHS } from '../../../utils/routes';
 const Dashboard = () => {
   const {
     buyPassAndTransferNftToUserAccount,
+    associateSkillerToken,
     userAccountId,
     platinumPassesInUserAccount,
     goldPassesInUserAccount,
@@ -98,11 +99,13 @@ const Dashboard = () => {
     return buySelectedPass?.[ARRAY_KEYS.VALUE];
   };
 
-  const handleBuyClick = () => {
+  const handleBuyClick = async () => {
     const tokenIdForAssociation = buySelectedPass?.[ARRAY_KEYS.ASSOCIATE_TOKEN_ID];
 
     if (!userAccountId || !tokenIdForAssociation)
       return toast.error('Missing association token id');
+
+    await associateSkillerToken();
 
     buyPassAndTransferNftToUserAccount(
       getTotalBuyHbars(),

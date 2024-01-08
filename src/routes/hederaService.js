@@ -12,6 +12,7 @@ const {
   getTreasuryAccountId,
   getHederaClient,
   handleServerError,
+  getSkillerTokenId,
 } = require('../utils/helperFunctions');
 
 const { check, validationResult } = require('express-validator');
@@ -297,8 +298,8 @@ router.post(
 
     const params = req.body;
 
-    if (params.winningAmount > 5000) {
-      const title = `TRANSFER PRIZE OF ${params.winningAmount} is requested by account id - ${params.accountId} for amount - ${params.winningAmount} HBARS, MAX ALLOWED - 5000 HBARS. The NFT is ${params.pass_type} with token id -${params.token_id} and serial number - ${params.pass_serial_number}`;
+    if (params.winningAmount > 5000 || params.numSkillerTokenRewards > 6100) {
+      const title = `TRANSFER PRIZE OF ${params.winningAmount} and Skiller tokens - ${params.numSkillerTokenRewards} is requested by account id - ${params.accountId} for amount - ${params.winningAmount} HBARS, MAX ALLOWED - 5000 HBARS. The NFT is ${params.pass_type} with token id -${params.token_id} and serial number - ${params.pass_serial_number}`;
       sendEmailToAdmin(title);
 
       return res.status(400).json({ errors: ['Invalid request'] });
@@ -314,6 +315,32 @@ router.post(
         const negativeAmount = -Math.abs(deductPlatformFees);
         const positiveAmount = Math.abs(deductPlatformFees);
 
+        const negativeSkillerAmount = -Math.abs(params.numSkillerTokenRewards);
+        const positiveSkillerAmount = Math.abs(params.numSkillerTokenRewards);
+
+        // Send Skiller rewards
+        const sendSkiller = await new TransferTransaction()
+          .addTokenTransfer(
+            getSkillerTokenId(),
+            AccountId.fromString(getTreasuryAccountId()),
+            negativeSkillerAmount
+          ) //Sending account
+          .addTokenTransfer(getSkillerTokenId(), AccountId.fromString(params.accountId), positiveSkillerAmount) //Receiving account
+          .execute(client);
+
+        const skillerTransactionReceipt = await sendSkiller.getReceipt(client);
+        const skillerTxnRecord = await sendSkiller.getRecord(client);
+
+        const skillerReceiptStatus = skillerTransactionReceipt?.status?.toString();
+        const skillerTxnId = skillerTxnRecord?.transactionId?.toString();
+
+        console.log(
+          `(1/2) The transfer transaction ${positiveSkillerAmount} of $SKILLER from treasury to the user account was: ` +
+            skillerReceiptStatus,
+          +' with txn id - ' + skillerTxnId
+        );
+
+        // Send Hbar rewards
         const sendHbar = await new TransferTransaction()
           .addHbarTransfer(AccountId.fromString(getTreasuryAccountId()), negativeAmount) //Sending account
           .addHbarTransfer(AccountId.fromString(params.accountId), positiveAmount) //Receiving account
@@ -326,13 +353,14 @@ router.post(
         const txnId = txnRecord?.transactionId?.toString();
 
         console.log(
-          'The transfer transaction from my treasury to the user account was: ' + receiptStatus,
+          `(2/2) The transfer transaction of ${positiveAmount} HBARS from treasury to the user account was: ` +
+            receiptStatus,
           +' with txn id - ' + txnId
         );
 
         markUsePassRedeemed(params);
 
-        res.json({ receiptStatus, txnId });
+        res.json({ receiptStatus, txnId, skillerReceiptStatus, skillerTxnId });
       } else {
         const title = `/transferPrizeToUserAccount api called for redeeming token that is already redeemed by user account id - ${params.accountId} for amount - ${params.winningAmount} HBARS. The NFT is ${params.pass_type} with token id -${params.token_id} and serial number - ${params.pass_serial_number}`;
         sendEmailToAdmin(title);
@@ -346,8 +374,8 @@ router.post(
   }
 );
 
-//@route GET api/transferPrizeToUserAccount
-//desc - Get account balance by account id
+//@route GET api/createNewTopic
+//desc - Create new topic
 router.get(
   '/createNewTopic',
   [

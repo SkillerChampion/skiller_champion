@@ -110,8 +110,8 @@ export const WHEEL_BET_AMOUNTS = {
 };
 
 export const WHEEL_MAX_WINNER_AMOUNTS = {
-  PLATINUM: 5000,
-  GOLD: 1500,
+  PLATINUM: 4000,
+  GOLD: 1200,
   SILVER: 300
 };
 
@@ -134,12 +134,14 @@ export const HCS_KEYS = {
   error_msg: 'error_msg',
   txn_id: 'txn_id',
   nft_transfer_txn_id: 'nft_transfer_txn_id',
+  skiller_transfer_txn_id: 'skiller_transfer_txn_id',
   consensus_timestamp: 'consensus_timestamp',
   message: 'message',
   messages: 'messages',
   payer_account_id: 'payer_account_id',
   time: 'time',
-  is_terms_and_conditions_accepted: 'is_terms_and_conditions_accepted'
+  is_terms_and_conditions_accepted: 'is_terms_and_conditions_accepted',
+  skiller_rewards_amount: 'skiller_rewards_amount'
 };
 
 export const HCS_TYPES = {
