@@ -1,7 +1,11 @@
 const { check, validationResult } = require('express-validator');
 
-const { getLeaderBoardByPassType, insertUserEmail } = require('../services/hederaService');
-
+const {
+  getLeaderBoardByPassType,
+  insertUserEmail,
+  insertUserTermsAndCondition,
+} = require('../services/hederaService');
+const { createAndMintTokenOnTestNet } = require('../services/minter');
 const { HCS_KEYS } = require('../utils/constants');
 const express = require('express');
 const { generateJwtToken } = require('../middleware/auth');
@@ -48,6 +52,33 @@ router.post(
   }
 );
 
+//@route POST api/insertUserTermsAndCondition
+//desc - Post user terms and conditions
+router.post(
+  '/insertUserTermsAndCondition',
+  [check('isTermsAccepted', 'Please accept terms and conditions').custom((val) => val === true)],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const { accountId = '', isTermsAccepted } = req.body;
+      console.log('isTermsAccepted', isTermsAccepted, typeof isTermsAccepted);
+
+      const params = { [HCS_KEYS.user_account_id]: accountId, [HCS_KEYS.is_terms_accepted]: isTermsAccepted };
+      await insertUserTermsAndCondition(params);
+
+      res.send('Success');
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 //@route POST api/generateJwtToken
 //desc - POST jwt token
 router.post(
@@ -71,5 +102,17 @@ router.post(
     }
   }
 );
+
+//@route POST api/mintTestnetHts
+//desc - POST Mint HTS fungible on testnet
+router.post('/mintTestnetHts', async (req, res) => {
+  try {
+    const tokenId = await createAndMintTokenOnTestNet('Skiller Champion', 'Skiller');
+    res.send('Fungible HTS created with token id - ' + tokenId);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;

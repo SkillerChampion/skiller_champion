@@ -14,4 +14,17 @@
         ) 
     </insert>
 
+    <insert id="insertOrUpdateUserTermsAccepted">
+        INSERT INTO skiller_champion.USER_INFO
+        (
+            user_account_id,
+            is_terms_accepted
+        )
+        VALUES
+        (
+            #{user_account_id},
+            #{is_terms_accepted}
+        )
+    </insert>
+
 </mapper>

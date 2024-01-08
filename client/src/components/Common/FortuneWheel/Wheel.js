@@ -13,6 +13,7 @@ import {
   ZERO,
   ONE_AND_HALF_SECONDS,
   THREE_SECONDS,
+  PASSES_TYPES,
   HEDERA_API_KEYS
 } from '../../../utils/constants';
 import { displayErrors } from '../../../utils/helperFunctions';
@@ -20,7 +21,8 @@ import {
   setCssVariable,
   scrollToTop,
   submitUsePassHcsMsg,
-  submitUsePassFailedHcsMsg
+  submitUsePassFailedHcsMsg,
+  getSkillerTokensBasesOnPassType
 } from '../../../utils/helperFunctions';
 import hederaWhiteIcon from '../../../assets/hederaWhiteIcon.png';
 import { FortuneContext } from '../../../context/FortuneContext';
@@ -80,6 +82,8 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
     const nftDetails = passesInUserAccount[ZERO];
     const nftTokenId = nftDetails?.[HEDERA_API_KEYS.token_id];
     const nftSerialNumber = nftDetails?.[HEDERA_API_KEYS.serial_number];
+    const numSkillerTokenRewards = getSkillerTokensBasesOnPassType(passType);
+
     let winningAmount;
     let nftTransferTxnId;
     let transferPrizeTxnId;
@@ -106,10 +110,12 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
             passType,
             nftTransferTxnId,
             nftSerialNumber,
-            nftTokenId
+            nftTokenId,
+            numSkillerTokenRewards
           );
 
           transferPrizeTxnId = res?.txnId;
+          const skillerTxnId = res?.skillerTxnId;
 
           if (res?.receiptStatus) {
             submitUsePassHcsMsg(
@@ -119,7 +125,9 @@ const Wheel = ({ wheelData = [], betAmount, passesInUserAccount, winnerMaxAmount
               nftTokenId,
               HEDERA_API_KEYS.SUCCESS,
               winningAmount,
+              numSkillerTokenRewards,
               transferPrizeTxnId,
+              skillerTxnId,
               nftTransferTxnId,
               userAccountId
             );

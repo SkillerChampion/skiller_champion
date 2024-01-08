@@ -44,6 +44,7 @@ const HCS_KEYS = {
   payer_account_id: 'payer_account_id',
   email: 'email',
   txn_id: 'txn_id',
+  is_terms_accepted: 'is_terms_accepted',
 };
 
 const NODE_ENVS = {
@@ -65,6 +66,7 @@ const QUERIES = {
   selectBuyPassByUserId: 'selectBuyPassByUserId',
   selectLeaderBoardUsePass: 'selectLeaderBoardUsePass',
   insertUserEmail: 'insertUserEmail',
+  insertOrUpdateUserTermsAccepted: 'insertOrUpdateUserTermsAccepted',
   selectUserEmail: 'selectUserEmail',
   updateUserEmail: 'updateUserEmail',
   selectLeaderBoardUsePassByAccountId: 'selectLeaderBoardUsePassByAccountId',
@@ -86,6 +88,8 @@ const DEPLOYED_ORIGIN_URL = [
 
 const GCP_PROJECT_ID = 948181003317;
 const TOKEN_EXPIRY_TIME = configurations.NODE_ENV === NODE_ENVS.development ? '20m' : '20s';
+const ONE_AND_HALF_TRILLION = 150000000000000;
+const ONE_TRILLION = 110000000000000;
 
 module.exports = {
   ARRAY_KEYS,
@@ -105,4 +109,6 @@ module.exports = {
   PLATFORM_FEES,
   UNAUTHORIZED,
   USER_AGENT,
+  ONE_TRILLION,
+  ONE_AND_HALF_TRILLION,
 };

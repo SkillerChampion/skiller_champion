@@ -20,4 +20,5 @@ module.exports = Object.freeze({
   NODE_MAILER_USER: process.env.NODE_MAILER_USER,
   NODE_MAILER_PASS: process.env.NODE_MAILER_PASS,
   NODE_MAILER_RECIPIENT: process.env.NODE_MAILER_RECIPIENT,
+  skillerTokenId: process.env.SKILLER_TOKEN_ID,
 });

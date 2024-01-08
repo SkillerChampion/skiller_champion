@@ -113,6 +113,10 @@ const insertUserEmail = async (params) => {
   await executeQuery(MAPPER_NAMESPACES.userInformation, QUERIES.insertUserEmail, params);
 };
 
+const insertUserTermsAndCondition = async (params) => {
+  await executeQuery(MAPPER_NAMESPACES.userInformation, QUERIES.insertOrUpdateUserTermsAccepted, params);
+};
+
 const findAndCallQueryFnByPassType = async (params = {}, res) => {
   const dataSet = [
     {
@@ -218,6 +222,7 @@ module.exports = {
   getBuyPassesByAccountId,
   getLeaderBoardByPassType,
   insertUserEmail,
+  insertUserTermsAndCondition,
   getLeaderBoardByAccountId,
   checkIfUsePassTxnWithTrueRedemptionExists,
   markUsePassRedeemed,

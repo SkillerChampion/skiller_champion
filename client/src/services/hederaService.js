@@ -62,12 +62,13 @@ export const associateTokens = async (accountId, tokenId) => {
       .then((res) => res.data);
 };
 
-// Removing token association logic as hashpack handled it automatically
-// export const getTokenRelationships = (accountId) => {
-//   if (!accountId) return;
+export const getTokenRelationshipsByTokenId = (accountId, tokenId) => {
+  if (!accountId) return;
 
-//   return hederaApi.get(`/api/v1/accounts/${accountId}/tokens`).then((res) => res.data);
-// };
+  return hederaApi
+    .get(`/api/v1/accounts/${accountId}/tokens?token.id=${tokenId}`)
+    .then((res) => res.data);
+};
 
 export const getNftsSerialNumberFromTreasury = (accountId, tokenId) => {
   if (!accountId) return;
@@ -136,6 +137,15 @@ export const submitUserEmail = (email, accountId) => {
     .then((res) => res.data);
 };
 
+export const submitUserTermsAccepted = (accountId, isTermsAccepted) => {
+  return axios
+    .post(`/public/insertUserTermsAndCondition`, {
+      accountId,
+      isTermsAccepted
+    })
+    .then((res) => res.data);
+};
+
 export const generateJwtToken = (data) => {
   return axios.post(`/public/generateJwtToken`, data).then((res) => res.data);
 };
@@ -172,7 +182,8 @@ export const transferPrizeToUserAccount = async (
   passType,
   nftTransferTxnId,
   nftSerialNumber,
-  nftTokenId
+  nftTokenId,
+  numSkillerTokenRewards
 ) => {
   // !winningAmount for value=0 will execute if statement, so don't use it
   if (!accountId || !passType || !nftTransferTxnId || !nftSerialNumber || !nftTokenId) {
@@ -202,6 +213,7 @@ export const transferPrizeToUserAccount = async (
         {
           accountId,
           winningAmount,
+          numSkillerTokenRewards,
           ...payload
         }
       )

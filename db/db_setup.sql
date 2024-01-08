@@ -43,7 +43,8 @@ Store information when user uses any pass';
 
 create table skiller_champion.USER_INFO (
    email               VARCHAR(120)          null,
-   user_account_id     VARCHAR(120)          null
+   user_account_id     VARCHAR(120)          null,
+   is_terms_accepted   BOOLEAN               null
 );
 
 comment on table skiller_champion.USER_INFO is

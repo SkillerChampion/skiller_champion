@@ -5,7 +5,9 @@ import {
   ZERO,
   DOT,
   TRUE_STRING,
-  LOCAL_STORAGE_KEYS
+  LOCAL_STORAGE_KEYS,
+  PASSES_TYPES,
+  WHEEL_BET_AMOUNTS
 } from './constants';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -21,6 +23,9 @@ export const getCurrentHashNet = () => process.env.REACT_APP_NET;
 export const getPlatinumPassTokenId = () => process.env.REACT_APP_PLATINUM_PASS_TOKEN_ID;
 export const getGoldPassTokenId = () => process.env.REACT_APP_GOLD_PASS_TOKEN_ID;
 export const getSilverPassTokenId = () => process.env.REACT_APP_SILVER_PASS_TOKEN_ID;
+
+export const getSkillerTokenId = () => process.env.REACT_APP_SKILLER_TOKEN_ID;
+
 export const getFortuneWheelTopicId = () => process.env.REACT_APP_TOPIC_ID_FORTUNE_WHEEL;
 export const getHashScanUrl = () => process.env.REACT_APP_HASHSCAN_URL;
 export const getEncryptionKey = () => process.env.REACT_APP_ENCRYPTION_KEY;
@@ -123,7 +128,9 @@ export const submitUsePassHcsMsg = async (
   tokenId,
   status,
   winnerAmount,
+  numSkillerTokenRewards,
   txnId,
+  skillerTxnId,
   nftTransferTxnId,
   accountId
 ) => {
@@ -137,8 +144,10 @@ export const submitUsePassHcsMsg = async (
     [HCS_KEYS.pass_serial_number]: passSerialNum,
     [HCS_KEYS.status]: status,
     [HCS_KEYS.winner_amount]: winnerAmount,
+    [HCS_KEYS.skiller_rewards_amount]: numSkillerTokenRewards,
     [HCS_KEYS.txn_id]: txnId,
     [HCS_KEYS.nft_transfer_txn_id]: nftTransferTxnId,
+    [HCS_KEYS.skiller_transfer_txn_id]: skillerTxnId,
     [HCS_KEYS.is_terms_and_conditions_accepted]: isTermsAccepted()
   };
 
@@ -204,4 +213,12 @@ export const decodeHcsTimeStamp = (time) => {
 
 export const getUserLocalTimezone = () => {
   return momentTimezone().tz(momentTimezone.tz.guess()).format('z');
+};
+
+export const getSkillerTokensBasesOnPassType = (passType) => {
+  if (PASSES_TYPES.SILVER === passType) return WHEEL_BET_AMOUNTS.SILVER * 3;
+  if (PASSES_TYPES.GOLD === passType) return WHEEL_BET_AMOUNTS.GOLD * 3;
+  if (PASSES_TYPES.PLATINUM === passType) return WHEEL_BET_AMOUNTS.PLATINUM * 3;
+
+  return 1;
 };

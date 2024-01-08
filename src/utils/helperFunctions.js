@@ -3,7 +3,7 @@ const { Client } = require('@hashgraph/sdk');
 const { enc, AES } = require('crypto-js');
 
 const secretManager = require('./secretManager');
-const { HCS_KEYS, ZERO, DOT, NODE_ENVS, UNAUTHORIZED } = require('./constants');
+const { NODE_ENVS, UNAUTHORIZED } = require('./constants');
 const configurations = require('../../config');
 
 const getDynamicEnv = async (key) => {
@@ -18,6 +18,8 @@ const getTreasuryPrivateKey = async () => await getDynamicEnv(configurations.tre
 const getTreasuryAccountId = () => configurations.treasuryAccountId;
 const getApiAccessKey = async () => await getDynamicEnv(configurations.apiAccessKey);
 const getEncryptionKey = () => configurations.encryptionKey;
+
+const getSkillerTokenId = () => configurations.skillerTokenId;
 
 const getHederaClient = async () => {
   if (configurations.runTestNet) {
@@ -52,4 +54,5 @@ module.exports = {
   getHederaClient,
   getDynamicEnv,
   handleServerError,
+  getSkillerTokenId,
 };
